@@ -1,0 +1,10 @@
+model_list:
+  - model_name: qwen3.5-35b
+    litellm_params:
+      model: openai/qwen3.5-35b
+      api_base: http://192.168.6.216:8889/v1
+      api_key: os.environ/LOCAL_LLM_API_KEY
+
+litellm_settings:
+  drop_params: true
+  use_chat_completions_url_for_anthropic_messages: true
