@@ -259,6 +259,14 @@ process.on('exit', () => {
   cleanupAllSessions()
 })
 
+process.on('uncaughtException', (err) => {
+  console.error('[Server] Uncaught exception:', err)
+})
+
+process.on('unhandledRejection', (reason) => {
+  console.error('[Server] Unhandled rejection:', reason)
+})
+
 // Direct execution
 if (import.meta.main) {
   startServer()

@@ -7,6 +7,7 @@ import { useSettingsStore } from '../../stores/settingsStore'
 import { useUIStore, type SettingsTab } from '../../stores/uiStore'
 import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts'
 import { initializeDesktopServerUrl } from '../../lib/desktopRuntime'
+import { api } from '../../api/client'
 import { TabBar } from './TabBar'
 import { useTabStore, SETTINGS_TAB_ID } from '../../stores/tabStore'
 import { useChatStore } from '../../stores/chatStore'
@@ -17,6 +18,7 @@ export function AppShell() {
   const sidebarOpen = useUIStore((s) => s.sidebarOpen)
   const [ready, setReady] = useState(false)
   const [startupError, setStartupError] = useState<string | null>(null)
+  const [serverVersion, setServerVersion] = useState<string>('')
   const t = useTranslation()
 
   useEffect(() => {
@@ -26,6 +28,16 @@ export function AppShell() {
       try {
         await initializeDesktopServerUrl()
         await fetchSettings()
+        try {
+          const status = await api.get<{ version?: string }>('/api/status', {
+            timeout: 5000,
+          })
+          if (typeof status?.version === 'string' && status.version.trim()) {
+            setServerVersion(status.version.trim())
+          }
+        } catch {
+          // 非阻塞信息，不影响主流程
+        }
 
         // Restore tabs from localStorage
         await useTabStore.getState().restoreTabs()
@@ -114,6 +126,9 @@ export function AppShell() {
       </main>
       <ToastContainer />
       <UpdateChecker />
+      <div className="fixed bottom-2 right-3 z-50 rounded border border-[var(--color-border)] bg-[var(--color-surface-container-low)] px-2 py-1 text-[11px] text-[var(--color-text-secondary)] shadow-sm">
+        Server: {serverVersion || 'unknown'}
+      </div>
     </div>
   )
 }

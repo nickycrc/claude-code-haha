@@ -71,6 +71,37 @@ export class ConversationService {
   private sessions = new Map<string, SessionProcess>()
   private providerService = new ProviderService()
 
+  private resolveAppRoot(): string {
+    const inferredAppRoot = path.resolve(import.meta.dir, '../../..')
+    const envAppRoot = process.env.CLAUDE_APP_ROOT
+    if (
+      envAppRoot &&
+      this.isValidAppRoot(envAppRoot)
+    ) {
+      return envAppRoot
+    }
+    if (envAppRoot && envAppRoot.trim()) {
+      console.warn(
+        `[ConversationService] Ignoring invalid CLAUDE_APP_ROOT=${JSON.stringify(
+          envAppRoot,
+        )}, fallback to inferred root: ${inferredAppRoot}`,
+      )
+    }
+    return inferredAppRoot
+  }
+
+  private isValidAppRoot(candidate: string): boolean {
+    try {
+      const normalized = path.resolve(candidate)
+      return (
+        fs.existsSync(path.join(normalized, 'src', 'entrypoints', 'cli.tsx')) ||
+        fs.existsSync(path.join(normalized, 'bin', 'claude-haha'))
+      )
+    } catch {
+      return false
+    }
+  }
+
   private buildSessionCliArgs(
     sessionId: string,
     sdkUrl: string,
@@ -132,6 +163,9 @@ export class ConversationService {
     console.log(
       `[ConversationService] Starting CLI for ${sessionId}, cwd: ${workDir} (process.cwd()=${process.cwd()}, CALLER_DIR will be pinned to workDir)`,
     )
+    console.log(
+      `[ConversationService] CLI spawn args: ${JSON.stringify(args)}`,
+    )
 
     // IMPORTANT (Bug#5): 必须覆盖子进程继承的 CALLER_DIR / PWD。
     // preload.ts 顶层读 process.env.CALLER_DIR 并调用 process.chdir(CALLER_DIR)。
@@ -192,6 +226,17 @@ export class ConversationService {
     ])
 
     if (earlyExitCode !== null) {
+      const earlySession = this.sessions.get(sessionId)
+      const earlyStderr = earlySession?.stderrLines.join('\n') ?? ''
+      if (earlyExitCode === 0) {
+        console.warn(
+          `[ConversationService] CLI exited cleanly during startup grace for ${sessionId}; continue and allow lazy restart on demand. stderr: ${earlyStderr}`,
+        )
+        return
+      }
+      console.error(
+        `[ConversationService] CLI exited with code ${earlyExitCode} during startup for ${sessionId}. stderr: ${earlyStderr}`,
+      )
       const startupError = this.buildStartupError(sessionId, earlyExitCode)
       this.sessions.delete(sessionId)
 
@@ -557,8 +602,15 @@ export class ConversationService {
         ? await this.providerService.getProviderRuntimeEnv(options.providerId)
         : null
 
+    const resolvedAppRoot = this.resolveAppRoot()
+
     return {
       ...cleanEnv,
+      CLAUDE_APP_ROOT: resolvedAppRoot,
+      // Some older Windows CPUs crash Bun child CLI with "Illegal instruction".
+      // Disable JSC JIT by default for spawned desktop CLI subprocesses to
+      // improve compatibility/stability.
+      BUN_JSC_useJIT: process.env.BUN_JSC_useJIT || '0',
       CLAUDE_CODE_ENABLE_TASKS: '1',
       CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING: '1',
       CALLER_DIR: workDir,
@@ -694,6 +746,7 @@ export class ConversationService {
   }
 
   private resolveCliArgs(baseArgs: string[]): string[] {
+    const appRoot = this.resolveAppRoot()
     const launcher = resolveClaudeCliLauncher({
       cliPath: process.env.CLAUDE_CLI_PATH,
       execPath: process.execPath,
@@ -701,16 +754,30 @@ export class ConversationService {
 
     if (!launcher) {
       if (process.platform === 'win32') {
-        return [
+        const preloadPath = path.resolve(appRoot, 'preload.ts')
+        const hasPreload = fs.existsSync(preloadPath)
+        const cliPath = path.resolve(import.meta.dir, '../../entrypoints/cli.tsx')
+        const resolvedArgs = [
           process.execPath,
-          path.resolve(import.meta.dir, '../../entrypoints/cli.tsx'),
+          ...(hasPreload ? ['--preload', preloadPath] : []),
+          cliPath,
           ...baseArgs,
         ]
+        console.log(
+          `[ConversationService] resolveCliArgs (win32 fallback): execPath=${process.execPath}, preloadPath=${preloadPath} (exists=${hasPreload}), cliPath=${cliPath}, args=${JSON.stringify(resolvedArgs)}`,
+        )
+        return resolvedArgs
       }
       return [path.resolve(import.meta.dir, '../../../bin/claude-haha'), ...baseArgs]
     }
 
-    return buildClaudeCliArgs(launcher, baseArgs, process.env.CLAUDE_APP_ROOT)
+    const resolvedArgs = buildClaudeCliArgs(launcher, baseArgs, appRoot)
+    console.log(
+      `[ConversationService] resolveCliArgs launcher=${launcher.kind} cliPath=${JSON.stringify(
+        launcher.command,
+      )} appRoot=${JSON.stringify(appRoot)} args=${JSON.stringify(resolvedArgs)}`,
+    )
+    return resolvedArgs
   }
 
   private clearStaleLock(sessionId: string): boolean {

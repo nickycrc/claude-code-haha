@@ -36,6 +36,15 @@ function isAllowedFilesystemPath(targetPath: string): boolean {
     return true
   }
 
+  // Windows: allow access to all local drives (C:\, D:\, etc.)
+  if (process.platform === 'win32') {
+    // Check if path is a Windows drive root or within a drive
+    const driveMatch = resolvedPath.match(/^[A-Za-z]:[/\\]/)
+    if (driveMatch) {
+      return true
+    }
+  }
+
   return false
 }
 

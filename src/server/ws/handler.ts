@@ -59,6 +59,8 @@ const sessionStartupPromises = new Map<string, Promise<void>>()
 const prewarmPendingSessions = new Set<string>()
 const prewarmedSessions = new Set<string>()
 const prewarmIdleTimers = new Map<string, ReturnType<typeof setTimeout>>()
+
+const RUNTIME_SWITCH_TIMEOUT_MS = 15_000
 const DEFAULT_PREWARM_IDLE_TIMEOUT_MS = 5 * 60_000
 
 export function getSlashCommands(sessionId: string): Array<{ name: string; description: string }> {
@@ -220,17 +222,49 @@ async function handleUserMessage(
   const pendingRuntimeTransition = runtimeTransitionPromises.get(sessionId)
   if (pendingRuntimeTransition) {
     try {
-      await pendingRuntimeTransition
+      await Promise.race([
+        pendingRuntimeTransition,
+        new Promise((_, reject) =>
+          setTimeout(
+            () =>
+              reject(
+                new Error(
+                  `Runtime switch timed out after ${RUNTIME_SWITCH_TIMEOUT_MS}ms`,
+                ),
+              ),
+            RUNTIME_SWITCH_TIMEOUT_MS,
+          ),
+        ),
+      ])
     } catch (err) {
       const errMsg = err instanceof Error ? err.message : String(err)
+      runtimeTransitionPromises.delete(sessionId)
       console.error(`[WS] Runtime transition failed before handling user message for ${sessionId}: ${errMsg}`)
+      // Recover from stale/invalid runtime override so the session can continue
+      // with default/provider-managed settings instead of staying stuck in
+      // thinking forever.
+      runtimeOverrides.delete(sessionId)
       sendMessage(ws, {
-        type: 'error',
-        message: `Failed to switch provider/model: ${errMsg}`,
-        code: 'CLI_RESTART_FAILED',
+        type: 'status',
+        state: 'thinking',
+        verb: 'Recovering from runtime switch failure...',
       })
-      sendMessage(ws, { type: 'status', state: 'idle' })
-      return
+      const recovered = await restartSessionWithRuntimeConfig(ws, sessionId)
+      if (!recovered) {
+        sendMessage(ws, {
+          type: 'error',
+          message: `Failed to switch provider/model: ${errMsg}`,
+          code: 'CLI_RESTART_FAILED',
+        })
+        sendMessage(ws, { type: 'status', state: 'idle' })
+        return
+      }
+      sendMessage(ws, {
+        type: 'system_notification',
+        subtype: 'runtime_recovered',
+        message:
+          'Runtime switch failed and was reset to a safe default. Please re-select provider/model if needed.',
+      })
     }
   }
 
@@ -280,6 +314,28 @@ async function handleUserMessage(
     message.attachments
   )
   if (!sent) {
+    // Some environments may see the CLI exit cleanly during prewarm/startup
+    // before the first user turn is enqueued. Retry one fresh startup + resend
+    // so the user doesn't get a false startup failure.
+    try {
+      sendMessage(ws, {
+        type: 'status',
+        state: 'thinking',
+        verb: 'CLI restarted, retrying your message...',
+      })
+      await ensureCliSessionStarted(ws, sessionId, 'user_message')
+      const retried = conversationService.sendMessage(
+        sessionId,
+        message.content,
+        message.attachments,
+      )
+      if (retried) {
+        userMessageSent = true
+        return
+      }
+    } catch {
+      // fall through to the existing error path
+    }
     sendMessage(ws, {
       type: 'error',
       message: 'CLI process is not running. The session may have ended or the process crashed.',
@@ -406,9 +462,22 @@ async function handleSetRuntimeConfig(
     return
   }
 
-  await enqueueRuntimeTransition(sessionId, () =>
-    restartSessionWithRuntimeConfig(ws, sessionId),
-  )
+  await enqueueRuntimeTransition(sessionId, async () => {
+    await Promise.race([
+      restartSessionWithRuntimeConfig(ws, sessionId),
+      new Promise((_, reject) =>
+        setTimeout(
+          () =>
+            reject(
+              new Error(
+                `Runtime switch timed out after ${RUNTIME_SWITCH_TIMEOUT_MS}ms`,
+              ),
+            ),
+          RUNTIME_SWITCH_TIMEOUT_MS,
+        ),
+      ),
+    ])
+  })
 }
 
 async function restartSessionWithPermissionMode(
@@ -449,7 +518,16 @@ async function restartSessionWithPermissionMode(
 async function restartSessionWithRuntimeConfig(
   ws: ServerWebSocket<WebSocketData>,
   sessionId: string,
-): Promise<void> {
+): Promise<boolean> {
+  const tryStartSession = async () => {
+    const workDir = conversationService.getSessionWorkDir(sessionId)
+    const runtimeSettings = await getRuntimeSettings(sessionId)
+    const sdkUrl =
+      `ws://${ws.data.serverHost}:${ws.data.serverPort}/sdk/${sessionId}` +
+      `?token=${encodeURIComponent(crypto.randomUUID())}`
+    await conversationService.startSession(sessionId, workDir, sdkUrl, runtimeSettings)
+  }
+
   try {
     sendMessage(ws, {
       type: 'status',
@@ -457,19 +535,38 @@ async function restartSessionWithRuntimeConfig(
       verb: 'Switching provider and model...',
     })
 
-    const workDir = conversationService.getSessionWorkDir(sessionId)
     conversationService.stopSession(sessionId)
-
-    const runtimeSettings = await getRuntimeSettings(sessionId)
-    const sdkUrl =
-      `ws://${ws.data.serverHost}:${ws.data.serverPort}/sdk/${sessionId}` +
-      `?token=${encodeURIComponent(crypto.randomUUID())}`
-    await conversationService.startSession(sessionId, workDir, sdkUrl, runtimeSettings)
+    await tryStartSession()
 
     sendMessage(ws, { type: 'status', state: 'idle' })
     console.log(`[WS] Restarted CLI for ${sessionId} with runtime override`)
+    return true
   } catch (err) {
     const errMsg = err instanceof Error ? err.message : String(err)
+    // On provider/model switch, previous CLI may terminate with 143 during handoff.
+    // Retry once to avoid surfacing a false "switch failed" error to the UI.
+    if (
+      /code 143|startup \(code 143\)|startup with code 143/i.test(errMsg)
+    ) {
+      try {
+        console.warn(
+          `[WS] Runtime switch hit transient 143 for ${sessionId}, retrying once...`,
+        )
+        await new Promise(resolve => setTimeout(resolve, 200))
+        await tryStartSession()
+        sendMessage(ws, { type: 'status', state: 'idle' })
+        console.log(
+          `[WS] Restarted CLI for ${sessionId} with runtime override (retry after 143)`,
+        )
+        return true
+      } catch (retryErr) {
+        const retryMsg =
+          retryErr instanceof Error ? retryErr.message : String(retryErr)
+        console.error(
+          `[WS] Retry failed for ${sessionId} after transient 143: ${retryMsg}`,
+        )
+      }
+    }
     console.error(`[WS] Failed to restart CLI for ${sessionId} after runtime override: ${errMsg}`)
     sendMessage(ws, {
       type: 'error',
@@ -477,6 +574,7 @@ async function restartSessionWithRuntimeConfig(
       code: 'CLI_RESTART_FAILED',
     })
     sendMessage(ws, { type: 'status', state: 'idle' })
+    return false
   }
 }
 
@@ -651,24 +749,47 @@ function bindPrewarmMetadataCapture(sessionId: string) {
   })
 }
 
-async function resolveSessionWorkDir(sessionId: string, fallback = os.homedir()): Promise<string> {
+async function resolveSessionWorkDir(
+  sessionId: string,
+  fallback = os.homedir(),
+): Promise<{ workDir: string; resolvedWorkDir: string | null; usedFallback: boolean }> {
   let workDir = fallback
+  let resolvedWorkDir: string | null = null
+  let usedFallback = false
   try {
-    const resolved = await sessionService.getSessionWorkDir(sessionId)
+    const sessionDetail = await sessionService.getSession(sessionId).catch(() => null)
+    const resolved =
+      sessionDetail?.workDir || (await sessionService.getSessionWorkDir(sessionId))
+    resolvedWorkDir = resolved || null
     if (resolved) workDir = resolved
+
+    // Some historical sessions point to removed/unmounted directories (e.g. U盘/网络盘).
+    // Fall back to a safe local directory so the CLI can still start.
+    const workDirExists =
+      typeof sessionDetail?.workDirExists === 'boolean'
+        ? sessionDetail.workDirExists
+        : true
+    if (!workDirExists) {
+      console.warn(
+        `[WS] resolveSessionWorkDir: session ${sessionId} workDir no longer exists (${resolved}); fallback to ${fallback}`,
+      )
+      workDir = fallback
+      usedFallback = true
+    }
     console.log(
       `[WS] resolveSessionWorkDir: sessionId=${sessionId}, resolved workDir=${JSON.stringify(
         resolved,
       )}, will spawn CLI with workDir=${workDir}`,
     )
   } catch (resolveErr) {
+    usedFallback = true
     console.warn(
       `[WS] resolveSessionWorkDir: failed to resolve workDir for ${sessionId}, using fallback=${workDir}: ${
         resolveErr instanceof Error ? resolveErr.message : String(resolveErr)
       }`,
     )
   }
-  return workDir
+  return { workDir, resolvedWorkDir, usedFallback }
 }
 
 async function ensureCliSessionStarted(
@@ -685,7 +806,24 @@ async function ensureCliSessionStarted(
   if (conversationService.hasSession(sessionId)) return
 
   const startup = (async () => {
-    const workDir = await resolveSessionWorkDir(sessionId)
+    const { workDir, resolvedWorkDir, usedFallback } =
+      await resolveSessionWorkDir(sessionId)
+    sendMessage(ws, {
+      type: 'system_notification',
+      subtype: 'workdir_active',
+      message: `当前会话工作目录: ${workDir}`,
+      data: { workDir },
+    })
+    if (usedFallback) {
+      sendMessage(ws, {
+        type: 'system_notification',
+        subtype: 'workdir_fallback',
+        message:
+          `原会话目录不可用，已回退到: ${workDir}` +
+          (resolvedWorkDir ? `（原目录: ${resolvedWorkDir}）` : ''),
+        data: { fallbackWorkDir: workDir, previousWorkDir: resolvedWorkDir },
+      })
+    }
     const runtimeSettings = await getRuntimeSettings(sessionId)
     const sdkUrl =
       `ws://${ws.data.serverHost}:${ws.data.serverPort}/sdk/${sessionId}` +

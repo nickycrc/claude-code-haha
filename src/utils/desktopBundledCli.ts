@@ -76,7 +76,18 @@ export function buildClaudeCliArgs(
   appRoot: string | undefined = process.env.CLAUDE_APP_ROOT,
 ): string[] {
   if (launcher.kind === 'script') {
-    return ['bun', launcher.command, ...baseArgs]
+    const scriptPath =
+      !path.isAbsolute(launcher.command) && appRoot
+        ? path.resolve(appRoot, launcher.command)
+        : launcher.command
+    const preloadPath = appRoot ? path.resolve(appRoot, 'preload.ts') : null
+    const hasPreload = preloadPath && fs.existsSync(preloadPath)
+    return [
+      'bun',
+      ...(hasPreload && preloadPath ? ['--preload', preloadPath] : []),
+      scriptPath,
+      ...baseArgs,
+    ]
   }
 
   if (launcher.kind === 'sidecar') {

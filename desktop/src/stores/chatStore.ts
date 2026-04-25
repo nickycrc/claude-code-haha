@@ -768,6 +768,18 @@ export const useChatStore = create<ChatStore>((set, get) => ({
         if (msg.subtype === 'slash_commands' && Array.isArray(msg.data)) {
           update(() => ({ slashCommands: msg.data as Array<{ name: string; description: string }> }))
         }
+        if (
+          (msg.subtype === 'workdir_active' || msg.subtype === 'workdir_fallback') &&
+          typeof msg.message === 'string' &&
+          msg.message.trim()
+        ) {
+          update((session) => ({
+            messages: [
+              ...session.messages,
+              { id: nextId(), type: 'system', content: msg.message, timestamp: Date.now() },
+            ],
+          }))
+        }
         if (msg.subtype === 'task_notification' && msg.data && typeof msg.data === 'object') {
           const data = msg.data as Record<string, unknown>
           const toolUseId =

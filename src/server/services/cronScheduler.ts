@@ -430,6 +430,17 @@ export class CronScheduler {
         stdout: 'pipe',
         stderr: 'pipe',
         cwd: workDir,
+        env: {
+          ...process.env,
+          // CLAUDE_APP_ROOT must point to app/project root, not user workdir.
+          CLAUDE_APP_ROOT: projectRoot,
+          // CALLER_DIR/PWD are user task workdir used by preload.ts chdir flow.
+          CALLER_DIR: workDir,
+          PWD: workDir,
+          CLAUDE_CODE_ENABLE_TASKS: '1',
+          CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING: '1',
+          BUN_JSC_useJIT: process.env.BUN_JSC_useJIT || '0',
+        },
       },
     )
 

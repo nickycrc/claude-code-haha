@@ -55,13 +55,23 @@ const getRipgrepConfig = memoize((): RipgrepConfig => {
     }
   }
 
+  // Development mode: check if vendor ripgrep exists, otherwise fall back to system
   const rgRoot = path.resolve(__dirname, 'vendor', 'ripgrep')
-  const command =
+  const builtinPath =
     process.platform === 'win32'
       ? path.resolve(rgRoot, `${process.arch}-win32`, 'rg.exe')
       : path.resolve(rgRoot, `${process.arch}-${process.platform}`, 'rg')
 
-  return { mode: 'builtin', command, args: [] }
+  // If builtin ripgrep doesn't exist, try system ripgrep
+  if (!require('fs').existsSync(builtinPath)) {
+    const { cmd: systemPath } = findExecutable('rg', [])
+    if (systemPath !== 'rg') {
+      return { mode: 'system', command: 'rg', args: [] }
+    }
+    // If system ripgrep also not found, return builtin path anyway (will fail later with clear error)
+  }
+
+  return { mode: 'builtin', command: builtinPath, args: [] }
 })
 
 export function ripgrepCommand(): {
