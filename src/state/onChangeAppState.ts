@@ -18,6 +18,7 @@ import {
   type SessionExternalMetadata,
 } from '../utils/sessionState.js'
 import { updateSettingsForSource } from '../utils/settings/settings.js'
+import { saveRememberedCliModel } from '../utils/model/modelPreference.js'
 import type { AppState } from './AppStateStore.js'
 
 // Inverse of the push below — restore on worker restart.
@@ -89,6 +90,14 @@ export function onChangeAppState({
       })
     }
     notifyPermissionModeChanged(newMode)
+  }
+
+  if (newState.mainLoopModel !== oldState.mainLoopModel) {
+    try {
+      saveRememberedCliModel(newState.mainLoopModel)
+    } catch (error) {
+      logError(toError(error))
+    }
   }
 
   // mainLoopModel: remove it from settings?

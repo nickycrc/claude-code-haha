@@ -28,6 +28,7 @@ import { LIGHTNING_BOLT } from '../../constants/figures.js'
 import { isModelAllowed } from './modelAllowlist.js'
 import { type ModelAlias, isModelAlias } from './aliases.js'
 import { capitalize } from '../stringUtils.js'
+import { getRememberedCliModel } from './modelPreference.js'
 
 export type ModelShortName = string
 export type ModelName = string
@@ -55,8 +56,9 @@ export function isNonCustomOpusModel(model: ModelName): boolean {
  * Priority order within this function:
  * 1. Model override during session (from /model command) - highest priority
  * 2. Model override at startup (from --model flag)
- * 3. ANTHROPIC_MODEL environment variable
- * 4. Settings (from user's saved settings)
+ * 3. Last /model selection for the current API provider
+ * 4. ANTHROPIC_MODEL environment variable
+ * 5. Settings (from user's saved settings)
  */
 export function getUserSpecifiedModelSetting(): ModelSetting | undefined {
   let specifiedModel: ModelSetting | undefined
@@ -66,7 +68,10 @@ export function getUserSpecifiedModelSetting(): ModelSetting | undefined {
     specifiedModel = modelOverride
   } else {
     const settings = getSettings_DEPRECATED() || {}
-    specifiedModel = process.env.ANTHROPIC_MODEL || settings.model || undefined
+    const rememberedModel = getRememberedCliModel(settings.model)
+    specifiedModel = rememberedModel !== undefined
+      ? rememberedModel
+      : process.env.ANTHROPIC_MODEL || settings.model || undefined
   }
 
   // Ignore the user-specified model if it's not in the availableModels allowlist.
@@ -83,9 +88,10 @@ export function getUserSpecifiedModelSetting(): ModelSetting | undefined {
  * Model Selection Priority Order:
  * 1. Model override during session (from /model command) - highest priority
  * 2. Model override at startup (from --model flag)
- * 3. ANTHROPIC_MODEL environment variable
- * 4. Settings (from user's saved settings)
- * 5. Built-in default
+ * 3. Last /model selection for the current API provider
+ * 4. ANTHROPIC_MODEL environment variable
+ * 5. Settings (from user's saved settings)
+ * 6. Built-in default
  *
  * @returns The resolved model name to use
  */
