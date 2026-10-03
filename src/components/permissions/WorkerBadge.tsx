@@ -1,7 +1,8 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import * as React from 'react';
 import { BLACK_CIRCLE } from '../../constants/figures.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { toInkColor } from '../../utils/ink.js';
 export type WorkerBadgeProps = {
   name: string;

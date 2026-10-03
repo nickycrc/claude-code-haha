@@ -30,7 +30,7 @@ export function MemoryUsageIndicator(): React.ReactNode {
   const color = status === 'critical' ? 'error' : 'warning';
   return <Box>
       <Text color={color} wrap="truncate">
-        High memory usage ({formattedSize}) · /heapdump
+        {"内存占用较高（"}{formattedSize}{"）· /heapdump"}
       </Text>
     </Box>;
 }

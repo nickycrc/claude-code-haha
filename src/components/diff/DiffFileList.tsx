@@ -64,7 +64,7 @@ export function DiffFileList(t0) {
   if (files.length === 0) {
     let t2;
     if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
-      t2 = <Text dimColor={true}>No changed files</Text>;
+      t2 = <Text dimColor={true}>{"没有修改的文件"}</Text>;
       $[5] = t2;
     } else {
       t2 = $[5];
@@ -86,7 +86,7 @@ export function DiffFileList(t0) {
     T0 = Box;
     t2 = "column";
     if ($[17] !== hasMoreAbove || $[18] !== needsPagination || $[19] !== startIndex) {
-      t3 = needsPagination && <Text dimColor={true}>{hasMoreAbove ? ` ↑ ${startIndex} more ${plural(startIndex, "file")}` : " "}</Text>;
+      t3 = needsPagination && <Text dimColor={true}>{hasMoreAbove ? `↑ 上方还有 ${startIndex} 项${plural(startIndex, "file")}` : " "}</Text>;
       $[17] = hasMoreAbove;
       $[18] = needsPagination;
       $[19] = startIndex;
@@ -126,7 +126,7 @@ export function DiffFileList(t0) {
   }
   let t5;
   if ($[25] !== endIndex || $[26] !== files.length || $[27] !== hasMoreBelow || $[28] !== needsPagination) {
-    t5 = needsPagination && <Text dimColor={true}>{hasMoreBelow ? ` ↓ ${files.length - endIndex} more ${plural(files.length - endIndex, "file")}` : " "}</Text>;
+    t5 = needsPagination && <Text dimColor={true}>{hasMoreBelow ? `↓ 下方还有 ${files.length - endIndex} 项${plural(files.length - endIndex, "file")}` : " "}</Text>;
     $[25] = endIndex;
     $[26] = files.length;
     $[27] = hasMoreBelow;
@@ -216,7 +216,7 @@ function FileStats(t0) {
     const t1 = !isSelected;
     let t2;
     if ($[0] !== t1) {
-      t2 = <Text dimColor={t1} italic={true}>untracked</Text>;
+      t2 = <Text dimColor={t1} italic={true}>{"未跟踪"}</Text>;
       $[0] = t1;
       $[1] = t2;
     } else {
@@ -228,7 +228,7 @@ function FileStats(t0) {
     const t1 = !isSelected;
     let t2;
     if ($[2] !== t1) {
-      t2 = <Text dimColor={t1} italic={true}>Binary file</Text>;
+      t2 = <Text dimColor={t1} italic={true}>{"二进制文件"}</Text>;
       $[2] = t1;
       $[3] = t2;
     } else {
@@ -240,7 +240,7 @@ function FileStats(t0) {
     const t1 = !isSelected;
     let t2;
     if ($[4] !== t1) {
-      t2 = <Text dimColor={t1} italic={true}>Large file modified</Text>;
+      t2 = <Text dimColor={t1} italic={true}>{"大文件已修改"}</Text>;
       $[4] = t1;
       $[5] = t2;
     } else {
@@ -269,7 +269,7 @@ function FileStats(t0) {
   }
   let t4;
   if ($[12] !== file.isTruncated || $[13] !== isSelected) {
-    t4 = file.isTruncated && <Text dimColor={!isSelected}> (truncated)</Text>;
+    t4 = file.isTruncated && <Text dimColor={!isSelected}> {"（已截断）"}</Text>;
     $[12] = file.isTruncated;
     $[13] = isSelected;
     $[14] = t4;

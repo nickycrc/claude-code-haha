@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 // eslint-disable-next-line custom-rules/prefer-use-keybindings -- 'r' is a view-specific key, not a global keybinding
-import { Box, Text, useInput } from '../../../ink.js';
+import { Box, useInput } from "../../../ink.js";
 import { type AutoModeDenial, getAutoModeDenials } from '../../../utils/autoModeDenials.js';
 import { Select } from '../../CustomSelect/select.js';
 import { StatusIcon } from '../../design-system/StatusIcon.js';
@@ -140,7 +141,7 @@ export function RecentDenialsTab(t0) {
   if (denials.length === 0) {
     let t10;
     if ($[16] === Symbol.for("react.memo_cache_sentinel")) {
-      t10 = <Text dimColor={true}>No recent denials. Commands denied by the auto mode classifier will appear here.</Text>;
+      t10 = <Text dimColor={true}>{"最近没有拒绝记录。自动模式分类器拒绝的命令会显示在这里。"}</Text>;
       $[16] = t10;
     } else {
       t10 = $[16];
@@ -176,7 +177,7 @@ export function RecentDenialsTab(t0) {
   const options = t10;
   let t11;
   if ($[24] === Symbol.for("react.memo_cache_sentinel")) {
-    t11 = <Text>Commands recently denied by the auto mode classifier.</Text>;
+    t11 = <Text>{"最近被自动模式分类器拒绝的命令。"}</Text>;
     $[24] = t11;
   } else {
     t11 = $[24];

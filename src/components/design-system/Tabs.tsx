@@ -8,6 +8,7 @@ import { stringWidth } from '../../ink/stringWidth.js';
 import { Box, Text } from '../../ink.js';
 import { useKeybindings } from '../../keybindings/useKeybinding.js';
 import type { Theme } from '../../utils/theme.js';
+import { translateMenuText } from '../../utils/i18n/menuText.js'
 type TabsProps = {
   children: Array<React.ReactElement<TabProps>>;
   title?: string;
@@ -251,7 +252,7 @@ function _temp2(n) {
   return n + 1;
 }
 function _temp(child) {
-  return [child.props.id ?? child.props.title, child.props.title];
+  return [child.props.id ?? child.props.title, translateMenuText(child.props.title)];
 }
 type TabProps = {
   title: string;

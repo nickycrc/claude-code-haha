@@ -1,6 +1,7 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import figures from 'figures';
 import React, { useEffect, useState } from 'react';
-import { Box, Text } from '../ink.js';
+import { Box } from "../ink.js";
 import { logForDebugging } from '../utils/debug.js';
 import type { GitFileStatus } from '../utils/git.js';
 import { getFileStatus, stashToCleanState } from '../utils/git.js';
@@ -71,44 +72,44 @@ export function TeleportStash({
     return <Box flexDirection="column" padding={1}>
         <Box marginBottom={1}>
           <Spinner />
-          <Text> Checking git status{figures.ellipsis}</Text>
+          <Text> {"正在检查 Git 状态"}{figures.ellipsis}</Text>
         </Box>
       </Box>;
   }
   if (error) {
     return <Box flexDirection="column" padding={1}>
         <Text bold color="error">
-          Error: {error}
+          {"错误："} {error}
         </Text>
         <Box marginTop={1}>
-          <Text dimColor>Press </Text>
+          <Text dimColor>{"按"} </Text>
           <Text bold>Escape</Text>
-          <Text dimColor> to cancel</Text>
+          <Text dimColor> {"取消"}</Text>
         </Box>
       </Box>;
   }
   const showFileCount = changedFiles.length > 8;
-  return <Dialog title="Working Directory Has Changes" onCancel={onCancel}>
+  return <Dialog title="工作目录存在修改" onCancel={onCancel}>
       <Text>
-        Teleport will switch git branches. The following changes were found:
+        {"会话转移会切换 Git 分支，发现以下修改："}
       </Text>
 
       <Box flexDirection="column" paddingLeft={2}>
-        {changedFiles.length > 0 ? showFileCount ? <Text>{changedFiles.length} files changed</Text> : changedFiles.map((file: string, index: number) => <Text key={index}>{file}</Text>) : <Text dimColor>No changes detected</Text>}
+        {changedFiles.length > 0 ? showFileCount ? <Text>{changedFiles.length} {"个文件已修改"}</Text> : changedFiles.map((file: string, index: number) => <Text key={index}>{file}</Text>) : <Text dimColor>{"未检测到修改"}</Text>}
       </Box>
 
       <Text>
-        Would you like to stash these changes and continue with teleport?
+        {"暂存这些修改并继续转移会话？"}
       </Text>
 
       {stashing ? <Box>
           <Spinner />
-          <Text> Stashing changes...</Text>
+          <Text> {"正在暂存修改……"}</Text>
         </Box> : <Select options={[{
-      label: 'Stash changes and continue',
+      label: "暂存修改并继续",
       value: 'stash'
     }, {
-      label: 'Exit',
+      label: "退出",
       value: 'exit'
     }]} onChange={handleSelectChange} />}
     </Dialog>;

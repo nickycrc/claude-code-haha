@@ -1,9 +1,10 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React from 'react';
 import type { DeepImmutable } from 'src/types/utils.js';
 import { useElapsedTime } from '../../hooks/useElapsedTime.js';
 import type { KeyboardEvent } from '../../ink/events/keyboard-event.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { useKeybindings } from '../../keybindings/useKeybinding.js';
 import type { DreamTaskState } from '../../tasks/DreamTask/DreamTask.js';
 import { plural } from '../../utils/stringUtils.js';
@@ -113,14 +114,14 @@ export function DreamDetailDialog(t0) {
     }
     let t19;
     if ($[35] !== task.filesTouched.length) {
-      t19 = task.filesTouched.length > 0 && <>{" "}· {task.filesTouched.length}{" "}{plural(task.filesTouched.length, "file")} touched</>;
+      t19 = task.filesTouched.length > 0 && <>{" "}· {task.filesTouched.length}{" "}{plural(task.filesTouched.length, "file")} {"涉及"}</>;
       $[35] = task.filesTouched.length;
       $[36] = t19;
     } else {
       t19 = $[36];
     }
     if ($[37] !== elapsedTime || $[38] !== t18 || $[39] !== t19 || $[40] !== task.sessionsReviewing) {
-      t9 = <Text dimColor={true}>{elapsedTime} · reviewing {t17}{" "}{t18}{t19}</Text>;
+      t9 = <Text dimColor={true}>{elapsedTime} {"· 正在审查"} {t17}{" "}{t18}{t19}</Text>;
       $[37] = elapsedTime;
       $[38] = t18;
       $[39] = t19;
@@ -132,7 +133,7 @@ export function DreamDetailDialog(t0) {
     t10 = onDone;
     t11 = "background";
     if ($[42] !== onBack || $[43] !== onKill || $[44] !== task.status) {
-      t12 = exitState => exitState.pending ? <Text>Press {exitState.keyName} again to exit</Text> : <Byline>{onBack && <KeyboardShortcutHint shortcut={"\u2190"} action="go back" />}<KeyboardShortcutHint shortcut="Esc/Enter/Space" action="close" />{task.status === "running" && onKill && <KeyboardShortcutHint shortcut="x" action="stop" />}</Byline>;
+      t12 = exitState => exitState.pending ? <Text>{"按"} {exitState.keyName} {"再次按下退出"}</Text> : <Byline>{onBack && <KeyboardShortcutHint shortcut={"\u2190"} action="返回" />}<KeyboardShortcutHint shortcut="Esc/Enter/Space" action="关闭" />{task.status === "running" && onKill && <KeyboardShortcutHint shortcut="x" action="停止" />}</Byline>;
       $[42] = onBack;
       $[43] = onKill;
       $[44] = task.status;
@@ -145,19 +146,19 @@ export function DreamDetailDialog(t0) {
     t5 = 1;
     let t20;
     if ($[46] === Symbol.for("react.memo_cache_sentinel")) {
-      t20 = <Text bold={true}>Status:</Text>;
+      t20 = <Text bold={true}>{"状态："}</Text>;
       $[46] = t20;
     } else {
       t20 = $[46];
     }
     if ($[47] !== task.status) {
-      t6 = <Text>{t20}{" "}{task.status === "running" ? <Text color="background">running</Text> : task.status === "completed" ? <Text color="success">{task.status}</Text> : <Text color="error">{task.status}</Text>}</Text>;
+      t6 = <Text>{t20}{" "}{task.status === "running" ? <Text color="background">{"运行中"}</Text> : task.status === "completed" ? <Text color="success">{task.status}</Text> : <Text color="error">{task.status}</Text>}</Text>;
       $[47] = task.status;
       $[48] = t6;
     } else {
       t6 = $[48];
     }
-    t7 = shown.length === 0 ? <Text dimColor={true}>{task.status === "running" ? "Starting\u2026" : "(no text output)"}</Text> : <>{hidden > 0 && <Text dimColor={true}>({hidden} earlier {plural(hidden, "turn")})</Text>}{shown.map(_temp2)}</>;
+    t7 = shown.length === 0 ? <Text dimColor={true}>{task.status === "running" ? "正在启动……" : "（无文本输出）"}</Text> : <>{hidden > 0 && <Text dimColor={true}>({hidden} {"之前"} {plural(hidden, "turn")})</Text>}{shown.map(_temp2)}</>;
     $[8] = elapsedTime;
     $[9] = handleKeyDown;
     $[10] = onBack;

@@ -113,7 +113,7 @@ function MainLine(t0) {
   const t3 = !isSelected && !isViewed && !hover;
   let t4;
   if ($[2] !== bullet || $[3] !== isViewed || $[4] !== prefix || $[5] !== t3) {
-    t4 = <Text dimColor={t3} bold={isViewed}>{prefix}{bullet} main</Text>;
+    t4 = <Text dimColor={t3} bold={isViewed}>{prefix}{bullet} {"主代理"}</Text>;
     $[2] = bullet;
     $[3] = isViewed;
     $[4] = prefix;

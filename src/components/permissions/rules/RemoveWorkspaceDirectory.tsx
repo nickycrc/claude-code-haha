@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import * as React from 'react';
 import { useCallback } from 'react';
 import { Select } from '../../../components/CustomSelect/select.js';
-import { Box, Text } from '../../../ink.js';
+import { Box } from "../../../ink.js";
 import type { ToolPermissionContext } from '../../../Tool.js';
 import { applyPermissionUpdate } from '../../../utils/permissions/PermissionUpdate.js';
 import { Dialog } from '../../design-system/Dialog.js';
@@ -68,7 +69,7 @@ export function RemoveWorkspaceDirectory(t0) {
   }
   let t4;
   if ($[10] === Symbol.for("react.memo_cache_sentinel")) {
-    t4 = <Text>Claude Code will no longer have access to files in this directory.</Text>;
+    t4 = <Text>{"Claude Code 将无法再访问此目录中的文件。"}</Text>;
     $[10] = t4;
   } else {
     t4 = $[10];
@@ -76,10 +77,10 @@ export function RemoveWorkspaceDirectory(t0) {
   let t5;
   if ($[11] === Symbol.for("react.memo_cache_sentinel")) {
     t5 = [{
-      label: "Yes",
+      label: "是",
       value: "yes"
     }, {
-      label: "No",
+      label: "否",
       value: "no"
     }];
     $[11] = t5;
@@ -97,7 +98,7 @@ export function RemoveWorkspaceDirectory(t0) {
   }
   let t7;
   if ($[15] !== onCancel || $[16] !== t3 || $[17] !== t6) {
-    t7 = <Dialog title="Remove directory from workspace?" onCancel={onCancel} color="error">{t3}{t4}{t6}</Dialog>;
+    t7 = <Dialog title="从工作区移除此目录？" onCancel={onCancel} color="error">{t3}{t4}{t6}</Dialog>;
     $[15] = onCancel;
     $[16] = t3;
     $[17] = t6;

@@ -110,7 +110,7 @@ export function DesktopHandoff(t0) {
   if (state === "error") {
     let t4;
     if ($[7] !== error) {
-      t4 = <Text color="error">Error: {error}</Text>;
+      t4 = <Text color="error">{"错误："} {error}</Text>;
       $[7] = error;
       $[8] = t4;
     } else {
@@ -118,7 +118,7 @@ export function DesktopHandoff(t0) {
     }
     let t5;
     if ($[9] === Symbol.for("react.memo_cache_sentinel")) {
-      t5 = <Text dimColor={true}>Press any key to continue…</Text>;
+      t5 = <Text dimColor={true}>{"按任意键继续……"}</Text>;
       $[9] = t5;
     } else {
       t5 = $[9];
@@ -144,7 +144,7 @@ export function DesktopHandoff(t0) {
     }
     let t5;
     if ($[14] === Symbol.for("react.memo_cache_sentinel")) {
-      t5 = <Text>Download now? (y/n)</Text>;
+      t5 = <Text>{"现在下载？（y/n）"}</Text>;
       $[14] = t5;
     } else {
       t5 = $[14];

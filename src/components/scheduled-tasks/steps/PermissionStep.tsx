@@ -1,5 +1,6 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import React, { type ReactNode } from 'react'
-import { Box, Text } from '../../../ink.js'
+import { Box } from "../../../ink.js";
 import { Select } from '../../CustomSelect/select.js'
 import { WizardDialogLayout } from '../../wizard/index.js'
 import { useWizard } from '../../wizard/useWizard.js'
@@ -7,24 +8,24 @@ import type { ScheduledTaskWizardData } from '../types.js'
 
 const PERMISSION_OPTIONS = [
   {
-    label: 'Ask permissions',
+    label: "询问权限",
     value: 'ask',
-    description: 'Always ask before making changes',
+    description: "修改前始终询问",
   },
   {
-    label: 'Auto accept edits',
+    label: "自动接受编辑",
     value: 'auto-accept',
-    description: 'Automatically accept all file edits',
+    description: "自动接受所有文件编辑",
   },
   {
-    label: 'Plan mode',
+    label: "计划模式",
     value: 'plan',
-    description: 'Create a plan before making changes',
+    description: "修改前先制定计划",
   },
   {
-    label: 'Bypass permissions',
+    label: "跳过权限确认",
     value: 'bypass',
-    description: 'Accepts all permissions',
+    description: "接受所有权限请求",
   },
 ]
 
@@ -33,11 +34,11 @@ export function PermissionStep(): ReactNode {
     useWizard<ScheduledTaskWizardData>()
 
   return (
-    <WizardDialogLayout subtitle="Permission mode">
+    <WizardDialogLayout subtitle="权限模式">
       <Box flexDirection="column">
         <Box marginBottom={1}>
           <Text dimColor>
-            Choose the permission mode for this scheduled task.
+            {"选择此定时任务的权限模式。"}
           </Text>
         </Box>
         <Select

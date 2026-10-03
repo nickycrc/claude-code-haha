@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import chalk from 'chalk';
 import * as path from 'path';
@@ -7,7 +8,7 @@ import type { CommandResultDisplay, LocalJSXCommandContext } from '../../command
 import { Select } from '../../components/CustomSelect/index.js';
 import { Dialog } from '../../components/design-system/Dialog.js';
 import { IdeAutoConnectDialog, IdeDisableAutoConnectDialog, shouldShowAutoConnectDialog, shouldShowDisableAutoConnectDialog } from '../../components/IdeAutoConnectDialog.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { clearServerCache } from '../../services/mcp/client.js';
 import type { ScopedMcpServerConfig } from '../../services/mcp/types.js';
 import { useAppState, useSetAppState } from '../../state/AppState.js';
@@ -90,7 +91,7 @@ function IDEScreen(t0) {
       t5 = $[11];
     }
     t4 = availableIDEs.map(t5).concat([{
-      label: "None",
+      label: "无",
       value: "None",
       description: undefined
     }]);
@@ -128,7 +129,7 @@ function IDEScreen(t0) {
   }
   let t5;
   if ($[17] !== availableIDEs.length) {
-    t5 = availableIDEs.length === 0 && <Text dimColor={true}>{isSupportedJetBrainsTerminal() ? "No available IDEs detected. Please install the plugin and restart your IDE:\nhttps://docs.claude.com/s/claude-code-jetbrains" : "No available IDEs detected. Make sure your IDE has the Claude Code extension or plugin installed and is running."}</Text>;
+    t5 = availableIDEs.length === 0 && <Text dimColor={true}>{isSupportedJetBrainsTerminal() ? "未检测到可用 IDE。请安装插件并重启 IDE：https://docs.claude.com/s/claude-code-jetbrains" : "未检测到可用 IDE。请确认 IDE 已安装 Claude Code 扩展或插件，并且正在运行。"}</Text>;
     $[17] = availableIDEs.length;
     $[18] = t5;
   } else {
@@ -150,7 +151,7 @@ function IDEScreen(t0) {
   }
   let t7;
   if ($[24] !== availableIDEs) {
-    t7 = availableIDEs.length !== 0 && availableIDEs.some(_temp2) && <Box marginTop={1}><Text color="warning">Note: Only one Claude Code instance can be connected to VS Code at a time.</Text></Box>;
+    t7 = availableIDEs.length !== 0 && availableIDEs.some(_temp2) && <Box marginTop={1}><Text color="warning">{"注意：VS Code 同时只能连接一个 Claude Code 实例。"}</Text></Box>;
     $[24] = availableIDEs;
     $[25] = t7;
   } else {
@@ -158,7 +159,7 @@ function IDEScreen(t0) {
   }
   let t8;
   if ($[26] !== availableIDEs.length) {
-    t8 = availableIDEs.length !== 0 && !isSupportedTerminal() && <Box marginTop={1}><Text dimColor={true}>Tip: You can enable auto-connect to IDE in /config or with the --ide flag</Text></Box>;
+    t8 = availableIDEs.length !== 0 && !isSupportedTerminal() && <Box marginTop={1}><Text dimColor={true}>{"提示：可在 /config 中或通过 --ide 参数启用 IDE 自动连接"}</Text></Box>;
     $[26] = availableIDEs.length;
     $[27] = t8;
   } else {
@@ -166,7 +167,7 @@ function IDEScreen(t0) {
   }
   let t9;
   if ($[28] !== unavailableIDEs) {
-    t9 = unavailableIDEs.length > 0 && <Box marginTop={1} flexDirection="column"><Text dimColor={true}>Found {unavailableIDEs.length} other running IDE(s). However, their workspace/project directories do not match the current cwd.</Text><Box marginTop={1} flexDirection="column">{unavailableIDEs.map(_temp3)}</Box></Box>;
+    t9 = unavailableIDEs.length > 0 && <Box marginTop={1} flexDirection="column"><Text dimColor={true}>{"找到"} {unavailableIDEs.length} {"个正在运行的其他 IDE，但其工作区／项目目录与当前目录不一致。"}</Text><Box marginTop={1} flexDirection="column">{unavailableIDEs.map(_temp3)}</Box></Box>;
     $[28] = unavailableIDEs;
     $[29] = t9;
   } else {
@@ -186,7 +187,7 @@ function IDEScreen(t0) {
   }
   let t11;
   if ($[36] !== onClose || $[37] !== t10) {
-    t11 = <Dialog title="Select IDE" subtitle="Connect to an IDE for integrated development features." onCancel={onClose} color="ide">{t10}</Dialog>;
+    t11 = <Dialog title="选择 IDE" subtitle="连接 IDE 以使用集成开发功能。" onCancel={onClose} color="ide">{t10}</Dialog>;
     $[36] = onClose;
     $[37] = t10;
     $[38] = t11;
@@ -298,7 +299,7 @@ function IDEOpenSelection(t0) {
   }
   let t7;
   if ($[15] !== handleCancel || $[16] !== t6) {
-    t7 = <Dialog title="Select an IDE to open the project" onCancel={handleCancel} color="ide">{t6}</Dialog>;
+    t7 = <Dialog title="选择打开项目的 IDE" onCancel={handleCancel} color="ide">{t6}</Dialog>;
     $[15] = handleCancel;
     $[16] = t6;
     $[17] = t7;
@@ -377,7 +378,7 @@ function RunningIDESelector(t0) {
   }
   let t6;
   if ($[12] !== handleCancel || $[13] !== t5) {
-    t6 = <Dialog title="Select IDE to install extension" onCancel={handleCancel} color="ide">{t5}</Dialog>;
+    t6 = <Dialog title="选择要安装扩展的 IDE" onCancel={handleCancel} color="ide">{t5}</Dialog>;
     $[12] = handleCancel;
     $[13] = t5;
     $[14] = t6;
@@ -596,7 +597,7 @@ function IDECommandFlow({
     onChangeDynamicMcpConfig(newConfig);
   }, [dynamicMcpConfig, currentIDE, ideClient, setAppState, onChangeDynamicMcpConfig, onDone]);
   if (connectingIDE) {
-    return <Text dimColor>Connecting to {connectingIDE.name}…</Text>;
+    return <Text dimColor>{"正在连接："} {connectingIDE.name}…</Text>;
   }
   return <IDEScreen availableIDEs={availableIDEs} unavailableIDEs={unavailableIDEs} selectedIDE={currentIDE} onClose={() => onDone('IDE selection cancelled', {
     display: 'system'

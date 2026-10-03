@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React, { useCallback, useMemo } from 'react';
 import { logError } from 'src/utils/log.js';
 import { getOriginalCwd } from '../../../bootstrap/state.js';
-import { Box, Text } from '../../../ink.js';
+import { Box } from "../../../ink.js";
 import { sanitizeToolNameForAnalytics } from '../../../services/analytics/metadata.js';
 import { SKILL_TOOL_NAME } from '../../../tools/SkillTool/constants.js';
 import { SkillTool } from '../../../tools/SkillTool/SkillTool.js';
@@ -65,7 +66,7 @@ export function SkillPermissionRequest(props) {
   let t4;
   if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
     t4 = [{
-      label: "Yes",
+      label: "是",
       value: "yes",
       feedbackConfig: {
         type: "accept"
@@ -91,7 +92,7 @@ export function SkillPermissionRequest(props) {
       let t7;
       if ($[9] !== t5) {
         t7 = {
-          label: <Text>Yes, and don't ask again for {t5} in{" "}{t6}</Text>,
+          label: <Text>{"是，并不再询问以下操作："} {t5} {"位于"}{" "}{t6}</Text>,
           value: "yes-exact"
         };
         $[9] = t5;
@@ -122,7 +123,7 @@ export function SkillPermissionRequest(props) {
         let t11;
         if ($[14] !== t9) {
           t11 = {
-            label: <Text>Yes, and don't ask again for{" "}{t9} commands in{" "}{t10}</Text>,
+            label: <Text>{"是，并不再询问以下操作："}{" "}{t9} {"命令，位于"}{" "}{t10}</Text>,
             value: "yes-prefix"
           };
           $[14] = t9;
@@ -141,7 +142,7 @@ export function SkillPermissionRequest(props) {
   let t5;
   if ($[16] === Symbol.for("react.memo_cache_sentinel")) {
     t5 = {
-      label: "No",
+      label: "否",
       value: "no",
       feedbackConfig: {
         type: "reject"
@@ -303,7 +304,7 @@ export function SkillPermissionRequest(props) {
   const t12 = `Use skill "${skill}"?`;
   let t13;
   if ($[33] === Symbol.for("react.memo_cache_sentinel")) {
-    t13 = <Text>Claude may use instructions, code, or files from this Skill.</Text>;
+    t13 = <Text>{"Claude 可能使用此技能中的指令、代码或文件。"}</Text>;
     $[33] = t13;
   } else {
     t13 = $[33];

@@ -1,9 +1,10 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import figures from 'figures';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { ConfigurableShortcutHint } from '../../components/ConfigurableShortcutHint.js';
 import { Byline } from '../../components/design-system/Byline.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { useKeybinding, useKeybindings } from '../../keybindings/useKeybinding.js';
 import type { LoadedPlugin } from '../../types/plugin.js';
 import { count } from '../../utils/array.js';
@@ -567,7 +568,7 @@ export function BrowseMarketplace({
 
   // Loading state
   if (loading) {
-    return <Text>Loading…</Text>;
+    return <Text>{"正在加载……"}</Text>;
   }
 
   // Error state
@@ -580,22 +581,22 @@ export function BrowseMarketplace({
     if (marketplaces.length === 0) {
       return <Box flexDirection="column">
           <Box marginBottom={1}>
-            <Text bold>Select marketplace</Text>
+            <Text bold>{"选择市场"}</Text>
           </Box>
-          <Text>No marketplaces configured.</Text>
+          <Text>{"尚未配置市场。"}</Text>
           <Text dimColor>
-            Add a marketplace first using {"'Add marketplace'"}.
+            {"请先使用以下操作添加市场："} {"“添加市场”"}.
           </Text>
           <Box marginTop={1} paddingLeft={1}>
             <Text dimColor>
-              <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="go back" />
+              <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="返回" />
             </Text>
           </Box>
         </Box>;
     }
     return <Box flexDirection="column">
         <Box marginBottom={1}>
-          <Text bold>Select marketplace</Text>
+          <Text bold>{"选择市场"}</Text>
         </Box>
 
         {/* Warning banner for marketplace load failures */}
@@ -614,8 +615,8 @@ export function BrowseMarketplace({
             <Box marginLeft={2}>
               <Text dimColor>
                 {marketplace_3.totalPlugins}{' '}
-                {plural(marketplace_3.totalPlugins, 'plugin')} available
-                {marketplace_3.installedCount > 0 && ` · ${marketplace_3.installedCount} already installed`}
+                {plural(marketplace_3.totalPlugins, 'plugin')} {"可用"}
+                {marketplace_3.installedCount > 0 && `· ${marketplace_3.installedCount} 已安装`}
                 {marketplace_3.source && ` · ${marketplace_3.source}`}
               </Text>
             </Box>
@@ -624,8 +625,8 @@ export function BrowseMarketplace({
         <Box marginTop={1}>
           <Text dimColor italic>
             <Byline>
-              <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="select" />
-              <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="go back" />
+              <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="选择" />
+              <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="返回" />
             </Byline>
           </Text>
         </Box>
@@ -639,19 +640,19 @@ export function BrowseMarketplace({
     const menuOptions = buildPluginDetailsMenuOptions(hasHomepage_1, githubRepo_1);
     return <Box flexDirection="column">
         <Box marginBottom={1}>
-          <Text bold>Plugin Details</Text>
+          <Text bold>{"插件详情"}</Text>
         </Box>
 
         {/* Plugin metadata */}
         <Box flexDirection="column" marginBottom={1}>
           <Text bold>{selectedPlugin.entry.name}</Text>
-          {selectedPlugin.entry.version && <Text dimColor>Version: {selectedPlugin.entry.version}</Text>}
+          {selectedPlugin.entry.version && <Text dimColor>{"版本："} {selectedPlugin.entry.version}</Text>}
           {selectedPlugin.entry.description && <Box marginTop={1}>
               <Text>{selectedPlugin.entry.description}</Text>
             </Box>}
           {selectedPlugin.entry.author && <Box marginTop={1}>
               <Text dimColor>
-                By:{' '}
+                {"作者："}{' '}
                 {typeof selectedPlugin.entry.author === 'string' ? selectedPlugin.entry.author : selectedPlugin.entry.author.name}
               </Text>
             </Box>}
@@ -659,25 +660,25 @@ export function BrowseMarketplace({
 
         {/* What will be installed */}
         <Box flexDirection="column" marginBottom={1}>
-          <Text bold>Will install:</Text>
+          <Text bold>{"将安装："}</Text>
           {selectedPlugin.entry.commands && <Text dimColor>
-              · Commands:{' '}
+              {"· 命令："}{' '}
               {Array.isArray(selectedPlugin.entry.commands) ? selectedPlugin.entry.commands.join(', ') : Object.keys(selectedPlugin.entry.commands).join(', ')}
             </Text>}
           {selectedPlugin.entry.agents && <Text dimColor>
-              · Agents:{' '}
+              {"· 代理："}{' '}
               {Array.isArray(selectedPlugin.entry.agents) ? selectedPlugin.entry.agents.join(', ') : Object.keys(selectedPlugin.entry.agents).join(', ')}
             </Text>}
           {selectedPlugin.entry.hooks && <Text dimColor>
-              · Hooks: {Object.keys(selectedPlugin.entry.hooks).join(', ')}
+              {"· 钩子："} {Object.keys(selectedPlugin.entry.hooks).join(', ')}
             </Text>}
           {selectedPlugin.entry.mcpServers && <Text dimColor>
-              · MCP Servers:{' '}
-              {Array.isArray(selectedPlugin.entry.mcpServers) ? selectedPlugin.entry.mcpServers.join(', ') : typeof selectedPlugin.entry.mcpServers === 'object' ? Object.keys(selectedPlugin.entry.mcpServers).join(', ') : 'configured'}
+              {"· MCP 服务器："}{' '}
+              {Array.isArray(selectedPlugin.entry.mcpServers) ? selectedPlugin.entry.mcpServers.join(', ') : typeof selectedPlugin.entry.mcpServers === 'object' ? Object.keys(selectedPlugin.entry.mcpServers).join(', ') : "已配置"}
             </Text>}
           {!selectedPlugin.entry.commands && !selectedPlugin.entry.agents && !selectedPlugin.entry.hooks && !selectedPlugin.entry.mcpServers && <>
-                {typeof selectedPlugin.entry.source === 'object' && 'source' in selectedPlugin.entry.source && (selectedPlugin.entry.source.source === 'github' || selectedPlugin.entry.source.source === 'url' || selectedPlugin.entry.source.source === 'npm' || selectedPlugin.entry.source.source === 'pip') ? <Text dimColor>
-                    · Component summary not available for remote plugin
+                {typeof selectedPlugin.entry.source === 'object' && "来源" in selectedPlugin.entry.source && (selectedPlugin.entry.source.source === 'github' || selectedPlugin.entry.source.source === 'url' || selectedPlugin.entry.source.source === 'npm' || selectedPlugin.entry.source.source === 'pip') ? <Text dimColor>
+                    {"· 远程插件暂不提供组件摘要"}
                   </Text> :
           // TODO: Actually scan local plugin directories to show real components
           // This would require accessing the filesystem to check for:
@@ -686,7 +687,7 @@ export function BrowseMarketplace({
           // - hooks/ directory and list files
           // - .mcp.json or mcp-servers.json files
           <Text dimColor>
-                    · Components will be discovered at installation
+                    {"· 安装时会发现组件"}
                   </Text>}
               </>}
         </Box>
@@ -695,7 +696,7 @@ export function BrowseMarketplace({
 
         {/* Error message */}
         {installError && <Box marginBottom={1}>
-            <Text color="error">Error: {installError}</Text>
+            <Text color="error">{"错误："} {installError}</Text>
           </Box>}
 
         {/* Menu options */}
@@ -704,7 +705,7 @@ export function BrowseMarketplace({
               {detailsMenuIndex === index_0 && <Text>{'> '}</Text>}
               {detailsMenuIndex !== index_0 && <Text>{'  '}</Text>}
               <Text bold={detailsMenuIndex === index_0}>
-                {isInstalling && option.action === 'install' ? 'Installing…' : option.label}
+                {isInstalling && option.action === 'install' ? "正在安装……" : option.label}
               </Text>
             </Box>)}
         </Box>
@@ -712,8 +713,8 @@ export function BrowseMarketplace({
         <Box marginTop={1} paddingLeft={1}>
           <Text dimColor>
             <Byline>
-              <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="select" />
-              <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="back" />
+              <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="选择" />
+              <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="返回" />
             </Byline>
           </Text>
         </Box>
@@ -724,15 +725,15 @@ export function BrowseMarketplace({
   if (availablePlugins.length === 0) {
     return <Box flexDirection="column">
         <Box marginBottom={1}>
-          <Text bold>Install plugins</Text>
+          <Text bold>{"安装插件"}</Text>
         </Box>
-        <Text dimColor>No new plugins available to install.</Text>
+        <Text dimColor>{"没有可安装的新插件。"}</Text>
         <Text dimColor>
-          All plugins from this marketplace are already installed.
+          {"此市场的所有插件均已安装。"}
         </Text>
         <Box marginLeft={3}>
           <Text dimColor italic>
-            <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="go back" />
+            <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="返回" />
           </Text>
         </Box>
       </Box>;
@@ -742,12 +743,12 @@ export function BrowseMarketplace({
   const visiblePlugins = pagination.getVisibleItems(availablePlugins);
   return <Box flexDirection="column">
       <Box marginBottom={1}>
-        <Text bold>Install Plugins</Text>
+        <Text bold>{"安装插件"}</Text>
       </Box>
 
       {/* Scroll up indicator */}
       {pagination.scrollPosition.canScrollUp && <Box>
-          <Text dimColor> {figures.arrowUp} more above</Text>
+          <Text dimColor> {figures.arrowUp} {"上方还有更多"}</Text>
         </Box>}
 
       {/* Plugin list */}
@@ -766,12 +767,12 @@ export function BrowseMarketplace({
                 {plugin_6.isInstalled ? figures.tick : isInstalling_0 ? figures.ellipsis : isSelectedForInstall ? figures.radioOn : figures.radioOff}{' '}
                 {plugin_6.entry.name}
                 {plugin_6.entry.category && <Text dimColor> [{plugin_6.entry.category}]</Text>}
-                {plugin_6.entry.tags?.includes('community-managed') && <Text dimColor> [Community Managed]</Text>}
-                {plugin_6.isInstalled && <Text dimColor> (installed)</Text>}
+                {plugin_6.entry.tags?.includes('community-managed') && <Text dimColor> {"[社区维护]"}</Text>}
+                {plugin_6.isInstalled && <Text dimColor> {"（已安装）"}</Text>}
                 {installCounts && selectedMarketplace === OFFICIAL_MARKETPLACE_NAME && <Text dimColor>
                       {' · '}
                       {formatInstallCount(installCounts.get(plugin_6.pluginId) ?? 0)}{' '}
-                      installs
+                      {"次安装"}
                     </Text>}
               </Text>
             </Box>
@@ -786,7 +787,7 @@ export function BrowseMarketplace({
 
       {/* Scroll down indicator */}
       {pagination.scrollPosition.canScrollDown && <Box>
-          <Text dimColor> {figures.arrowDown} more below</Text>
+          <Text dimColor> {figures.arrowDown} {"下方还有更多"}</Text>
         </Box>}
 
       {/* Error messages shown in the UI */}

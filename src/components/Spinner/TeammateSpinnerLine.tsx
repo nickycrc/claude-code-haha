@@ -171,18 +171,18 @@ export function TeammateSpinnerLine({
   // Status rendering logic
   const renderStatus = (): React.ReactNode => {
     if (teammate.shutdownRequested) {
-      return <Text dimColor>[stopping]</Text>;
+      return <Text dimColor>{"[正在停止]"}</Text>;
     }
     if (teammate.awaitingPlanApproval) {
-      return <Text color="warning">[awaiting approval]</Text>;
+      return <Text color="warning">{"[等待批准]"}</Text>;
     }
     if (teammate.isIdle) {
       if (allIdle) {
         return <Text dimColor>
-            {pastTenseVerb} for {displayTime}
+            {pastTenseVerb} {"用于"} {displayTime}
           </Text>;
       }
-      return <Text dimColor>Idle for {idleElapsedTime}</Text>;
+      return <Text dimColor>{"已空闲"} {idleElapsedTime}</Text>;
     }
     // Active - show spinner glyph + activity description (only when not highlighted;
     // when highlighted, the main spinner above already shows the verb)
@@ -215,12 +215,12 @@ export function TeammateSpinnerLine({
         {/* Stats: only shown when selected and terminal is wide enough */}
         {showStats && <Text dimColor>
             {' '}
-            · {toolUseCount} tool {toolUseCount === 1 ? 'use' : 'uses'} ·{' '}
-            {formatNumber(tokenCount)} tokens
+            · {toolUseCount} {"工具"} {toolUseCount === 1 ? "次调用" : "次调用"} ·{' '}
+            {formatNumber(tokenCount)} {"令牌"}
           </Text>}
         {/* Hints: select hint when highlighted, view hint when selected but not foregrounded */}
         {showSelectHint && <Text dimColor> · {TEAMMATE_SELECT_HINT}</Text>}
-        {showViewHint && <Text dimColor> · enter to view</Text>}
+        {showViewHint && <Text dimColor> {"· Enter 查看"}</Text>}
       </Box>
       {/* Preview lines */}
       {previewLines.map((line, idx) => <Box key={idx} paddingLeft={3}>

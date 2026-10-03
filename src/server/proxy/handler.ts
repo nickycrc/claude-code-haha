@@ -17,8 +17,21 @@ import { openaiResponsesToAnthropic } from './transform/openaiResponsesToAnthrop
 import { openaiChatStreamToAnthropic } from './streaming/openaiChatStreamToAnthropic.js'
 import { openaiResponsesStreamToAnthropic } from './streaming/openaiResponsesStreamToAnthropic.js'
 import type { AnthropicRequest } from './transform/types.js'
+import { getOpenaiEndpoint } from './openaiEndpoint.js'
 
 const providerService = new ProviderService()
+
+/**
+ * Upstream request timeout — a TOTAL cap, not an idle cap.
+ *
+ * A local model must prefill the entire prompt before it emits its first token.
+ * With large contexts (CLI system prompt + history) that can take minutes, and
+ * the previous 30s cap on streaming requests aborted the upstream fetch while
+ * the model was still prefilling: the client saw no response, but the server
+ * kept burning GPU on an abandoned request. Use one generous safety cap for
+ * both modes and let the client's own cancellation end a request early.
+ */
+const UPSTREAM_TIMEOUT_MS = 1_200_000 // 20 minutes
 
 export async function handleProxyRequest(req: Request, url: URL): Promise<Response> {
   const providerMatch = url.pathname.match(/^\/proxy\/providers\/([^/]+)\/v1\/messages$/)
@@ -110,7 +123,7 @@ async function handleOpenaiChat(
   isStream: boolean,
 ): Promise<Response> {
   const transformed = anthropicToOpenaiChat(body)
-  const url = `${baseUrl}/v1/chat/completions`
+  const url = getOpenaiEndpoint(baseUrl, 'chat/completions')
 
   const upstream = await fetch(url, {
     method: 'POST',
@@ -119,7 +132,7 @@ async function handleOpenaiChat(
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify(transformed),
-    signal: isStream ? AbortSignal.timeout(30_000) : AbortSignal.timeout(300_000),
+    signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
   })
 
   if (!upstream.ok) {
@@ -167,7 +180,7 @@ async function handleOpenaiResponses(
   isStream: boolean,
 ): Promise<Response> {
   const transformed = anthropicToOpenaiResponses(body)
-  const url = `${baseUrl}/v1/responses`
+  const url = getOpenaiEndpoint(baseUrl, 'responses')
 
   const upstream = await fetch(url, {
     method: 'POST',
@@ -176,7 +189,7 @@ async function handleOpenaiResponses(
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify(transformed),
-    signal: isStream ? AbortSignal.timeout(30_000) : AbortSignal.timeout(300_000),
+    signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
   })
 
   if (!upstream.ok) {

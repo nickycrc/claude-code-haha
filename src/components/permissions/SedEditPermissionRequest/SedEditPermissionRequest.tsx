@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import { basename, relative } from 'path';
 import React, { Suspense, use, useMemo } from 'react';
@@ -6,7 +7,7 @@ import { getCwd } from 'src/utils/cwd.js';
 import { isENOENT } from 'src/utils/errors.js';
 import { detectEncodingForResolvedPath } from 'src/utils/fileRead.js';
 import { getFsImplementation } from 'src/utils/fsOperations.js';
-import { Text } from '../../../ink.js';
+
 import { BashTool } from '../../../tools/BashTool/BashTool.js';
 import { applySedSubstitution, type SedEditInfo } from '../../../tools/BashTool/sedEditParser.js';
 import { FilePermissionDialog } from '../FilePermissionDialog/FilePermissionDialog.js';
@@ -192,7 +193,7 @@ function SedEditPermissionRequestInner(t0) {
   }
   let t11;
   if ($[18] !== t10) {
-    t11 = <Text>Do you want to make this edit to{" "}<Text bold={true}>{t10}</Text>?</Text>;
+    t11 = <Text>{"是否要对以下文件进行此编辑："}{" "}<Text bold={true}>{t10}</Text>?</Text>;
     $[18] = t10;
     $[19] = t11;
   } else {
@@ -210,7 +211,7 @@ function SedEditPermissionRequestInner(t0) {
   }
   let t13;
   if ($[24] !== filePath || $[25] !== parseInput || $[26] !== props.onDone || $[27] !== props.onReject || $[28] !== props.toolUseConfirm || $[29] !== props.toolUseContext || $[30] !== props.workerBadge || $[31] !== t11 || $[32] !== t12 || $[33] !== t9) {
-    t13 = <FilePermissionDialog toolUseConfirm={t5} toolUseContext={t6} onDone={t7} onReject={t8} title="Edit file" subtitle={t9} question={t11} content={t12} path={filePath} completionType="str_replace_single" parseInput={parseInput} workerBadge={props.workerBadge} />;
+    t13 = <FilePermissionDialog toolUseConfirm={t5} toolUseContext={t6} onDone={t7} onReject={t8} title="编辑文件" subtitle={t9} question={t11} content={t12} path={filePath} completionType="str_replace_single" parseInput={parseInput} workerBadge={props.workerBadge} />;
     $[24] = filePath;
     $[25] = parseInput;
     $[26] = props.onDone;

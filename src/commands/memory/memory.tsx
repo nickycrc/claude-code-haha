@@ -1,10 +1,11 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { mkdir, writeFile } from 'fs/promises';
 import * as React from 'react';
 import type { CommandResultDisplay } from '../../commands.js';
 import { Dialog } from '../../components/design-system/Dialog.js';
 import { MemoryFileSelector } from '../../components/memory/MemoryFileSelector.js';
 import { getRelativeMemoryPath } from '../../components/memory/MemoryUpdateNotification.js';
-import { Box, Link, Text } from '../../ink.js';
+import { Box, Link } from "../../ink.js";
 import type { LocalJSXCommandCall } from '../../types/command.js';
 import { clearMemoryFileCaches, getMemoryFiles } from '../../utils/claudemd.js';
 import { getClaudeConfigHomeDir } from '../../utils/envUtils.js';
@@ -66,7 +67,7 @@ function MemoryCommand({
       display: 'system'
     });
   };
-  return <Dialog title="Memory" onCancel={handleCancel} color="remember">
+  return <Dialog title="记忆" onCancel={handleCancel} color="remember">
       <Box flexDirection="column">
         <React.Suspense fallback={null}>
           <MemoryFileSelector onSelect={handleSelectMemoryFile} onCancel={handleCancel} />
@@ -74,7 +75,7 @@ function MemoryCommand({
 
         <Box marginTop={1}>
           <Text dimColor>
-            Learn more: <Link url="https://code.claude.com/docs/en/memory" />
+            {"了解更多："} <Link url="https://code.claude.com/docs/en/memory" />
           </Text>
         </Box>
       </Box>

@@ -1,5 +1,6 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import React, { type ReactNode, useState } from 'react'
-import { Box, Text } from '../../../ink.js'
+import { Box } from "../../../ink.js";
 import { useKeybinding } from '../../../hooks/useKeybinding.js'
 import TextInput from '../../TextInput.js'
 import { WizardDialogLayout } from '../../wizard/index.js'
@@ -26,18 +27,18 @@ export function TaskPromptStep(): ReactNode {
   }
 
   return (
-    <WizardDialogLayout subtitle="Prompt">
+    <WizardDialogLayout subtitle="提示词">
       <Box flexDirection="column">
         <Box marginBottom={1}>
           <Text dimColor>
-            Enter the prompt that will be sent to Claude when this task runs.
+            {"输入运行此任务时发送给 Claude 的提示词。"}
           </Text>
         </Box>
         <TextInput
           value={value}
           onChange={setValue}
           onSubmit={handleSubmit}
-          placeholder="e.g. Look at the commits from the last 24 hours..."
+          placeholder="例如：查看过去 24 小时内的提交……"
         />
         {error && (
           <Box marginTop={1}>

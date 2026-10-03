@@ -37,7 +37,7 @@ function InvalidApiKeyMessage() {
   const isKeychainLocked = t0;
   let t1;
   if ($[1] === Symbol.for("react.memo_cache_sentinel")) {
-    t1 = <MessageResponse><Box flexDirection="column"><Text color="error">{INVALID_API_KEY_ERROR_MESSAGE}</Text>{isKeychainLocked && <Text dimColor={true}>· Run in another terminal: security unlock-keychain</Text>}</Box></MessageResponse>;
+    t1 = <MessageResponse><Box flexDirection="column"><Text color="error">{INVALID_API_KEY_ERROR_MESSAGE}</Text>{isKeychainLocked && <Text dimColor={true}>{"· 在另一个终端中运行：security unlock-keychain"}</Text>}</Box></MessageResponse>;
     $[1] = t1;
   } else {
     t1 = $[1];
@@ -89,7 +89,7 @@ export function AssistantTextMessage(t0) {
         const upgradeHint = t2;
         let t3;
         if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
-          t3 = <MessageResponse height={1}><Text color="error">Context limit reached · /compact or /clear to continue{upgradeHint ? ` · ${upgradeHint}` : ""}</Text></MessageResponse>;
+          t3 = <MessageResponse height={1}><Text color="error">{"已达到上下文上限 · 使用 /compact 或 /clear 继续"}{upgradeHint ? ` · ${upgradeHint}` : ""}</Text></MessageResponse>;
           $[4] = t3;
         } else {
           t3 = $[4];
@@ -100,7 +100,7 @@ export function AssistantTextMessage(t0) {
       {
         let t2;
         if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
-          t2 = <MessageResponse height={1}><Text color="error">Credit balance too low · Add funds: https://platform.claude.com/settings/billing</Text></MessageResponse>;
+          t2 = <MessageResponse height={1}><Text color="error">{"余额不足 · 充值：https://platform.claude.com/settings/billing"}</Text></MessageResponse>;
           $[5] = t2;
         } else {
           t2 = $[5];
@@ -157,7 +157,7 @@ export function AssistantTextMessage(t0) {
       {
         let t2;
         if ($[11] === Symbol.for("react.memo_cache_sentinel")) {
-          t2 = <MessageResponse height={1}><Text color="error">{API_TIMEOUT_ERROR_MESSAGE}{process.env.API_TIMEOUT_MS && <>{" "}(API_TIMEOUT_MS={process.env.API_TIMEOUT_MS}ms, try increasing it)</>}</Text></MessageResponse>;
+          t2 = <MessageResponse height={1}><Text color="error">{API_TIMEOUT_ERROR_MESSAGE}{process.env.API_TIMEOUT_MS && <>{" "}{"（API_TIMEOUT_MS="}{process.env.API_TIMEOUT_MS}{"毫秒，可尝试增大此值）"}</>}</Text></MessageResponse>;
           $[11] = t2;
         } else {
           t2 = $[11];
@@ -168,14 +168,14 @@ export function AssistantTextMessage(t0) {
       {
         let t2;
         if ($[12] === Symbol.for("react.memo_cache_sentinel")) {
-          t2 = <Text color="error">We are experiencing high demand for Opus 4.</Text>;
+          t2 = <Text color="error">{"Opus 4 当前请求量较高。"}</Text>;
           $[12] = t2;
         } else {
           t2 = $[12];
         }
         let t3;
         if ($[13] === Symbol.for("react.memo_cache_sentinel")) {
-          t3 = <MessageResponse><Box flexDirection="column" gap={1}>{t2}<Text>To continue immediately, use /model to switch to{" "}{renderModelName(getDefaultSonnetModel())} and continue coding.</Text></Box></MessageResponse>;
+          t3 = <MessageResponse><Box flexDirection="column" gap={1}>{t2}<Text>{"如需立即继续，可使用 /model 切换到"}{" "}{renderModelName(getDefaultSonnetModel())} {"并继续编程。"}</Text></Box></MessageResponse>;
           $[13] = t3;
         } else {
           t3 = $[13];

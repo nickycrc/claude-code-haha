@@ -2,7 +2,7 @@ import { createMovedToPluginCommand } from '../createMovedToPluginCommand.js'
 
 export default createMovedToPluginCommand({
   name: 'pr-comments',
-  description: 'Get comments from a GitHub pull request',
+  description: "获取 GitHub 拉取请求的评论",
   progressMessage: 'fetching PR comments',
   pluginName: 'pr-comments',
   pluginCommand: 'pr-comments',
@@ -42,7 +42,7 @@ Remember:
 4. Show the file and line number context for code review comments
 5. Use jq to parse the JSON responses from the GitHub API
 
-${args ? 'Additional user input: ' + args : ''}
+${args ? "用户补充输入：" + args : ''}
 `,
       },
     ]

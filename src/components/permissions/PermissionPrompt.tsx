@@ -1,6 +1,7 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React, { type ReactNode, useCallback, useMemo, useState } from 'react';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import type { KeybindingAction } from '../../keybindings/types.js';
 import { useKeybindings } from '../../keybindings/useKeybinding.js';
 import { type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS, logEvent } from '../../services/analytics/index.js';
@@ -306,7 +307,7 @@ export function PermissionPrompt(t0) {
   const t11 = showTabHint && " \xB7 Tab to amend";
   let t12;
   if ($[48] !== t11) {
-    t12 = <Box marginTop={1}><Text dimColor={true}>Esc to cancel{t11}</Text></Box>;
+    t12 = <Box marginTop={1}><Text dimColor={true}>{"Esc 取消"}{t11}</Text></Box>;
     $[48] = t11;
     $[49] = t12;
   } else {

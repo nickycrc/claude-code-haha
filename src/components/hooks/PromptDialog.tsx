@@ -1,6 +1,7 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import * as React from 'react';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { useKeybinding } from '../../keybindings/useKeybinding.js';
 import type { PromptRequest } from '../../types/hooks.js';
 import { Select } from '../CustomSelect/select.js';

@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -5,7 +6,7 @@ import { useSearchInput } from '../../hooks/useSearchInput.js';
 import { useTerminalSize } from '../../hooks/useTerminalSize.js';
 import type { KeyboardEvent } from '../../ink/events/keyboard-event.js';
 import { clamp } from '../../ink/layout/geometry.js';
-import { Box, Text, useTerminalFocus } from '../../ink.js';
+import { Box, useTerminalFocus } from "../../ink.js";
 import { SearchBox } from '../SearchBox.js';
 import { Byline } from './Byline.js';
 import { KeyboardShortcutHint } from './KeyboardShortcutHint.js';
@@ -204,11 +205,11 @@ export function FuzzyPicker<T>({
         {!inputAbove && searchBox}
         <Text dimColor>
           <Byline>
-            <KeyboardShortcutHint shortcut="↑/↓" action={compact ? 'nav' : 'navigate'} />
+            <KeyboardShortcutHint shortcut="↑/↓" action={compact ? "导航" : "导航"} />
             <KeyboardShortcutHint shortcut="Enter" action={compact ? firstWord(selectAction) : selectAction} />
             {onTab && <KeyboardShortcutHint shortcut="Tab" action={onTab.action} />}
             {onShiftTab && !compact && <KeyboardShortcutHint shortcut="shift+tab" action={onShiftTab.action} />}
-            <KeyboardShortcutHint shortcut="Esc" action="cancel" />
+            <KeyboardShortcutHint shortcut="Esc" action="取消" />
             {extraHints}
           </Byline>
         </Text>

@@ -193,15 +193,15 @@ export function TaskListV2({
         <Box>
           <Text dimColor>
             <Text bold>{tasks.length}</Text>
-            {' tasks ('}
+            {"个任务（"}
             <Text bold>{completedCount}</Text>
-            {' done, '}
+            {"已完成，"}
             {inProgressCount > 0 && <>
                 <Text bold>{inProgressCount}</Text>
-                {' in progress, '}
+                {"进行中，"}
               </>}
             <Text bold>{pendingCount}</Text>
-            {' open)'}
+            {"待处理）"}
           </Text>
         </Box>
         {content}
@@ -331,7 +331,7 @@ function TaskItem(t0) {
   }
   let t9;
   if ($[23] !== isBlocked || $[24] !== openBlockers) {
-    t9 = isBlocked && <Text dimColor={true}>{" "}{figures.pointerSmall} blocked by{" "}{[...openBlockers].sort(_temp).map(_temp2).join(", ")}</Text>;
+    t9 = isBlocked && <Text dimColor={true}>{" "}{figures.pointerSmall} {"被以下任务阻塞："}{" "}{[...openBlockers].sort(_temp).map(_temp2).join(", ")}</Text>;
     $[23] = isBlocked;
     $[24] = openBlockers;
     $[25] = t9;

@@ -1,7 +1,8 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 // biome-ignore-all assist/source/organizeImports: ANT-ONLY import markers must not be reordered
 import { feature } from 'bun:bundle';
-import { Box, Text, useTheme, useThemeSetting, useTerminalFocus } from '../../ink.js';
+import { Box, useTheme, useThemeSetting, useTerminalFocus } from "../../ink.js";
 import type { KeyboardEvent } from '../../ink/events/keyboard-event.js';
 import * as React from 'react';
 import { useState, useCallback } from 'react';
@@ -265,7 +266,7 @@ export function Config({
   // Global settings
   {
     id: 'autoCompactEnabled',
-    label: 'Auto-compact',
+    label: "自动压缩上下文",
     value: globalConfig.autoCompactEnabled,
     type: 'boolean' as const,
     onChange(autoCompactEnabled: boolean) {
@@ -283,7 +284,7 @@ export function Config({
     }
   }, {
     id: 'spinnerTipsEnabled',
-    label: 'Show tips',
+    label: "显示提示",
     value: settingsData?.spinnerTipsEnabled ?? true,
     type: 'boolean' as const,
     onChange(spinnerTipsEnabled: boolean) {
@@ -301,7 +302,7 @@ export function Config({
     }
   }, {
     id: 'prefersReducedMotion',
-    label: 'Reduce motion',
+    label: "减少动画",
     value: settingsData?.prefersReducedMotion ?? false,
     type: 'boolean' as const,
     onChange(prefersReducedMotion: boolean) {
@@ -326,7 +327,7 @@ export function Config({
     }
   }, {
     id: 'thinkingEnabled',
-    label: 'Thinking mode',
+    label: "思考模式",
     value: thinkingEnabled ?? true,
     type: 'boolean' as const,
     onChange(enabled: boolean) {
@@ -345,7 +346,7 @@ export function Config({
   // Fast mode toggle (ant-only, eliminated from external builds)
   ...(isFastModeEnabled() && isFastModeAvailable() ? [{
     id: 'fastMode',
-    label: `Fast mode (${FAST_MODE_MODEL_DISPLAY} only)`,
+    label: `快速模式（仅限 ${FAST_MODE_MODEL_DISPLAY}）`,
     value: !!isFastMode,
     type: 'boolean' as const,
     onChange(enabled_0: boolean) {
@@ -378,7 +379,7 @@ export function Config({
     }
   }] : []), ...(getFeatureValue_CACHED_MAY_BE_STALE('tengu_chomp_inflection', false) ? [{
     id: 'promptSuggestionEnabled',
-    label: 'Prompt suggestions',
+    label: "输入建议",
     value: promptSuggestionEnabled,
     type: 'boolean' as const,
     onChange(enabled_1: boolean) {
@@ -394,7 +395,7 @@ export function Config({
   // Speculation toggle (ant-only)
   ...("external" === 'ant' ? [{
     id: 'speculationEnabled',
-    label: 'Speculative execution',
+    label: "推测执行",
     value: globalConfig.speculationEnabled ?? true,
     type: 'boolean' as const,
     onChange(enabled_2: boolean) {
@@ -415,7 +416,7 @@ export function Config({
     }
   }] : []), ...(isFileCheckpointingAvailable ? [{
     id: 'fileCheckpointingEnabled',
-    label: 'Rewind code (checkpoints)',
+    label: "代码回退（检查点）",
     value: globalConfig.fileCheckpointingEnabled,
     type: 'boolean' as const,
     onChange(enabled_3: boolean) {
@@ -433,13 +434,13 @@ export function Config({
     }
   }] : []), {
     id: 'verbose',
-    label: 'Verbose output',
+    label: "详细输出",
     value: verbose,
     type: 'boolean',
     onChange: onChangeVerbose
   }, {
     id: 'terminalProgressBarEnabled',
-    label: 'Terminal progress bar',
+    label: "终端进度条",
     value: globalConfig.terminalProgressBarEnabled,
     type: 'boolean' as const,
     onChange(terminalProgressBarEnabled: boolean) {
@@ -457,7 +458,7 @@ export function Config({
     }
   }, ...(getFeatureValue_CACHED_MAY_BE_STALE('tengu_terminal_sidebar', false) ? [{
     id: 'showStatusInTerminalTab',
-    label: 'Show status in terminal tab',
+    label: "在终端标签中显示状态",
     value: globalConfig.showStatusInTerminalTab ?? false,
     type: 'boolean' as const,
     onChange(showStatusInTerminalTab: boolean) {
@@ -475,7 +476,7 @@ export function Config({
     }
   }] : []), {
     id: 'showTurnDuration',
-    label: 'Show turn duration',
+    label: "显示每轮耗时",
     value: globalConfig.showTurnDuration,
     type: 'boolean' as const,
     onChange(showTurnDuration: boolean) {
@@ -493,7 +494,7 @@ export function Config({
     }
   }, {
     id: 'defaultPermissionMode',
-    label: 'Default permission mode',
+    label: "默认权限模式",
     value: settingsData?.permissions?.defaultMode || 'default',
     options: (() => {
       const priorityOrder: PermissionMode[] = ['default', 'plan'];
@@ -543,7 +544,7 @@ export function Config({
     }
   }, ...(feature('TRANSCRIPT_CLASSIFIER') && showAutoInDefaultModePicker ? [{
     id: 'useAutoModeDuringPlan',
-    label: 'Use auto mode during plan',
+    label: "计划期间使用自动模式",
     value: (settingsData as {
       useAutoModeDuringPlan?: boolean;
     } | undefined)?.useAutoModeDuringPlan ?? true,
@@ -574,7 +575,7 @@ export function Config({
     }
   }] : []), {
     id: 'respectGitignore',
-    label: 'Respect .gitignore in file picker',
+    label: "文件选择器遵循 .gitignore",
     value: globalConfig.respectGitignore,
     type: 'boolean' as const,
     onChange(respectGitignore: boolean) {
@@ -592,7 +593,7 @@ export function Config({
     }
   }, {
     id: 'copyFullResponse',
-    label: 'Always copy full response (skip /copy picker)',
+    label: "始终复制完整回复（跳过 /copy 选择器）",
     value: globalConfig.copyFullResponse,
     type: 'boolean' as const,
     onChange(copyFullResponse: boolean) {
@@ -614,7 +615,7 @@ export function Config({
   // alt-screen mode). In inline mode the terminal emulator owns selection.
   ...(isFullscreenEnvEnabled() ? [{
     id: 'copyOnSelect',
-    label: 'Copy on select',
+    label: "选中即复制",
     value: globalConfig.copyOnSelect ?? true,
     type: 'boolean' as const,
     onChange(copyOnSelect: boolean) {
@@ -635,13 +636,13 @@ export function Config({
   // autoUpdates setting is hidden - use DISABLE_AUTOUPDATER env var to control
   autoUpdaterDisabledReason ? {
     id: 'autoUpdatesChannel',
-    label: 'Auto-update channel',
+    label: "自动更新通道",
     value: 'disabled',
     type: 'managedEnum' as const,
     onChange() {}
   } : {
     id: 'autoUpdatesChannel',
-    label: 'Auto-update channel',
+    label: "自动更新通道",
     value: settingsData?.autoUpdatesChannel ?? 'latest',
     type: 'managedEnum' as const,
     onChange() {
@@ -649,13 +650,13 @@ export function Config({
     }
   }, {
     id: 'theme',
-    label: 'Theme',
+    label: "主题",
     value: themeSetting,
     type: 'managedEnum',
     onChange: setTheme
   }, {
     id: 'notifChannel',
-    label: feature('KAIROS') || feature('KAIROS_PUSH_NOTIFICATION') ? 'Local notifications' : 'Notifications',
+    label: feature('KAIROS') || feature('KAIROS_PUSH_NOTIFICATION') ? "本地通知" : "通知",
     value: globalConfig.preferredNotifChannel,
     options: ['auto', 'iterm2', 'terminal_bell', 'iterm2_with_bell', 'kitty', 'ghostty', 'notifications_disabled'],
     type: 'enum',
@@ -671,7 +672,7 @@ export function Config({
     }
   }, ...(feature('KAIROS') || feature('KAIROS_PUSH_NOTIFICATION') ? [{
     id: 'taskCompleteNotifEnabled',
-    label: 'Push when idle',
+    label: "空闲时推送",
     value: globalConfig.taskCompleteNotifEnabled ?? false,
     type: 'boolean' as const,
     onChange(taskCompleteNotifEnabled: boolean) {
@@ -686,7 +687,7 @@ export function Config({
     }
   }, {
     id: 'inputNeededNotifEnabled',
-    label: 'Push when input needed',
+    label: "需要输入时推送",
     value: globalConfig.inputNeededNotifEnabled ?? false,
     type: 'boolean' as const,
     onChange(inputNeededNotifEnabled: boolean) {
@@ -701,7 +702,7 @@ export function Config({
     }
   }, {
     id: 'agentPushNotifEnabled',
-    label: 'Push when Claude decides',
+    label: "由 Claude 决定何时推送",
     value: globalConfig.agentPushNotifEnabled ?? false,
     type: 'boolean' as const,
     onChange(agentPushNotifEnabled: boolean) {
@@ -716,13 +717,13 @@ export function Config({
     }
   }] : []), {
     id: 'outputStyle',
-    label: 'Output style',
+    label: "输出风格",
     value: currentOutputStyle,
     type: 'managedEnum' as const,
     onChange: () => {} // handled by OutputStylePicker submenu
   }, ...(showDefaultViewPicker ? [{
     id: 'defaultView',
-    label: 'What you see by default',
+    label: "默认显示内容",
     // 'default' means the setting is unset — currently resolves to
     // transcript (main.tsx falls through when defaultView !== 'chat').
     // String() narrows the conditional-schema-spread union to string.
@@ -761,13 +762,13 @@ export function Config({
     }
   }] : []), {
     id: 'language',
-    label: 'Language',
+    label: "语言",
     value: currentLanguage ?? 'Default (English)',
     type: 'managedEnum' as const,
     onChange: () => {} // handled by LanguagePicker submenu
   }, {
     id: 'editorMode',
-    label: 'Editor mode',
+    label: "编辑器模式",
     // Convert 'emacs' to 'normal' for backward compatibility
     value: globalConfig.editorMode === 'emacs' ? 'normal' : globalConfig.editorMode || 'normal',
     options: ['normal', 'vim'],
@@ -788,7 +789,7 @@ export function Config({
     }
   }, {
     id: 'prStatusFooterEnabled',
-    label: 'Show PR status footer',
+    label: "显示 PR 状态页脚",
     value: globalConfig.prStatusFooterEnabled ?? true,
     type: 'boolean' as const,
     onChange(enabled_4: boolean) {
@@ -809,13 +810,13 @@ export function Config({
     }
   }, {
     id: 'model',
-    label: 'Model',
+    label: "模型",
     value: mainLoopModel === null ? 'Default (recommended)' : mainLoopModel,
     type: 'managedEnum' as const,
     onChange: onChangeMainModelConfig
   }, ...(isConnectedToIde ? [{
     id: 'diffTool',
-    label: 'Diff tool',
+    label: "差异工具",
     value: globalConfig.diffTool ?? 'auto',
     options: ['terminal', 'auto'],
     type: 'enum' as const,
@@ -835,7 +836,7 @@ export function Config({
     }
   }] : []), ...(!isSupportedTerminal() ? [{
     id: 'autoConnectIde',
-    label: 'Auto-connect to IDE (external terminal)',
+    label: "自动连接 IDE（外部终端）",
     value: globalConfig.autoConnectIde ?? false,
     type: 'boolean' as const,
     onChange(autoConnectIde: boolean) {
@@ -854,7 +855,7 @@ export function Config({
     }
   }] : []), ...(isSupportedTerminal() ? [{
     id: 'autoInstallIdeExtension',
-    label: 'Auto-install IDE extension',
+    label: "自动安装 IDE 扩展",
     value: globalConfig.autoInstallIdeExtension ?? true,
     type: 'boolean' as const,
     onChange(autoInstallIdeExtension: boolean) {
@@ -873,7 +874,7 @@ export function Config({
     }
   }] : []), {
     id: 'claudeInChromeDefaultEnabled',
-    label: 'Claude in Chrome enabled by default',
+    label: "默认启用 Claude in Chrome",
     value: globalConfig.claudeInChromeDefaultEnabled ?? true,
     type: 'boolean' as const,
     onChange(enabled_5: boolean) {
@@ -920,7 +921,7 @@ export function Config({
       }
     }, {
       id: 'teammateDefaultModel',
-      label: 'Default teammate model',
+      label: "默认队友模型",
       value: teammateModelDisplayString(globalConfig.teammateDefaultModel),
       type: 'managedEnum' as const,
       onChange() {}
@@ -929,7 +930,7 @@ export function Config({
   // Remote at startup toggle — gated on build flag + GrowthBook + policy
   ...(feature('BRIDGE_MODE') && isBridgeEnabled() ? [{
     id: 'remoteControlAtStartup',
-    label: 'Enable Remote Control for all sessions',
+    label: "为所有会话启用远程控制",
     value: globalConfig.remoteControlAtStartup === undefined ? 'default' : String(globalConfig.remoteControlAtStartup),
     options: ['true', 'false', 'default'],
     type: 'enum' as const,
@@ -975,7 +976,7 @@ export function Config({
     }
   }] : []), ...(shouldShowExternalIncludesToggle ? [{
     id: 'showExternalIncludesDialog',
-    label: 'External CLAUDE.md includes',
+    label: "CLAUDE.md 外部引用",
     value: (() => {
       const projectConfig = getCurrentProjectConfig();
       if (projectConfig.hasClaudeMdExternalIncludesApproved) {
@@ -991,7 +992,7 @@ export function Config({
   }] : []), ...(process.env.ANTHROPIC_API_KEY && !isRunningOnHomespace() ? [{
     id: 'apiKey',
     label: <Text>
-                Use custom API key:{' '}
+                {"使用自定义 API 密钥："}{' '}
                 <Text bold>
                   {normalizeApiKeyForConfig(process.env.ANTHROPIC_API_KEY)}
                 </Text>
@@ -1461,8 +1462,8 @@ export function Config({
           <Box>
             <Text dimColor italic>
               <Byline>
-                <KeyboardShortcutHint shortcut="Enter" action="select" />
-                <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="cancel" />
+                <KeyboardShortcutHint shortcut="Enter" action="选择" />
+                <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="取消" />
               </Byline>
             </Text>
           </Box>
@@ -1478,12 +1479,12 @@ export function Config({
       }} showFastModeNotice={isFastModeEnabled() ? isFastMode && isFastModeSupportedByModel(mainLoopModel) && isFastModeAvailable() : false} />
           <Text dimColor>
             <Byline>
-              <KeyboardShortcutHint shortcut="Enter" action="confirm" />
-              <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="cancel" />
+              <KeyboardShortcutHint shortcut="Enter" action="确认" />
+              <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="取消" />
             </Byline>
           </Text>
         </> : showSubmenu === 'TeammateModel' ? <>
-          <ModelPicker initial={globalConfig.teammateDefaultModel ?? null} skipSettingsWrite headerText="Default model for newly spawned teammates. The leader can override via the tool call's model parameter." onSelect={(model_1, _effort_0) => {
+          <ModelPicker initial={globalConfig.teammateDefaultModel ?? null} skipSettingsWrite headerText="新启动队友的默认模型。负责人可通过工具调用中的 model 参数覆盖。" onSelect={(model_1, _effort_0) => {
         setShowSubmenu(null);
         setTabsHidden(false);
         // First-open-then-Enter from unset: picker highlights "Default"
@@ -1514,8 +1515,8 @@ export function Config({
       }} />
           <Text dimColor>
             <Byline>
-              <KeyboardShortcutHint shortcut="Enter" action="confirm" />
-              <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="cancel" />
+              <KeyboardShortcutHint shortcut="Enter" action="确认" />
+              <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="取消" />
             </Byline>
           </Text>
         </> : showSubmenu === 'ExternalIncludes' ? <>
@@ -1525,8 +1526,8 @@ export function Config({
       }} externalIncludes={getExternalClaudeMdIncludes(memoryFiles)} />
           <Text dimColor>
             <Byline>
-              <KeyboardShortcutHint shortcut="Enter" action="confirm" />
-              <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="disable external includes" />
+              <KeyboardShortcutHint shortcut="Enter" action="确认" />
+              <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="禁用外部引用" />
             </Byline>
           </Text>
         </> : showSubmenu === 'OutputStyle' ? <>
@@ -1551,8 +1552,8 @@ export function Config({
       }} />
           <Text dimColor>
             <Byline>
-              <KeyboardShortcutHint shortcut="Enter" action="confirm" />
-              <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="cancel" />
+              <KeyboardShortcutHint shortcut="Enter" action="确认" />
+              <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="取消" />
             </Byline>
           </Text>
         </> : showSubmenu === 'Language' ? <>
@@ -1576,27 +1577,26 @@ export function Config({
       }} />
           <Text dimColor>
             <Byline>
-              <KeyboardShortcutHint shortcut="Enter" action="confirm" />
-              <ConfigurableShortcutHint action="confirm:no" context="Settings" fallback="Esc" description="cancel" />
+              <KeyboardShortcutHint shortcut="Enter" action="确认" />
+              <ConfigurableShortcutHint action="confirm:no" context="Settings" fallback="Esc" description="取消" />
             </Byline>
           </Text>
-        </> : showSubmenu === 'EnableAutoUpdates' ? <Dialog title="Enable Auto-Updates" onCancel={() => {
+        </> : showSubmenu === 'EnableAutoUpdates' ? <Dialog title="启用自动更新" onCancel={() => {
       setShowSubmenu(null);
       setTabsHidden(false);
     }} hideBorder hideInputGuide>
           {autoUpdaterDisabledReason?.type !== 'config' ? <>
               <Text>
-                {autoUpdaterDisabledReason?.type === 'env' ? 'Auto-updates are controlled by an environment variable and cannot be changed here.' : 'Auto-updates are disabled in development builds.'}
+                {autoUpdaterDisabledReason?.type === 'env' ? "自动更新由环境变量控制，无法在这里修改。" : "开发版本已禁用自动更新。"}
               </Text>
               {autoUpdaterDisabledReason?.type === 'env' && <Text dimColor>
-                  Unset {autoUpdaterDisabledReason.envVar} to re-enable
-                  auto-updates.
+                  {"取消设置"} {autoUpdaterDisabledReason.envVar} {"以重新启用自动更新。"}
                 </Text>}
             </> : <Select options={[{
-        label: 'Enable with latest channel',
+        label: "启用最新通道",
         value: 'latest'
       }, {
-        label: 'Enable with stable channel',
+        label: "启用稳定通道",
         value: 'stable'
       }]} onChange={(channel: string) => {
         isDirty.current = true;
@@ -1652,13 +1652,13 @@ export function Config({
         minimum_version_set: choice === 'stay'
       });
     }} /> : <Box flexDirection="column" gap={1} marginY={insideModal ? undefined : 1}>
-          <SearchBox query={searchQuery} isFocused={isSearchMode && !headerFocused} isTerminalFocused={isTerminalFocused} cursorOffset={searchCursorOffset} placeholder="Search settings…" />
+          <SearchBox query={searchQuery} isFocused={isSearchMode && !headerFocused} isTerminalFocused={isTerminalFocused} cursorOffset={searchCursorOffset} placeholder="搜索设置……" />
           <Box flexDirection="column">
             {filteredSettingsItems.length === 0 ? <Text dimColor italic>
-                No settings match &quot;{searchQuery}&quot;
+                {"没有匹配以下内容的设置：“"}{searchQuery}{"”"}
               </Text> : <>
                 {scrollOffset > 0 && <Text dimColor>
-                    {figures.arrowUp} {scrollOffset} more above
+                    {figures.arrowUp} {scrollOffset} {"上方还有更多"}
                   </Text>}
                 {filteredSettingsItems.slice(scrollOffset, scrollOffset + maxVisible).map((setting_2, i) => {
             const actualIndex = scrollOffset + i;
@@ -1678,9 +1678,7 @@ export function Config({
                                 </Text>
                                 {showThinkingWarning && setting_2.id === 'thinkingEnabled' && <Text color="warning">
                                       {' '}
-                                      Changing thinking mode mid-conversation
-                                      will increase latency and may reduce
-                                      quality.
+                                      {"在对话中途修改思考模式会增加延迟，并可能降低质量。"}
                                     </Text>}
                               </> : setting_2.id === 'theme' ? <Text color={isSelected ? 'suggestion' : undefined}>
                                 {THEME_LABELS[setting_2.value.toString()] ?? setting_2.value.toString()}
@@ -1690,7 +1688,7 @@ export function Config({
                                 {permissionModeTitle(setting_2.value as PermissionMode)}
                               </Text> : setting_2.id === 'autoUpdatesChannel' && autoUpdaterDisabledReason ? <Box flexDirection="column">
                                 <Text color={isSelected ? 'suggestion' : undefined}>
-                                  disabled
+                                  {"已禁用"}
                                 </Text>
                                 <Text dimColor>
                                   (
@@ -1707,29 +1705,29 @@ export function Config({
                 {scrollOffset + maxVisible < filteredSettingsItems.length && <Text dimColor>
                     {figures.arrowDown}{' '}
                     {filteredSettingsItems.length - scrollOffset - maxVisible}{' '}
-                    more below
+                    {"下方还有更多"}
                   </Text>}
               </>}
           </Box>
           {headerFocused ? <Text dimColor>
               <Byline>
-                <KeyboardShortcutHint shortcut="←/→ tab" action="switch" />
-                <KeyboardShortcutHint shortcut="↓" action="return" />
-                <ConfigurableShortcutHint action="confirm:no" context="Settings" fallback="Esc" description="close" />
+                <KeyboardShortcutHint shortcut="←/→ tab" action="切换" />
+                <KeyboardShortcutHint shortcut="↓" action="返回" />
+                <ConfigurableShortcutHint action="confirm:no" context="Settings" fallback="Esc" description="关闭" />
               </Byline>
             </Text> : isSearchMode ? <Text dimColor>
               <Byline>
-                <Text>Type to filter</Text>
-                <KeyboardShortcutHint shortcut="Enter/↓" action="select" />
-                <KeyboardShortcutHint shortcut="↑" action="tabs" />
-                <ConfigurableShortcutHint action="confirm:no" context="Settings" fallback="Esc" description="clear" />
+                <Text>{"输入以筛选"}</Text>
+                <KeyboardShortcutHint shortcut="Enter/↓" action="选择" />
+                <KeyboardShortcutHint shortcut="↑" action="标签" />
+                <ConfigurableShortcutHint action="confirm:no" context="Settings" fallback="Esc" description="清空" />
               </Byline>
             </Text> : <Text dimColor>
               <Byline>
-                <ConfigurableShortcutHint action="select:accept" context="Settings" fallback="Space" description="change" />
-                <ConfigurableShortcutHint action="settings:close" context="Settings" fallback="Enter" description="save" />
-                <ConfigurableShortcutHint action="settings:search" context="Settings" fallback="/" description="search" />
-                <ConfigurableShortcutHint action="confirm:no" context="Settings" fallback="Esc" description="cancel" />
+                <ConfigurableShortcutHint action="select:accept" context="Settings" fallback="Space" description="修改" />
+                <ConfigurableShortcutHint action="settings:close" context="Settings" fallback="Enter" description="保存" />
+                <ConfigurableShortcutHint action="settings:search" context="Settings" fallback="/" description="搜索" />
+                <ConfigurableShortcutHint action="confirm:no" context="Settings" fallback="Esc" description="取消" />
               </Byline>
             </Text>}
         </Box>}
@@ -1765,7 +1763,7 @@ function NotifChannelLabel(t0) {
       {
         let t1;
         if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
-          t1 = <Text>iTerm2 <Text dimColor={true}>(OSC 9)</Text></Text>;
+          t1 = <Text>iTerm2 <Text dimColor={true}>{"（OSC 9）"}</Text></Text>;
           $[0] = t1;
         } else {
           t1 = $[0];
@@ -1776,7 +1774,7 @@ function NotifChannelLabel(t0) {
       {
         let t1;
         if ($[1] === Symbol.for("react.memo_cache_sentinel")) {
-          t1 = <Text>Terminal Bell <Text dimColor={true}>(\a)</Text></Text>;
+          t1 = <Text>{"终端提示铃"} <Text dimColor={true}>(\a)</Text></Text>;
           $[1] = t1;
         } else {
           t1 = $[1];
@@ -1787,7 +1785,7 @@ function NotifChannelLabel(t0) {
       {
         let t1;
         if ($[2] === Symbol.for("react.memo_cache_sentinel")) {
-          t1 = <Text>Kitty <Text dimColor={true}>(OSC 99)</Text></Text>;
+          t1 = <Text>Kitty <Text dimColor={true}>{"（OSC 99）"}</Text></Text>;
           $[2] = t1;
         } else {
           t1 = $[2];
@@ -1798,7 +1796,7 @@ function NotifChannelLabel(t0) {
       {
         let t1;
         if ($[3] === Symbol.for("react.memo_cache_sentinel")) {
-          t1 = <Text>Ghostty <Text dimColor={true}>(OSC 777)</Text></Text>;
+          t1 = <Text>Ghostty <Text dimColor={true}>{"（OSC 777）"}</Text></Text>;
           $[3] = t1;
         } else {
           t1 = $[3];

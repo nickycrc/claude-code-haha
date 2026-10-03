@@ -31,7 +31,7 @@ function ModelPickerWrapper(t0) {
         action: "cancel" as AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS
       });
       const displayModel = renderModelLabel(mainLoopModel);
-      onDone(`Kept model as ${chalk.bold(displayModel)}`, {
+      onDone(`继续使用模型 ${chalk.bold(displayModel)}`, {
         display: "system"
       });
     };
@@ -55,9 +55,9 @@ function ModelPickerWrapper(t0) {
         mainLoopModel: model,
         mainLoopModelForSession: null
       }));
-      let message = `Set model to ${chalk.bold(renderModelLabel(model))}`;
+      let message = `模型已切换为 ${chalk.bold(renderModelLabel(model))}`;
       if (effort !== undefined) {
-        message = message + ` with ${chalk.bold(effort)} effort`;
+        message = message + `，推理强度 ${chalk.bold(effort)}`;
       }
       let wasFastModeToggledOn = undefined;
       if (isFastModeEnabled()) {
@@ -67,16 +67,16 @@ function ModelPickerWrapper(t0) {
           wasFastModeToggledOn = false;
         } else {
           if (isFastModeSupportedByModel(model) && isFastModeAvailable() && isFastMode) {
-            message = message + " \xB7 Fast mode ON";
+            message = message + " · 快速模式开启";
             wasFastModeToggledOn = true;
           }
         }
       }
       if (isBilledAsExtraUsage(model, wasFastModeToggledOn === true, isOpus1mMergeEnabled())) {
-        message = message + " \xB7 Billed as extra usage";
+        message = message + " · 计入额外用量";
       }
       if (wasFastModeToggledOn === false) {
-        message = message + " \xB7 Fast mode OFF";
+        message = message + " · 快速模式关闭";
       }
       onDone(message);
     };
@@ -142,7 +142,7 @@ function SetModelAndClose({
   React.useEffect(() => {
     async function handleModelChange(): Promise<void> {
       if (model && !isModelAllowed(model)) {
-        onDone(`Model '${model}' is not available. Your organization restricts model selection.`, {
+        onDone(`模型“${model}”不可用，组织限制了模型选择。`, {
           display: 'system'
         });
         return;
@@ -150,13 +150,13 @@ function SetModelAndClose({
 
       // @[MODEL LAUNCH]: Update check for 1M access.
       if (model && isOpus1mUnavailable(model)) {
-        onDone(`Opus 4.7 with 1M context is not available for your account. Learn more: https://code.claude.com/docs/en/model-config#extended-context-with-1m`, {
+        onDone(`此账号无法使用 Opus 4.7 的 1M 上下文。详情：https://code.claude.com/docs/en/model-config#extended-context-with-1m`, {
           display: 'system'
         });
         return;
       }
       if (model && isSonnet1mUnavailable(model)) {
-        onDone(`Sonnet 4.6 with 1M context is not available for your account. Learn more: https://code.claude.com/docs/en/model-config#extended-context-with-1m`, {
+        onDone(`此账号无法使用 Sonnet 4.6 的 1M 上下文。详情：https://code.claude.com/docs/en/model-config#extended-context-with-1m`, {
           display: 'system'
         });
         return;
@@ -185,12 +185,12 @@ function SetModelAndClose({
         if (valid) {
           setModel(model);
         } else {
-          onDone(error_0 || `Model '${model}' not found`, {
+          onDone(error_0 || `未找到模型“${model}”`, {
             display: 'system'
           });
         }
       } catch (error) {
-        onDone(`Failed to validate model: ${(error as Error).message}`, {
+        onDone(`验证模型失败：${(error as Error).message}`, {
           display: 'system'
         });
       }
@@ -201,7 +201,7 @@ function SetModelAndClose({
         mainLoopModel: modelValue,
         mainLoopModelForSession: null
       }));
-      let message = `Set model to ${chalk.bold(renderModelLabel(modelValue))}`;
+      let message = `模型已切换为 ${chalk.bold(renderModelLabel(modelValue))}`;
       let wasFastModeToggledOn = undefined;
       if (isFastModeEnabled()) {
         clearFastModeCooldown();
@@ -213,16 +213,16 @@ function SetModelAndClose({
           wasFastModeToggledOn = false;
           // Do not update fast mode in settings since this is an automatic downgrade
         } else if (isFastModeSupportedByModel(modelValue) && isFastMode) {
-          message += ` · Fast mode ON`;
+          message += ` · 快速模式开启`;
           wasFastModeToggledOn = true;
         }
       }
       if (isBilledAsExtraUsage(modelValue, wasFastModeToggledOn === true, isOpus1mMergeEnabled())) {
-        message += ` · Billed as extra usage`;
+        message += ` · 计入额外用量`;
       }
       if (wasFastModeToggledOn === false) {
         // Fast mode was toggled off, show suffix after extra usage billing
-        message += ` · Fast mode OFF`;
+        message += ` · 快速模式关闭`;
       }
       onDone(message);
     }

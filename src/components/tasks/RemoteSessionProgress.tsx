@@ -105,7 +105,7 @@ function ReviewRainbowLine(t0) {
   if (session.status === "completed") {
     let t1;
     if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
-      t1 = <><Text color="background">{DIAMOND_FILLED} </Text><RainbowText text="ultrareview" phase={0} /><Text dimColor={true}> ready · shift+↓ to view</Text></>;
+      t1 = <><Text color="background">{DIAMOND_FILLED} </Text><RainbowText text="ultrareview" phase={0} /><Text dimColor={true}> {"已就绪 · shift+↓ 查看"}</Text></>;
       $[0] = t1;
     } else {
       t1 = $[0];
@@ -115,7 +115,7 @@ function ReviewRainbowLine(t0) {
   if (session.status === "failed") {
     let t1;
     if ($[1] === Symbol.for("react.memo_cache_sentinel")) {
-      t1 = <><Text color="background">{DIAMOND_FILLED} </Text><RainbowText text="ultrareview" phase={0} /><Text color="error" dimColor={true}>{" \xB7 "}error</Text></>;
+      t1 = <><Text color="background">{DIAMOND_FILLED} </Text><RainbowText text="ultrareview" phase={0} /><Text color="error" dimColor={true}>{" \xB7 "}{"错误"}</Text></>;
       $[1] = t1;
     } else {
       t1 = $[1];
@@ -188,7 +188,7 @@ export function RemoteSessionProgress(t0) {
   if (session.status === "completed") {
     let t1;
     if ($[2] === Symbol.for("react.memo_cache_sentinel")) {
-      t1 = <Text bold={true} color="success" dimColor={true}>done</Text>;
+      t1 = <Text bold={true} color="success" dimColor={true}>{"完成"}</Text>;
       $[2] = t1;
     } else {
       t1 = $[2];
@@ -198,7 +198,7 @@ export function RemoteSessionProgress(t0) {
   if (session.status === "failed") {
     let t1;
     if ($[3] === Symbol.for("react.memo_cache_sentinel")) {
-      t1 = <Text bold={true} color="error" dimColor={true}>error</Text>;
+      t1 = <Text bold={true} color="error" dimColor={true}>{"错误"}</Text>;
       $[3] = t1;
     } else {
       t1 = $[3];

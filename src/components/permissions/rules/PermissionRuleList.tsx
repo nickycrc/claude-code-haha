@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import chalk from 'chalk';
 import figures from 'figures';
@@ -11,7 +12,7 @@ import { Select } from '../../../components/CustomSelect/select.js';
 import { useExitOnCtrlCDWithKeybindings } from '../../../hooks/useExitOnCtrlCDWithKeybindings.js';
 import { useSearchInput } from '../../../hooks/useSearchInput.js';
 import type { KeyboardEvent } from '../../../ink/events/keyboard-event.js';
-import { Box, Text, useTerminalFocus } from '../../../ink.js';
+import { Box, useTerminalFocus } from "../../../ink.js";
 import { useKeybinding } from '../../../keybindings/useKeybinding.js';
 import { type AutoModeDenial, getAutoModeDenials } from '../../../utils/autoModeDenials.js';
 import type { PermissionBehavior, PermissionRule, PermissionRuleValue } from '../../../utils/permissions/PermissionRule.js';
@@ -135,7 +136,7 @@ function RuleDetails(t0) {
   const ruleDescription = t6;
   let t7;
   if ($[13] !== exitState.keyName || $[14] !== exitState.pending) {
-    t7 = <Box marginLeft={3}>{exitState.pending ? <Text dimColor={true}>Press {exitState.keyName} again to exit</Text> : <Text dimColor={true}>Esc to cancel</Text>}</Box>;
+    t7 = <Box marginLeft={3}>{exitState.pending ? <Text dimColor={true}>{"按"} {exitState.keyName} {"再次按下退出"}</Text> : <Text dimColor={true}>{"Esc 取消"}</Text>}</Box>;
     $[13] = exitState.keyName;
     $[14] = exitState.pending;
     $[15] = t7;
@@ -146,14 +147,14 @@ function RuleDetails(t0) {
   if (rule.source === "policySettings") {
     let t8;
     if ($[16] === Symbol.for("react.memo_cache_sentinel")) {
-      t8 = <Text bold={true} color="permission">Rule details</Text>;
+      t8 = <Text bold={true} color="permission">{"规则详情"}</Text>;
       $[16] = t8;
     } else {
       t8 = $[16];
     }
     let t9;
     if ($[17] === Symbol.for("react.memo_cache_sentinel")) {
-      t9 = <Text italic={true}>This rule is configured by managed settings and cannot be modified.{"\n"}Contact your system administrator for more information.</Text>;
+      t9 = <Text italic={true}>{"此规则由托管设置配置，无法修改。"}{"\n"}{"更多信息请联系系统管理员。"}</Text>;
       $[17] = t9;
     } else {
       t9 = $[17];
@@ -187,7 +188,7 @@ function RuleDetails(t0) {
   }
   let t9;
   if ($[25] !== t8) {
-    t9 = <Text bold={true} color="error">Delete {t8} tool?</Text>;
+    t9 = <Text bold={true} color="error">{"删除"} {t8} {"工具？"}</Text>;
     $[25] = t8;
     $[26] = t9;
   } else {
@@ -195,7 +196,7 @@ function RuleDetails(t0) {
   }
   let t10;
   if ($[27] === Symbol.for("react.memo_cache_sentinel")) {
-    t10 = <Text>Are you sure you want to delete this permission rule?</Text>;
+    t10 = <Text>{"确定删除此权限规则？"}</Text>;
     $[27] = t10;
   } else {
     t10 = $[27];
@@ -212,10 +213,10 @@ function RuleDetails(t0) {
   let t12;
   if ($[31] === Symbol.for("react.memo_cache_sentinel")) {
     t12 = [{
-      label: "Yes",
+      label: "是",
       value: "yes"
     }, {
-      label: "No",
+      label: "否",
       value: "no"
     }];
     $[31] = t12;
@@ -601,7 +602,7 @@ export function PermissionRuleList(t0) {
       const options = [];
       if (tab !== "workspace" && tab !== "recent" && !query) {
         options.push({
-          label: `Add a new rule${figures.ellipsis}`,
+          label: `添加新规则${figures.ellipsis}`,
           value: "add-new-rule"
         });
       }
@@ -1098,7 +1099,7 @@ export function PermissionRuleList(t0) {
   }
   let t28;
   if ($[89] === Symbol.for("react.memo_cache_sentinel")) {
-    t28 = <Text>Claude Code can read files in the workspace, and make edits when auto-accept edits is on.</Text>;
+    t28 = <Text>{"Claude Code 可以读取工作区文件；开启自动接受编辑后，也可以修改文件。"}</Text>;
     $[89] = t28;
   } else {
     t28 = $[89];
@@ -1114,7 +1115,7 @@ export function PermissionRuleList(t0) {
   }
   let t30;
   if ($[93] !== defaultTab || $[94] !== isHidden || $[95] !== t23 || $[96] !== t25 || $[97] !== t26 || $[98] !== t27 || $[99] !== t29) {
-    t30 = <Tabs title="Permissions:" color="permission" defaultTab={defaultTab} hidden={isHidden} initialHeaderFocused={!hasDenials} navFromContent={t23}>{t24}{t25}{t26}{t27}{t29}</Tabs>;
+    t30 = <Tabs title="权限：" color="permission" defaultTab={defaultTab} hidden={isHidden} initialHeaderFocused={!hasDenials} navFromContent={t23}>{t24}{t25}{t26}{t27}{t29}</Tabs>;
     $[93] = defaultTab;
     $[94] = isHidden;
     $[95] = t23;
@@ -1128,7 +1129,7 @@ export function PermissionRuleList(t0) {
   }
   let t31;
   if ($[101] !== defaultTab || $[102] !== exitState.keyName || $[103] !== exitState.pending || $[104] !== headerFocused || $[105] !== isSearchMode) {
-    t31 = <Box marginTop={1} paddingLeft={1}><Text dimColor={true}>{exitState.pending ? <>Press {exitState.keyName} again to exit</> : headerFocused ? <>←/→ tab switch · ↓ return · Esc cancel</> : isSearchMode ? <>Type to filter · Enter/↓ select · ↑ tabs · Esc clear</> : hasDenials && defaultTab === "recent" ? <>Enter approve · r retry · ↑↓ navigate · ←/→ switch · Esc cancel</> : <>↑↓ navigate · Enter select · Type to search · ←/→ switch · Esc cancel</>}</Text></Box>;
+    t31 = <Box marginTop={1} paddingLeft={1}><Text dimColor={true}>{exitState.pending ? <>{"按"} {exitState.keyName} {"再次按下退出"}</> : headerFocused ? <>{"←/→ 切换标签 · ↓ 返回 · Esc 取消"}</> : isSearchMode ? <>{"输入以筛选 · Enter/↓ 选择 · ↑ 标签 · Esc 清空"}</> : hasDenials && defaultTab === "recent" ? <>{"Enter 批准 · r 重试 · ↑↓ 导航 · ←/→ 切换 · Esc 取消"}</> : <>{"↑↓ 导航 · Enter 选择 · 输入以搜索 · ←/→ 切换 · Esc 取消"}</>}</Text></Box>;
     $[101] = defaultTab;
     $[102] = exitState.keyName;
     $[103] = exitState.pending;

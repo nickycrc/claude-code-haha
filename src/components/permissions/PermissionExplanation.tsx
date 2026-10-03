@@ -1,6 +1,7 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React, { Suspense, use, useState } from 'react';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { useKeybinding } from '../../keybindings/useKeybinding.js';
 import { logEvent } from '../../services/analytics/index.js';
 import type { Message } from '../../types/message.js';
@@ -162,7 +163,7 @@ function ExplanationResult(t0) {
   if (!explanation) {
     let t1;
     if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
-      t1 = <Box marginTop={1}><Text dimColor={true}>Explanation unavailable</Text></Box>;
+      t1 = <Box marginTop={1}><Text dimColor={true}>{"暂无解释"}</Text></Box>;
       $[0] = t1;
     } else {
       t1 = $[0];

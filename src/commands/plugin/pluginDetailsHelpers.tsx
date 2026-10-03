@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 /**
  * Shared helper functions and types for plugin details views
@@ -8,7 +9,7 @@ import { c as _c } from "react/compiler-runtime";
 import * as React from 'react';
 import { ConfigurableShortcutHint } from '../../components/ConfigurableShortcutHint.js';
 import { Byline } from '../../components/design-system/Byline.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import type { PluginMarketplaceEntry } from '../../utils/plugins/schemas.js';
 
 /**
@@ -45,29 +46,29 @@ export function extractGitHubRepo(plugin: InstallablePlugin): string | null {
  */
 export function buildPluginDetailsMenuOptions(hasHomepage: string | undefined, githubRepo: string | null): PluginDetailsMenuOption[] {
   const options: PluginDetailsMenuOption[] = [{
-    label: 'Install for you (user scope)',
+    label: "为你安装（用户范围）",
     action: 'install-user'
   }, {
-    label: 'Install for all collaborators on this repository (project scope)',
+    label: "为此仓库的所有协作者安装（项目范围）",
     action: 'install-project'
   }, {
-    label: 'Install for you, in this repo only (local scope)',
+    label: "仅在此仓库为你安装（本地范围）",
     action: 'install-local'
   }];
   if (hasHomepage) {
     options.push({
-      label: 'Open homepage',
+      label: "打开主页",
       action: 'homepage'
     });
   }
   if (githubRepo) {
     options.push({
-      label: 'View on GitHub',
+      label: "在 GitHub 上查看",
       action: 'github'
     });
   }
   options.push({
-    label: 'Back to plugin list',
+    label: "返回插件列表",
     action: 'back'
   });
   return options;
@@ -93,9 +94,9 @@ export function PluginSelectionKeyHint(t0) {
   let t3;
   let t4;
   if ($[2] === Symbol.for("react.memo_cache_sentinel")) {
-    t2 = <ConfigurableShortcutHint action="plugin:toggle" context="Plugin" fallback="Space" description="toggle" />;
-    t3 = <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="details" />;
-    t4 = <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="back" />;
+    t2 = <ConfigurableShortcutHint action="plugin:toggle" context="Plugin" fallback="Space" description="切换" />;
+    t3 = <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="详情" />;
+    t4 = <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="返回" />;
     $[2] = t2;
     $[3] = t3;
     $[4] = t4;

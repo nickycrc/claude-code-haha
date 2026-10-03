@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS, logEvent } from 'src/services/analytics/index.js';
@@ -5,7 +6,7 @@ import { installOAuthTokens } from '../cli/handlers/auth.js';
 import { useTerminalSize } from '../hooks/useTerminalSize.js';
 import { setClipboard } from '../ink/termio/osc.js';
 import { useTerminalNotification } from '../ink/useTerminalNotification.js';
-import { Box, Link, Text } from '../ink.js';
+import { Box, Link } from "../ink.js";
 import { useKeybinding } from '../keybindings/useKeybinding.js';
 import { getSSLErrorHint } from '../services/api/errorUtils.js';
 import { sendNotification } from '../services/notifier.js';
@@ -159,7 +160,7 @@ export function ConsoleOAuthFlow({
       if (!authorizationCode || !state) {
         setOAuthStatus({
           state: 'error',
-          message: 'Invalid code. Please make sure the full code was copied',
+          message: "验证码无效，请确认完整复制了验证码",
           toRetry: {
             state: 'waiting_for_login',
             url
@@ -211,7 +212,7 @@ export function ConsoleOAuthFlow({
         const sslHint_0 = getSSLErrorHint(err_1);
         setOAuthStatus({
           state: 'error',
-          message: sslHint_0 ?? (isTokenExchangeError ? 'Failed to exchange authorization code for access token. Please try again.' : err_1.message),
+          message: sslHint_0 ?? (isTokenExchangeError ? "无法用授权码换取访问令牌，请重试。" : err_1.message),
           toRetry: mode === 'setup-token' ? {
             state: 'ready_to_start'
           } : {
@@ -241,7 +242,7 @@ export function ConsoleOAuthFlow({
           state: 'success'
         });
         void sendNotification({
-          message: 'Claude Code login successful',
+          message: "Claude Code 登录成功",
           notificationType: 'auth_success'
         }, terminal);
       }
@@ -297,10 +298,10 @@ export function ConsoleOAuthFlow({
       {oauthStatus.state === 'waiting_for_login' && showPastePrompt && <Box flexDirection="column" key="urlToCopy" gap={1} paddingBottom={1}>
           <Box paddingX={1}>
             <Text dimColor>
-              Browser didn&apos;t open? Use the url below to sign in{' '}
+              {"浏览器未打开？使用下面的地址登录"}{' '}
             </Text>
-            {urlCopied ? <Text color="success">(Copied!)</Text> : <Text dimColor>
-                <KeyboardShortcutHint shortcut="c" action="copy" parens />
+            {urlCopied ? <Text color="success">{"（已复制！）"}</Text> : <Text dimColor>
+                <KeyboardShortcutHint shortcut="c" action="复制" parens />
               </Text>}
           </Box>
           <Link url={oauthStatus.url}>
@@ -309,18 +310,16 @@ export function ConsoleOAuthFlow({
         </Box>}
       {mode === 'setup-token' && oauthStatus.state === 'success' && oauthStatus.token && <Box key="tokenOutput" flexDirection="column" gap={1} paddingTop={1}>
             <Text color="success">
-              ✓ Long-lived authentication token created successfully!
+              {"✓ 长期身份验证令牌创建成功！"}
             </Text>
             <Box flexDirection="column" gap={1}>
-              <Text>Your OAuth token (valid for 1 year):</Text>
+              <Text>{"你的 OAuth 令牌（有效期 1 年）："}</Text>
               <Text color="warning">{oauthStatus.token}</Text>
               <Text dimColor>
-                Store this token securely. You won&apos;t be able to see it
-                again.
+                {"请妥善保存此令牌，之后无法再次查看。"}
               </Text>
               <Text dimColor>
-                Use this token by setting: export
-                CLAUDE_CODE_OAUTH_TOKEN=&lt;token&gt;
+                {"设置此环境变量使用令牌：export CLAUDE_CODE_OAUTH_TOKEN=<token>"}
               </Text>
             </Box>
           </Box>}
@@ -375,7 +374,7 @@ function OAuthStatusMessage(t0) {
         }
         let t3;
         if ($[2] === Symbol.for("react.memo_cache_sentinel")) {
-          t3 = <Text>Select login method:</Text>;
+          t3 = <Text>{"选择登录方式："}</Text>;
           $[2] = t3;
         } else {
           t3 = $[2];
@@ -383,7 +382,7 @@ function OAuthStatusMessage(t0) {
         let t4;
         if ($[3] === Symbol.for("react.memo_cache_sentinel")) {
           t4 = {
-            label: <Text>Claude account with subscription ·{" "}<Text dimColor={true}>Pro, Max, Team, or Enterprise</Text>{false && <Text>{"\n"}<Text color="warning">[ANT-ONLY]</Text>{" "}<Text dimColor={true}>Please use this option unless you need to login to a special org for accessing sensitive data (e.g. customer data, HIPI data) with the Console option</Text></Text>}{"\n"}</Text>,
+            label: <Text>{"有订阅的 Claude 账户 ·"}{" "}<Text dimColor={true}>{"Pro、Max、Team 或 Enterprise"}</Text>{false && <Text>{"\n"}<Text color="warning">{"[仅限内部]"}</Text>{" "}<Text dimColor={true}>{"除非需要通过 Console 登录特殊组织以访问敏感数据，否则请使用此选项。"}</Text></Text>}{"\n"}</Text>,
             value: "claudeai"
           };
           $[3] = t4;
@@ -393,7 +392,7 @@ function OAuthStatusMessage(t0) {
         let t5;
         if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
           t5 = {
-            label: <Text>Anthropic Console account ·{" "}<Text dimColor={true}>API usage billing</Text>{"\n"}</Text>,
+            label: <Text>{"Anthropic Console 账户 ·"}{" "}<Text dimColor={true}>{"按 API 用量计费"}</Text>{"\n"}</Text>,
             value: "console"
           };
           $[4] = t5;
@@ -403,7 +402,7 @@ function OAuthStatusMessage(t0) {
         let t6;
         if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
           t6 = [t4, t5, {
-            label: <Text>3rd-party platform ·{" "}<Text dimColor={true}>Amazon Bedrock, Microsoft Foundry, or Vertex AI</Text>{"\n"}</Text>,
+            label: <Text>{"第三方平台 ·"}{" "}<Text dimColor={true}>{"Amazon Bedrock、Microsoft Foundry 或 Vertex AI"}</Text>{"\n"}</Text>,
             value: "platform"
           }];
           $[5] = t6;
@@ -452,7 +451,7 @@ function OAuthStatusMessage(t0) {
       {
         let t1;
         if ($[12] === Symbol.for("react.memo_cache_sentinel")) {
-          t1 = <Text bold={true}>Using 3rd-party platforms</Text>;
+          t1 = <Text bold={true}>{"使用第三方平台"}</Text>;
           $[12] = t1;
         } else {
           t1 = $[12];
@@ -460,8 +459,8 @@ function OAuthStatusMessage(t0) {
         let t2;
         let t3;
         if ($[13] === Symbol.for("react.memo_cache_sentinel")) {
-          t2 = <Text>Claude Code supports Amazon Bedrock, Microsoft Foundry, and Vertex AI. Set the required environment variables, then restart Claude Code.</Text>;
-          t3 = <Text>If you are part of an enterprise organization, contact your administrator for setup instructions.</Text>;
+          t2 = <Text>{"Claude Code 支持 Amazon Bedrock、Microsoft Foundry 和 Vertex AI。设置所需环境变量后重启 Claude Code。"}</Text>;
+          t3 = <Text>{"如果你属于企业组织，请联系管理员获取配置说明。"}</Text>;
           $[13] = t2;
           $[14] = t3;
         } else {
@@ -470,35 +469,35 @@ function OAuthStatusMessage(t0) {
         }
         let t4;
         if ($[15] === Symbol.for("react.memo_cache_sentinel")) {
-          t4 = <Text bold={true}>Documentation:</Text>;
+          t4 = <Text bold={true}>{"文档："}</Text>;
           $[15] = t4;
         } else {
           t4 = $[15];
         }
         let t5;
         if ($[16] === Symbol.for("react.memo_cache_sentinel")) {
-          t5 = <Text>· Amazon Bedrock:{" "}<Link url="https://code.claude.com/docs/en/amazon-bedrock">https://code.claude.com/docs/en/amazon-bedrock</Link></Text>;
+          t5 = <Text>{"· Amazon Bedrock："}{" "}<Link url="https://code.claude.com/docs/en/amazon-bedrock">https://code.claude.com/docs/en/amazon-bedrock</Link></Text>;
           $[16] = t5;
         } else {
           t5 = $[16];
         }
         let t6;
         if ($[17] === Symbol.for("react.memo_cache_sentinel")) {
-          t6 = <Text>· Microsoft Foundry:{" "}<Link url="https://code.claude.com/docs/en/microsoft-foundry">https://code.claude.com/docs/en/microsoft-foundry</Link></Text>;
+          t6 = <Text>{"· Microsoft Foundry："}{" "}<Link url="https://code.claude.com/docs/en/microsoft-foundry">https://code.claude.com/docs/en/microsoft-foundry</Link></Text>;
           $[17] = t6;
         } else {
           t6 = $[17];
         }
         let t7;
         if ($[18] === Symbol.for("react.memo_cache_sentinel")) {
-          t7 = <Box flexDirection="column" marginTop={1}>{t4}{t5}{t6}<Text>· Vertex AI:{" "}<Link url="https://code.claude.com/docs/en/google-vertex-ai">https://code.claude.com/docs/en/google-vertex-ai</Link></Text></Box>;
+          t7 = <Box flexDirection="column" marginTop={1}>{t4}{t5}{t6}<Text>{"· Vertex AI："}{" "}<Link url="https://code.claude.com/docs/en/google-vertex-ai">https://code.claude.com/docs/en/google-vertex-ai</Link></Text></Box>;
           $[18] = t7;
         } else {
           t7 = $[18];
         }
         let t8;
         if ($[19] === Symbol.for("react.memo_cache_sentinel")) {
-          t8 = <Box flexDirection="column" gap={1} marginTop={1}>{t1}<Box flexDirection="column" gap={1}>{t2}{t3}{t7}<Box marginTop={1}><Text dimColor={true}>Press <Text bold={true}>Enter</Text> to go back to login options.</Text></Box></Box></Box>;
+          t8 = <Box flexDirection="column" gap={1} marginTop={1}>{t1}<Box flexDirection="column" gap={1}>{t2}{t3}{t7}<Box marginTop={1}><Text dimColor={true}>{"按"} <Text bold={true}>Enter</Text> {"返回登录选项。"}</Text></Box></Box></Box>;
           $[19] = t8;
         } else {
           t8 = $[19];
@@ -517,7 +516,7 @@ function OAuthStatusMessage(t0) {
         }
         let t2;
         if ($[22] !== showPastePrompt) {
-          t2 = !showPastePrompt && <Box><Spinner /><Text>Opening browser to sign in…</Text></Box>;
+          t2 = !showPastePrompt && <Box><Spinner /><Text>{"正在打开浏览器以登录……"}</Text></Box>;
           $[22] = showPastePrompt;
           $[23] = t2;
         } else {
@@ -554,7 +553,7 @@ function OAuthStatusMessage(t0) {
       {
         let t1;
         if ($[37] === Symbol.for("react.memo_cache_sentinel")) {
-          t1 = <Box flexDirection="column" gap={1}><Box><Spinner /><Text>Creating API key for Claude Code…</Text></Box></Box>;
+          t1 = <Box flexDirection="column" gap={1}><Box><Spinner /><Text>{"正在为 Claude Code 创建 API 密钥……"}</Text></Box></Box>;
           $[37] = t1;
         } else {
           t1 = $[37];
@@ -565,7 +564,7 @@ function OAuthStatusMessage(t0) {
       {
         let t1;
         if ($[38] === Symbol.for("react.memo_cache_sentinel")) {
-          t1 = <Box flexDirection="column" gap={1}><Text color="permission">Retrying…</Text></Box>;
+          t1 = <Box flexDirection="column" gap={1}><Text color="permission">{"正在重试……"}</Text></Box>;
           $[38] = t1;
         } else {
           t1 = $[38];
@@ -576,7 +575,7 @@ function OAuthStatusMessage(t0) {
       {
         let t1;
         if ($[39] !== mode || $[40] !== oauthStatus.token) {
-          t1 = mode === "setup-token" && oauthStatus.token ? null : <>{getOauthAccountInfo()?.emailAddress ? <Text dimColor={true}>Logged in as{" "}<Text>{getOauthAccountInfo()?.emailAddress}</Text></Text> : null}<Text color="success">Login successful. Press <Text bold={true}>Enter</Text> to continue…</Text></>;
+          t1 = mode === "setup-token" && oauthStatus.token ? null : <>{getOauthAccountInfo()?.emailAddress ? <Text dimColor={true}>{"已登录为"}{" "}<Text>{getOauthAccountInfo()?.emailAddress}</Text></Text> : null}<Text color="success">{"登录成功，按"} <Text bold={true}>Enter</Text> {"继续……"}</Text></>;
           $[39] = mode;
           $[40] = oauthStatus.token;
           $[41] = t1;
@@ -597,7 +596,7 @@ function OAuthStatusMessage(t0) {
       {
         let t1;
         if ($[44] !== oauthStatus.message) {
-          t1 = <Text color="error">OAuth error: {oauthStatus.message}</Text>;
+          t1 = <Text color="error">{"OAuth 错误："} {oauthStatus.message}</Text>;
           $[44] = oauthStatus.message;
           $[45] = t1;
         } else {
@@ -605,7 +604,7 @@ function OAuthStatusMessage(t0) {
         }
         let t2;
         if ($[46] !== oauthStatus.toRetry) {
-          t2 = oauthStatus.toRetry && <Box marginTop={1}><Text color="permission">Press <Text bold={true}>Enter</Text> to retry.</Text></Box>;
+          t2 = oauthStatus.toRetry && <Box marginTop={1}><Text color="permission">{"按"} <Text bold={true}>Enter</Text> {"重试。"}</Text></Box>;
           $[46] = oauthStatus.toRetry;
           $[47] = t2;
         } else {

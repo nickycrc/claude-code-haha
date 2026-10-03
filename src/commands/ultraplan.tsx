@@ -329,7 +329,7 @@ async function launchDetached(opts: {
     let bundleFailMsg: string | undefined;
     const session = await teleportToRemote({
       initialMessage: prompt,
-      description: blurb || 'Refine local plan',
+      description: blurb || "完善本地计划",
       model,
       permissionMode: 'plan',
       ultraplan: true,
@@ -461,7 +461,7 @@ const call: LocalJSXCommandCall = async (onDone, context, args) => {
 export default {
   type: 'local-jsx',
   name: 'ultraplan',
-  description: `~10–30 min · Claude Code on the web drafts an advanced plan you can edit and approve. See ${CCR_TERMS_URL}`,
+  description: `约 10–30 分钟 · 网页版 Claude Code 制定高级计划，供你编辑和批准。详情：${CCR_TERMS_URL}`,
   argumentHint: '<prompt>',
   isEnabled: () => "external" === 'ant',
   load: () => Promise.resolve({

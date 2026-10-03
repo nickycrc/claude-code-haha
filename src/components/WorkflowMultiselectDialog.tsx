@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React, { useCallback, useState } from 'react';
 import type { Workflow } from '../commands/install-github-app/types.js';
 import type { ExitState } from '../hooks/useExitOnCtrlCDWithKeybindings.js';
-import { Box, Link, Text } from '../ink.js';
+import { Box, Link } from "../ink.js";
 import { ConfigurableShortcutHint } from './ConfigurableShortcutHint.js';
 import { SelectMulti } from './CustomSelect/SelectMulti.js';
 import { Byline } from './design-system/Byline.js';
@@ -18,20 +19,20 @@ type Props = {
 };
 const WORKFLOWS: WorkflowOption[] = [{
   value: 'claude' as const,
-  label: '@Claude Code - Tag @claude in issues and PR comments'
+  label: "@Claude Code - 在问题和 PR 评论中提及 @claude"
 }, {
   value: 'claude-review' as const,
-  label: 'Claude Code Review - Automated code review on new PRs'
+  label: "Claude Code Review - 自动审查新 PR"
 }];
 function renderInputGuide(exitState: ExitState): React.ReactNode {
   if (exitState.pending) {
-    return <Text>Press {exitState.keyName} again to exit</Text>;
+    return <Text>{"按"} {exitState.keyName} {"再次按下退出"}</Text>;
   }
   return <Byline>
-      <KeyboardShortcutHint shortcut="↑↓" action="navigate" />
-      <KeyboardShortcutHint shortcut="Space" action="toggle" />
-      <KeyboardShortcutHint shortcut="Enter" action="confirm" />
-      <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="cancel" />
+      <KeyboardShortcutHint shortcut="↑↓" action="导航" />
+      <KeyboardShortcutHint shortcut="Space" action="切换" />
+      <KeyboardShortcutHint shortcut="Enter" action="确认" />
+      <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="取消" />
     </Byline>;
 }
 export function WorkflowMultiselectDialog(t0) {
@@ -79,7 +80,7 @@ export function WorkflowMultiselectDialog(t0) {
   const handleCancel = t3;
   let t4;
   if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
-    t4 = <Box><Text dimColor={true}>More workflow examples (issue triage, CI fixes, etc.) at:{" "}<Link url="https://github.com/anthropics/claude-code-action/blob/main/examples/">https://github.com/anthropics/claude-code-action/blob/main/examples/</Link></Text></Box>;
+    t4 = <Box><Text dimColor={true}>{"更多工作流示例（问题分类、CI 修复等）："}{" "}<Link url="https://github.com/anthropics/claude-code-action/blob/main/examples/">https://github.com/anthropics/claude-code-action/blob/main/examples/</Link></Text></Box>;
     $[4] = t4;
   } else {
     t4 = $[4];
@@ -102,7 +103,7 @@ export function WorkflowMultiselectDialog(t0) {
   }
   let t7;
   if ($[9] !== showError) {
-    t7 = showError && <Box><Text color="error">You must select at least one workflow to continue</Text></Box>;
+    t7 = showError && <Box><Text color="error">{"至少选择一个工作流才能继续"}</Text></Box>;
     $[9] = showError;
     $[10] = t7;
   } else {
@@ -110,7 +111,7 @@ export function WorkflowMultiselectDialog(t0) {
   }
   let t8;
   if ($[11] !== t6 || $[12] !== t7) {
-    t8 = <Dialog title="Select GitHub workflows to install" subtitle="We'll create a workflow file in your repository for each one you select." onCancel={handleCancel} inputGuide={renderInputGuide}>{t4}{t6}{t7}</Dialog>;
+    t8 = <Dialog title="选择要安装的 GitHub 工作流" subtitle="我们会在仓库中为每个选中的工作流创建一个文件。" onCancel={handleCancel} inputGuide={renderInputGuide}>{t4}{t6}{t7}</Dialog>;
     $[11] = t6;
     $[12] = t7;
     $[13] = t8;

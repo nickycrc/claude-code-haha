@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import { feature } from 'bun:bundle';
 import { plot as asciichart } from 'asciichart';
@@ -11,7 +12,7 @@ import { applyColor } from '../ink/colorize.js';
 import { stringWidth as getStringWidth } from '../ink/stringWidth.js';
 import type { Color } from '../ink/styles.js';
 // eslint-disable-next-line custom-rules/prefer-use-keybindings -- raw j/k/arrow stats navigation
-import { Ansi, Box, Text, useInput } from '../ink.js';
+import { Ansi, Box, useInput } from "../ink.js";
 import { useKeybinding } from '../keybindings/useKeybinding.js';
 import { getGlobalConfig } from '../utils/config.js';
 import { formatDuration, formatNumber } from '../utils/format.js';
@@ -94,7 +95,7 @@ export function Stats(t0) {
   const allTimePromise = t1;
   let t2;
   if ($[1] === Symbol.for("react.memo_cache_sentinel")) {
-    t2 = <Box marginTop={1}><Spinner /><Text> Loading your Claude Code stats…</Text></Box>;
+    t2 = <Box marginTop={1}><Spinner /><Text> {"正在加载 Claude Code 统计数据……"}</Text></Box>;
     $[1] = t2;
   } else {
     t2 = $[1];
@@ -231,7 +232,7 @@ function StatsContent(t0) {
   if (allTimeResult.type === "error") {
     let t7;
     if ($[13] !== allTimeResult.message) {
-      t7 = <Box marginTop={1}><Text color="error">Failed to load stats: {allTimeResult.message}</Text></Box>;
+      t7 = <Box marginTop={1}><Text color="error">{"加载统计数据失败："} {allTimeResult.message}</Text></Box>;
       $[13] = allTimeResult.message;
       $[14] = t7;
     } else {
@@ -242,7 +243,7 @@ function StatsContent(t0) {
   if (allTimeResult.type === "empty") {
     let t7;
     if ($[15] === Symbol.for("react.memo_cache_sentinel")) {
-      t7 = <Box marginTop={1}><Text color="warning">No stats available yet. Start using Claude Code!</Text></Box>;
+      t7 = <Box marginTop={1}><Text color="warning">{"暂无统计数据，开始使用 Claude Code 吧！"}</Text></Box>;
       $[15] = t7;
     } else {
       t7 = $[15];
@@ -252,7 +253,7 @@ function StatsContent(t0) {
   if (!displayStats || !allTimeStats) {
     let t7;
     if ($[16] === Symbol.for("react.memo_cache_sentinel")) {
-      t7 = <Box marginTop={1}><Spinner /><Text> Loading stats…</Text></Box>;
+      t7 = <Box marginTop={1}><Spinner /><Text> {"正在加载统计数据……"}</Text></Box>;
       $[16] = t7;
     } else {
       t7 = $[16];
@@ -292,7 +293,7 @@ function StatsContent(t0) {
   const t10 = copyStatus ? ` · ${copyStatus}` : "";
   let t11;
   if ($[29] !== t10) {
-    t11 = <Box paddingLeft={2}><Text dimColor={true}>Esc to cancel · r to cycle dates · ctrl+s to copy{t10}</Text></Box>;
+    t11 = <Box paddingLeft={2}><Text dimColor={true}>{"Esc 取消 · r 切换日期 · ctrl+s 复制"}{t10}</Text></Box>;
     $[29] = t10;
     $[30] = t11;
   } else {
@@ -405,19 +406,19 @@ function OverviewTab({
       shotStatsData = {
         avgShots: (totalShots / total).toFixed(1),
         buckets: [{
-          label: '1-shot',
+          label: "一次完成",
           count: b1,
           pct: pct(b1)
         }, {
-          label: '2\u20135 shot',
+          label: "2–5 次交互",
           count: b2_5,
           pct: pct(b2_5)
         }, {
-          label: '6\u201310 shot',
+          label: "6–10 次交互",
           count: b6_10,
           pct: pct(b6_10)
         }, {
-          label: '11+ shot',
+          label: "11 次以上交互",
           count: b11,
           pct: pct(b11)
         }]
@@ -441,7 +442,7 @@ function OverviewTab({
       <Box flexDirection="row" gap={4} marginBottom={1}>
         <Box flexDirection="column" width={28}>
           {favoriteModel && <Text wrap="truncate">
-              Favorite model:{' '}
+              {"常用模型："}{' '}
               <Text color="claude" bold>
                 {renderModelName(favoriteModel[0])}
               </Text>
@@ -449,7 +450,7 @@ function OverviewTab({
         </Box>
         <Box flexDirection="column" width={28}>
           <Text wrap="truncate">
-            Total tokens:{' '}
+            {"总令牌数："}{' '}
             <Text color="claude">{formatNumber(totalTokens)}</Text>
           </Text>
         </Box>
@@ -459,13 +460,13 @@ function OverviewTab({
       <Box flexDirection="row" gap={4}>
         <Box flexDirection="column" width={28}>
           <Text wrap="truncate">
-            Sessions:{' '}
+            {"会话数："}{' '}
             <Text color="claude">{formatNumber(stats.totalSessions)}</Text>
           </Text>
         </Box>
         <Box flexDirection="column" width={28}>
           {stats.longestSession && <Text wrap="truncate">
-              Longest session:{' '}
+              {"最长会话："}{' '}
               <Text color="claude">
                 {formatDuration(stats.longestSession.duration)}
               </Text>
@@ -477,17 +478,17 @@ function OverviewTab({
       <Box flexDirection="row" gap={4}>
         <Box flexDirection="column" width={28}>
           <Text wrap="truncate">
-            Active days: <Text color="claude">{stats.activeDays}</Text>
+            {"活跃天数："} <Text color="claude">{stats.activeDays}</Text>
             <Text color="subtle">/{rangeDays}</Text>
           </Text>
         </Box>
         <Box flexDirection="column" width={28}>
           <Text wrap="truncate">
-            Longest streak:{' '}
+            {"最长连续活跃："}{' '}
             <Text color="claude" bold>
               {stats.streaks.longestStreak}
             </Text>{' '}
-            {stats.streaks.longestStreak === 1 ? 'day' : 'days'}
+            {stats.streaks.longestStreak === 1 ? "天" : "天"}
           </Text>
         </Box>
       </Box>
@@ -496,17 +497,17 @@ function OverviewTab({
       <Box flexDirection="row" gap={4}>
         <Box flexDirection="column" width={28}>
           {stats.peakActivityDay && <Text wrap="truncate">
-              Most active day:{' '}
+              {"最活跃的一天："}{' '}
               <Text color="claude">{formatPeakDay(stats.peakActivityDay)}</Text>
             </Text>}
         </Box>
         <Box flexDirection="column" width={28}>
           <Text wrap="truncate">
-            Current streak:{' '}
+            {"当前连续活跃："}{' '}
             <Text color="claude" bold>
               {allTimeStats.streaks.currentStreak}
             </Text>{' '}
-            {allTimeStats.streaks.currentStreak === 1 ? 'day' : 'days'}
+            {allTimeStats.streaks.currentStreak === 1 ? "天" : "天"}
           </Text>
         </Box>
       </Box>
@@ -515,7 +516,7 @@ function OverviewTab({
       {"external" === 'ant' && stats.totalSpeculationTimeSavedMs > 0 && <Box flexDirection="row" gap={4}>
             <Box flexDirection="column" width={28}>
               <Text wrap="truncate">
-                Speculation saved:{' '}
+                {"推测执行节省："}{' '}
                 <Text color="claude">
                   {formatDuration(stats.totalSpeculationTimeSavedMs)}
                 </Text>
@@ -526,7 +527,7 @@ function OverviewTab({
       {/* Shot stats (ant-only) */}
       {shotStatsData && <>
           <Box marginTop={1}>
-            <Text>Shot distribution</Text>
+            <Text>{"交互次数分布"}</Text>
           </Box>
           <Box flexDirection="row" gap={4}>
             <Box flexDirection="column" width={28}>
@@ -563,7 +564,7 @@ function OverviewTab({
           <Box flexDirection="row" gap={4}>
             <Box flexDirection="column" width={28}>
               <Text wrap="truncate">
-                Avg/session:{' '}
+                {"每次会话平均："}{' '}
                 <Text color="claude">{shotStatsData.avgShots}</Text>
               </Text>
             </Box>
@@ -755,7 +756,7 @@ function ModelsTab(t0) {
   if (modelEntries.length === 0) {
     let t3;
     if ($[2] === Symbol.for("react.memo_cache_sentinel")) {
-      t3 = <Box><Text color="subtle">No model usage data available</Text></Box>;
+      t3 = <Box><Text color="subtle">{"暂无模型用量数据"}</Text></Box>;
       $[2] = t3;
     } else {
       t3 = $[2];
@@ -798,7 +799,7 @@ function ModelsTab(t0) {
   }
   let t10;
   if ($[9] !== canScrollDown || $[10] !== canScrollUp || $[11] !== modelEntries || $[12] !== scrollOffset || $[13] !== showScrollHint) {
-    t10 = showScrollHint && <Box marginTop={1}><Text color="subtle">{canScrollUp ? figures.arrowUp : " "}{" "}{canScrollDown ? figures.arrowDown : " "} {scrollOffset + 1}-{Math.min(scrollOffset + 4, modelEntries.length)} of{" "}{modelEntries.length} models (↑↓ to scroll)</Text></Box>;
+    t10 = showScrollHint && <Box marginTop={1}><Text color="subtle">{canScrollUp ? figures.arrowUp : " "}{" "}{canScrollDown ? figures.arrowDown : " "} {scrollOffset + 1}-{Math.min(scrollOffset + 4, modelEntries.length)} {"／"}{" "}{modelEntries.length} {"个模型（↑↓ 滚动）"}</Text></Box>;
     $[9] = canScrollDown;
     $[10] = canScrollUp;
     $[11] = modelEntries;
@@ -808,7 +809,7 @@ function ModelsTab(t0) {
   } else {
     t10 = $[14];
   }
-  return <Box flexDirection="column" marginTop={1}>{chartOutput && <Box flexDirection="column" marginBottom={1}><Text bold={true}>Tokens per Day</Text><Ansi>{chartOutput.chart}</Ansi><Text color="subtle">{chartOutput.xAxisLabels}</Text><Box>{chartOutput.legend.map(_temp1)}</Box></Box>}{t3}<Box flexDirection="row" gap={4}><Box flexDirection="column" width={36}>{leftModels.map(t4 => {
+  return <Box flexDirection="column" marginTop={1}>{chartOutput && <Box flexDirection="column" marginBottom={1}><Text bold={true}>{"每日令牌用量"}</Text><Ansi>{chartOutput.chart}</Ansi><Text color="subtle">{chartOutput.xAxisLabels}</Text><Box>{chartOutput.legend.map(_temp1)}</Box></Box>}{t3}<Box flexDirection="row" gap={4}><Box flexDirection="column" width={36}>{leftModels.map(t4 => {
           const [model_0, usage_0] = t4;
           return <ModelEntry key={model_0} model={model_0} usage={usage_0} totalTokens={totalTokens} />;
         })}</Box>{t9}</Box>{t10}</Box>;
@@ -910,7 +911,7 @@ function ModelEntry(t0) {
   }
   let t9;
   if ($[15] !== t7 || $[16] !== t8) {
-    t9 = <Text color="subtle">{"  "}In: {t7} · Out:{" "}{t8}</Text>;
+    t9 = <Text color="subtle">{"  "}{"输入："} {t7} {"· 输出："}{" "}{t8}</Text>;
     $[15] = t7;
     $[16] = t8;
     $[17] = t9;

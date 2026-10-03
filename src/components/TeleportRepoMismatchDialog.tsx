@@ -1,6 +1,7 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React, { useCallback, useState } from 'react';
-import { Box, Text } from '../ink.js';
+import { Box } from "../ink.js";
 import { getDisplayPath } from '../utils/file.js';
 import { removePathFromRepo, validateRepoAtPath } from '../utils/githubRepoPathMapping.js';
 import { Select } from './CustomSelect/index.js';
@@ -57,7 +58,7 @@ export function TeleportRepoMismatchDialog(t0) {
     let t3;
     if ($[7] === Symbol.for("react.memo_cache_sentinel")) {
       t3 = {
-        label: "Cancel",
+        label: "取消",
         value: "cancel"
       };
       $[7] = t3;
@@ -73,7 +74,7 @@ export function TeleportRepoMismatchDialog(t0) {
   const options = t2;
   let t3;
   if ($[8] !== availablePaths.length || $[9] !== errorMessage || $[10] !== handleChange || $[11] !== options || $[12] !== targetRepo || $[13] !== validating) {
-    t3 = availablePaths.length > 0 ? <><Box flexDirection="column" gap={1}>{errorMessage && <Text color="error">{errorMessage}</Text>}<Text>Open Claude Code in <Text bold={true}>{targetRepo}</Text>:</Text></Box>{validating ? <Box><Spinner /><Text> Validating repository…</Text></Box> : <Select options={options} onChange={value_0 => void handleChange(value_0)} />}</> : <Box flexDirection="column" gap={1}>{errorMessage && <Text color="error">{errorMessage}</Text>}<Text dimColor={true}>Run claude --teleport from a checkout of {targetRepo}</Text></Box>;
+    t3 = availablePaths.length > 0 ? <><Box flexDirection="column" gap={1}>{errorMessage && <Text color="error">{errorMessage}</Text>}<Text>{"在以下环境中打开 Claude Code："} <Text bold={true}>{targetRepo}</Text>:</Text></Box>{validating ? <Box><Spinner /><Text> {"正在验证仓库……"}</Text></Box> : <Select options={options} onChange={value_0 => void handleChange(value_0)} />}</> : <Box flexDirection="column" gap={1}>{errorMessage && <Text color="error">{errorMessage}</Text>}<Text dimColor={true}>{"请在以下仓库的工作副本中运行 claude --teleport："} {targetRepo}</Text></Box>;
     $[8] = availablePaths.length;
     $[9] = errorMessage;
     $[10] = handleChange;
@@ -86,7 +87,7 @@ export function TeleportRepoMismatchDialog(t0) {
   }
   let t4;
   if ($[15] !== onCancel || $[16] !== t3) {
-    t4 = <Dialog title="Teleport to Repo" onCancel={onCancel} color="background">{t3}</Dialog>;
+    t4 = <Dialog title="转移到仓库" onCancel={onCancel} color="background">{t3}</Dialog>;
     $[15] = onCancel;
     $[16] = t3;
     $[17] = t4;
@@ -97,7 +98,7 @@ export function TeleportRepoMismatchDialog(t0) {
 }
 function _temp(path) {
   return {
-    label: <Text>Use <Text bold={true}>{getDisplayPath(path)}</Text></Text>,
+    label: <Text>{"使用"} <Text bold={true}>{getDisplayPath(path)}</Text></Text>,
     value: path
   };
 }

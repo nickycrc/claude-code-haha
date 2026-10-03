@@ -1,7 +1,8 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React, { type ReactNode, useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line custom-rules/prefer-use-keybindings -- UP arrow exit not in Attachments bindings
-import { Box, Text, useInput } from '../../ink.js';
+import { Box, useInput } from "../../ink.js";
 import { useKeybinding, useKeybindings } from '../../keybindings/useKeybinding.js';
 import type { PastedContent } from '../../utils/config.js';
 import { getImageFromClipboard } from '../../utils/imagePaste.js';
@@ -451,7 +452,7 @@ export function SelectInputOption(t0) {
   }
   let t36;
   if ($[87] !== descriptionPaddingLeft || $[88] !== imageAttachments || $[89] !== imagesSelected || $[90] !== isFocused || $[91] !== selectedImageIndex) {
-    t36 = imageAttachments.length > 0 && <Box flexDirection="row" gap={1} paddingLeft={descriptionPaddingLeft}>{imageAttachments.map((img_0, idx) => <ClickableImageRef key={img_0.id} imageId={img_0.id} isSelected={!!imagesSelected && idx === selectedImageIndex} />)}<Box flexGrow={1} justifyContent="flex-start" flexDirection="row"><Text dimColor={true}>{imagesSelected ? <Byline>{imageAttachments.length > 1 && <><ConfigurableShortcutHint action="attachments:next" context="Attachments" fallback={"\u2192"} description="next" /><ConfigurableShortcutHint action="attachments:previous" context="Attachments" fallback={"\u2190"} description="prev" /></>}<ConfigurableShortcutHint action="attachments:remove" context="Attachments" fallback="backspace" description="remove" /><ConfigurableShortcutHint action="attachments:exit" context="Attachments" fallback="esc" description="cancel" /></Byline> : isFocused ? "(\u2193 to select)" : null}</Text></Box></Box>;
+    t36 = imageAttachments.length > 0 && <Box flexDirection="row" gap={1} paddingLeft={descriptionPaddingLeft}>{imageAttachments.map((img_0, idx) => <ClickableImageRef key={img_0.id} imageId={img_0.id} isSelected={!!imagesSelected && idx === selectedImageIndex} />)}<Box flexGrow={1} justifyContent="flex-start" flexDirection="row"><Text dimColor={true}>{imagesSelected ? <Byline>{imageAttachments.length > 1 && <><ConfigurableShortcutHint action="attachments:next" context="Attachments" fallback={"\u2192"} description="下一项" /><ConfigurableShortcutHint action="attachments:previous" context="Attachments" fallback={"\u2190"} description="上一项" /></>}<ConfigurableShortcutHint action="attachments:remove" context="Attachments" fallback="backspace" description="移除" /><ConfigurableShortcutHint action="attachments:exit" context="Attachments" fallback="esc" description="取消" /></Byline> : isFocused ? "（按 ↓ 选择）" : null}</Text></Box></Box>;
     $[87] = descriptionPaddingLeft;
     $[88] = imageAttachments;
     $[89] = imagesSelected;

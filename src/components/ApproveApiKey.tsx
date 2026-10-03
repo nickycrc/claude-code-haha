@@ -1,6 +1,7 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React from 'react';
-import { Text } from '../ink.js';
+
 import { saveGlobalConfig } from '../utils/config.js';
 import { Select } from './CustomSelect/index.js';
 import { Dialog } from './design-system/Dialog.js';
@@ -75,7 +76,7 @@ export function ApproveApiKey(t0) {
   }
   let t5;
   if ($[8] === Symbol.for("react.memo_cache_sentinel")) {
-    t5 = <Text>Do you want to use this API key?</Text>;
+    t5 = <Text>{"是否使用此 API 密钥？"}</Text>;
     $[8] = t5;
   } else {
     t5 = $[8];
@@ -83,7 +84,7 @@ export function ApproveApiKey(t0) {
   let t6;
   if ($[9] === Symbol.for("react.memo_cache_sentinel")) {
     t6 = {
-      label: "Yes",
+      label: "是",
       value: "yes"
     };
     $[9] = t6;
@@ -93,7 +94,7 @@ export function ApproveApiKey(t0) {
   let t7;
   if ($[10] === Symbol.for("react.memo_cache_sentinel")) {
     t7 = [t6, {
-      label: <Text>No (<Text bold={true}>recommended</Text>)</Text>,
+      label: <Text>{"否（"}<Text bold={true}>{"推荐"}</Text>)</Text>,
       value: "no"
     }];
     $[10] = t7;
@@ -110,7 +111,7 @@ export function ApproveApiKey(t0) {
   }
   let t9;
   if ($[13] !== t2 || $[14] !== t4 || $[15] !== t8) {
-    t9 = <Dialog title="Detected a custom API key in your environment" color="warning" onCancel={t2}>{t4}{t5}{t8}</Dialog>;
+    t9 = <Dialog title="在环境变量中检测到自定义 API 密钥" color="warning" onCancel={t2}>{t4}{t5}{t8}</Dialog>;
     $[13] = t2;
     $[14] = t4;
     $[15] = t8;

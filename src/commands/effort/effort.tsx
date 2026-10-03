@@ -21,7 +21,7 @@ function setEffortValue(effortValue: EffortValue): EffortCommandResult {
     });
     if (result.error) {
       return {
-        message: `Failed to set effort level: ${result.error.message}`
+        message: `设置推理强度失败：${result.error.message}`
       };
     }
   }
@@ -37,14 +37,14 @@ function setEffortValue(effortValue: EffortValue): EffortCommandResult {
     const envRaw = process.env.CLAUDE_CODE_EFFORT_LEVEL;
     if (persistable === undefined) {
       return {
-        message: `Not applied: CLAUDE_CODE_EFFORT_LEVEL=${envRaw} overrides effort this session, and ${effortValue} is session-only (nothing saved)`,
+        message: `未应用：CLAUDE_CODE_EFFORT_LEVEL=${envRaw} 覆盖本次会话的推理强度，而 ${effortValue} 仅限本次会话（未保存任何设置）`,
         effortUpdate: {
           value: effortValue
         }
       };
     }
     return {
-      message: `CLAUDE_CODE_EFFORT_LEVEL=${envRaw} overrides this session — clear it and ${effortValue} takes over`,
+      message: `CLAUDE_CODE_EFFORT_LEVEL=${envRaw} 覆盖本次会话；清除后由 ${effortValue} 控制`,
       effortUpdate: {
         value: effortValue
       }
@@ -53,7 +53,7 @@ function setEffortValue(effortValue: EffortValue): EffortCommandResult {
   const description = getEffortValueDescription(effortValue);
   const suffix = persistable !== undefined ? '' : ' (this session only)';
   return {
-    message: `Set effort level to ${effortValue}${suffix}: ${description}`,
+    message: `推理强度已设为 ${effortValue}${suffix}：${description}`,
     effortUpdate: {
       value: effortValue
     }
@@ -65,12 +65,12 @@ export function showCurrentEffort(appStateEffort: EffortValue | undefined, model
   if (effectiveValue === undefined) {
     const level = getDisplayedEffortLevel(model, appStateEffort);
     return {
-      message: `Effort level: auto (currently ${level})`
+      message: `推理强度：自动（当前为 ${level}）`
     };
   }
   const description = getEffortValueDescription(effectiveValue);
   return {
-    message: `Current effort level: ${effectiveValue} (${description})`
+    message: `当前推理强度：${effectiveValue}（${description}）`
   };
 }
 function unsetEffortLevel(): EffortCommandResult {
@@ -79,7 +79,7 @@ function unsetEffortLevel(): EffortCommandResult {
   });
   if (result.error) {
     return {
-      message: `Failed to set effort level: ${result.error.message}`
+      message: `设置推理强度失败：${result.error.message}`
     };
   }
   logEvent('tengu_effort_command', {
@@ -91,14 +91,14 @@ function unsetEffortLevel(): EffortCommandResult {
   if (envOverride !== undefined && envOverride !== null) {
     const envRaw = process.env.CLAUDE_CODE_EFFORT_LEVEL;
     return {
-      message: `Cleared effort from settings, but CLAUDE_CODE_EFFORT_LEVEL=${envRaw} still controls this session`,
+      message: `已清除设置中的推理强度，但 CLAUDE_CODE_EFFORT_LEVEL=${envRaw} 仍控制本次会话`,
       effortUpdate: {
         value: undefined
       }
     };
   }
   return {
-    message: 'Effort level set to auto',
+    message: "推理强度已设为自动",
     effortUpdate: {
       value: undefined
     }
@@ -111,7 +111,7 @@ export function executeEffort(args: string): EffortCommandResult {
   }
   if (!isEffortLevel(normalized)) {
     return {
-      message: `Invalid argument: ${args}. Valid options are: low, medium, high, max, auto`
+      message: `参数无效：${args}。可选值：low、medium、high、max、auto`
     };
   }
   return setEffortValue(normalized);

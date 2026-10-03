@@ -1,10 +1,11 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import chalk from 'chalk';
 import figures from 'figures';
 import * as React from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import { useSetAppState } from 'src/state/AppState.js';
 import type { KeyboardEvent } from '../../ink/events/keyboard-event.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { useKeybinding } from '../../keybindings/useKeybinding.js';
 import type { Tools } from '../../Tool.js';
 import { type AgentColorName, setAgentColor } from '../../tools/AgentTool/agentColorManager.js';
@@ -94,16 +95,16 @@ export function AgentEditor({
     }
   }, [agent, selectedColor, onSaved, setAppState]);
   const menuItems = useMemo(() => [{
-    label: 'Open in editor',
+    label: "在编辑器中打开",
     action: handleOpenInEditor
   }, {
-    label: 'Edit tools',
+    label: "编辑工具",
     action: () => setEditMode('edit-tools')
   }, {
-    label: 'Edit model',
+    label: "编辑模型",
     action: () => setEditMode('edit-model')
   }, {
-    label: 'Edit color',
+    label: "编辑颜色",
     action: () => setEditMode('edit-color')
   }], [handleOpenInEditor]);
   const handleEscape = useCallback(() => {
@@ -133,7 +134,7 @@ export function AgentEditor({
     context: 'Confirmation'
   });
   const renderMenu = (): React.ReactNode => <Box flexDirection="column" tabIndex={0} autoFocus onKeyDown={handleMenuKeyDown}>
-      <Text dimColor>Source: {getAgentSourceDisplayName(agent.source)}</Text>
+      <Text dimColor>{"来源："} {getAgentSourceDisplayName(agent.source)}</Text>
 
       <Box marginTop={1} flexDirection="column">
         {menuItems.map((item, index_1) => <Text key={item.label} color={index_1 === selectedMenuIndex ? 'suggestion' : undefined}>

@@ -1,7 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import figures from 'figures';
-import React from 'react';
-import { Box, Text } from '../../ink.js';
+import React, { useMemo } from 'react';
+import { localizeMenuOptions } from '../../utils/i18n/menuOptions.js'
+import { Box } from "../../ink.js";
 import type { PastedContent } from '../../utils/config.js';
 import type { ImageDimensions } from '../../utils/imageResizer.js';
 import type { OptionWithDescription } from './select.js';
@@ -60,7 +62,7 @@ export function SelectMulti(t0) {
   const {
     isDisabled: t1,
     visibleOptionCount: t2,
-    options,
+    options: originalOptions,
     defaultValue: t3,
     onCancel,
     onChange,
@@ -77,6 +79,7 @@ export function SelectMulti(t0) {
     pastedContents,
     onRemoveImage
   } = t0;
+  const options = useMemo(() => localizeMenuOptions(originalOptions), [originalOptions])
   const isDisabled = t1 === undefined ? false : t1;
   const visibleOptionCount = t2 === undefined ? 5 : t2;
   let t5;

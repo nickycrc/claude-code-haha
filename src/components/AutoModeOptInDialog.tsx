@@ -1,7 +1,8 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React from 'react';
 import { logEvent } from 'src/services/analytics/index.js';
-import { Box, Link, Text } from '../ink.js';
+import { Box, Link } from "../ink.js";
 import { updateSettingsForSource } from '../utils/settings/settings.js';
 import { Select } from './CustomSelect/index.js';
 import { Dialog } from './design-system/Dialog.js';
@@ -78,7 +79,7 @@ export function AutoModeOptInDialog(t0) {
   let t4;
   if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
     t4 = true ? [{
-      label: "Yes, and make it my default mode",
+      label: "是，并设为默认模式",
       value: "accept-default" as const
     }] : [];
     $[5] = t4;
@@ -88,7 +89,7 @@ export function AutoModeOptInDialog(t0) {
   let t5;
   if ($[6] === Symbol.for("react.memo_cache_sentinel")) {
     t5 = {
-      label: "Yes, enable auto mode",
+      label: "是，启用自动模式",
       value: "accept" as const
     };
     $[6] = t5;
@@ -127,7 +128,7 @@ export function AutoModeOptInDialog(t0) {
   }
   let t10;
   if ($[15] !== onDecline || $[16] !== t9) {
-    t10 = <Dialog title="Enable auto mode?" color="warning" onCancel={onDecline}>{t3}{t9}</Dialog>;
+    t10 = <Dialog title="启用自动模式？" color="warning" onCancel={onDecline}>{t3}{t9}</Dialog>;
     $[15] = onDecline;
     $[16] = t9;
     $[17] = t10;

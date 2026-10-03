@@ -38,7 +38,7 @@ export function FileEditToolUseRejectedMessage(t0) {
   } = useTerminalSize();
   let t1;
   if ($[0] !== operation) {
-    t1 = <Text color="subtle">User rejected {operation} to </Text>;
+    t1 = <Text color="subtle">{"用户已拒绝"} {operation} {"以"} </Text>;
     $[0] = operation;
     $[1] = t1;
   } else {
@@ -113,7 +113,7 @@ export function FileEditToolUseRejectedMessage(t0) {
     }
     let t9;
     if ($[20] !== plusLines || $[21] !== verbose) {
-      t9 = !verbose && plusLines > 0 && <Text dimColor={true}>… +{plusLines} lines</Text>;
+      t9 = !verbose && plusLines > 0 && <Text dimColor={true}>… +{plusLines} {"行"}</Text>;
       $[20] = plusLines;
       $[21] = verbose;
       $[22] = t9;

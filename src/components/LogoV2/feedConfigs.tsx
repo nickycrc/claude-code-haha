@@ -18,10 +18,10 @@ export function createRecentActivityFeed(activities: LogOption[]): FeedConfig {
     };
   });
   return {
-    title: 'Recent activity',
+    title: "近期活动",
     lines,
     footer: lines.length > 0 ? '/resume for more' : undefined,
-    emptyMessage: 'No recent activity'
+    emptyMessage: "暂无近期活动"
   };
 }
 export function createWhatsNewFeed(releaseNotes: string[]): FeedConfig {
@@ -41,7 +41,7 @@ export function createWhatsNewFeed(releaseNotes: string[]): FeedConfig {
   });
   const emptyMessage = "external" === 'ant' ? 'Unable to fetch latest claude-cli-internal commits' : 'Check the Claude Code changelog for updates';
   return {
-    title: "external" === 'ant' ? "What's new [ANT-ONLY: Latest CC commits]" : "What's new",
+    title: "external" === 'ant' ? "更新内容 [仅限内部：最新 CC 提交]" : "更新内容",
     lines,
     footer: lines.length > 0 ? '/release-notes for more' : undefined,
     emptyMessage
@@ -67,7 +67,7 @@ export function createProjectOnboardingFeed(steps: Step[]): FeedConfig {
     });
   }
   return {
-    title: 'Tips for getting started',
+    title: "入门提示",
     lines
   };
 }
@@ -75,7 +75,7 @@ export function createGuestPassesFeed(): FeedConfig {
   const reward = getCachedReferrerReward();
   const subtitle = reward ? `Share Claude Code and earn ${formatCreditAmount(reward)} of extra usage` : 'Share Claude Code with friends';
   return {
-    title: '3 guest passes',
+    title: "3 个访客名额",
     lines: [],
     customContent: {
       content: <>

@@ -27,7 +27,7 @@ export function NotebookEditToolUseRejectedMessage(t0) {
   const operation = edit_mode === "delete" ? "delete" : `${edit_mode} cell in`;
   let t2;
   if ($[0] !== operation) {
-    t2 = <Text color="subtle">User rejected {operation} </Text>;
+    t2 = <Text color="subtle">{"用户已拒绝"} {operation} </Text>;
     $[0] = operation;
     $[1] = t2;
   } else {
@@ -52,7 +52,7 @@ export function NotebookEditToolUseRejectedMessage(t0) {
   }
   let t5;
   if ($[7] !== cell_id) {
-    t5 = <Text color="subtle"> at cell {cell_id}</Text>;
+    t5 = <Text color="subtle"> {"在单元格"} {cell_id}</Text>;
     $[7] = cell_id;
     $[8] = t5;
   } else {

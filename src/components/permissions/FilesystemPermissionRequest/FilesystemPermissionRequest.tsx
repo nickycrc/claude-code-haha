@@ -1,6 +1,7 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React from 'react';
-import { Box, Text, useTheme } from '../../../ink.js';
+import { Box, useTheme } from "../../../ink.js";
 import { FallbackPermissionRequest } from '../FallbackPermissionRequest.js';
 import { FilePermissionDialog } from '../FilePermissionDialog/FilePermissionDialog.js';
 import type { ToolInput } from '../FilePermissionDialog/useFilePermissionDialog.js';

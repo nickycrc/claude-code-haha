@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import figures from 'figures';
 import * as React from 'react';
@@ -7,7 +8,7 @@ import { Byline } from '../../components/design-system/Byline.js';
 import { Pane } from '../../components/design-system/Pane.js';
 import { Tab, Tabs } from '../../components/design-system/Tabs.js';
 import { useExitOnCtrlCDWithKeybindings } from '../../hooks/useExitOnCtrlCDWithKeybindings.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { useKeybinding, useKeybindings } from '../../keybindings/useKeybinding.js';
 import { useAppState, useSetAppState } from '../../state/AppState.js';
 import type { PluginError } from '../../types/plugin.js';
@@ -65,7 +66,7 @@ function MarketplaceList(t0) {
   useEffect(t1, t2);
   let t3;
   if ($[3] === Symbol.for("react.memo_cache_sentinel")) {
-    t3 = <Text>Loading marketplaces...</Text>;
+    t3 = <Text>{"正在加载市场……"}</Text>;
     $[3] = t3;
   } else {
     t3 = $[3];
@@ -240,7 +241,7 @@ function buildErrorRows(failedMarketplaces: Array<{
     const scope = sourceInfo.isInPolicy ? 'managed' : sourceInfo.editableSources[0]?.scope;
     rows.push({
       label: m.name,
-      message: m.error ?? 'Installation failed',
+      message: m.error ?? "安装失败",
       guidance: action.kind === 'managed-only' ? 'Managed by your organization — contact your admin' : undefined,
       action,
       scope
@@ -518,14 +519,14 @@ function ErrorsTabContent(t0) {
   if (rows.length === 0) {
     let t10;
     if ($[9] === Symbol.for("react.memo_cache_sentinel")) {
-      t10 = <Box marginLeft={1}><Text dimColor={true}>No plugin errors</Text></Box>;
+      t10 = <Box marginLeft={1}><Text dimColor={true}>{"没有插件错误"}</Text></Box>;
       $[9] = t10;
     } else {
       t10 = $[9];
     }
     let t11;
     if ($[10] === Symbol.for("react.memo_cache_sentinel")) {
-      t11 = <Box flexDirection="column">{t10}<Box marginTop={1}><Text dimColor={true} italic={true}><ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="back" /></Text></Box></Box>;
+      t11 = <Box flexDirection="column">{t10}<Box marginTop={1}><Text dimColor={true} italic={true}><ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="返回" /></Text></Box></Box>;
       $[10] = t11;
     } else {
       t11 = $[10];
@@ -556,14 +557,14 @@ function ErrorsTabContent(t0) {
   }
   let t14;
   if ($[15] === Symbol.for("react.memo_cache_sentinel")) {
-    t14 = <ConfigurableShortcutHint action="select:previous" context="Select" fallback={"\u2191"} description="navigate" />;
+    t14 = <ConfigurableShortcutHint action="select:previous" context="Select" fallback={"\u2191"} description="导航" />;
     $[15] = t14;
   } else {
     t14 = $[15];
   }
   let t15;
   if ($[16] !== hasAction) {
-    t15 = hasAction && <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="resolve" />;
+    t15 = hasAction && <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="处理" />;
     $[16] = hasAction;
     $[17] = t15;
   } else {
@@ -571,7 +572,7 @@ function ErrorsTabContent(t0) {
   }
   let t16;
   if ($[18] === Symbol.for("react.memo_cache_sentinel")) {
-    t16 = <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="back" />;
+    t16 = <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="返回" />;
     $[18] = t16;
   } else {
     t16 = $[18];
@@ -916,7 +917,7 @@ export function PluginSettings(t0) {
   if (viewState.type === "help") {
     let t16;
     if ($[28] === Symbol.for("react.memo_cache_sentinel")) {
-      t16 = <Box flexDirection="column"><Text bold={true}>Plugin Command Usage:</Text><Text> </Text><Text dimColor={true}>Installation:</Text><Text> /plugin install - Browse and install plugins</Text><Text>{" "}{"/plugin install <marketplace> - Install from specific marketplace"}</Text><Text>{" /plugin install <plugin> - Install specific plugin"}</Text><Text>{" "}{"/plugin install <plugin>@<market> - Install plugin from marketplace"}</Text><Text> </Text><Text dimColor={true}>Management:</Text><Text> /plugin manage - Manage installed plugins</Text><Text>{" /plugin enable <plugin> - Enable a plugin"}</Text><Text>{" /plugin disable <plugin> - Disable a plugin"}</Text><Text>{" /plugin uninstall <plugin> - Uninstall a plugin"}</Text><Text> </Text><Text dimColor={true}>Marketplaces:</Text><Text> /plugin marketplace - Marketplace management menu</Text><Text> /plugin marketplace add - Add a marketplace</Text><Text>{" "}{"/plugin marketplace add <path/url> - Add marketplace directly"}</Text><Text> /plugin marketplace update - Update marketplaces</Text><Text>{" "}{"/plugin marketplace update <name> - Update specific marketplace"}</Text><Text> /plugin marketplace remove - Remove a marketplace</Text><Text>{" "}{"/plugin marketplace remove <name> - Remove specific marketplace"}</Text><Text> /plugin marketplace list - List all marketplaces</Text><Text> </Text><Text dimColor={true}>Validation:</Text><Text>{" "}{"/plugin validate <path> - Validate a manifest file or directory"}</Text><Text> </Text><Text dimColor={true}>Other:</Text><Text> /plugin - Main plugin menu</Text><Text> /plugin help - Show this help</Text><Text> /plugins - Alias for /plugin</Text></Box>;
+      t16 = <Box flexDirection="column"><Text bold={true}>{"插件命令用法："}</Text><Text> </Text><Text dimColor={true}>{"安装："}</Text><Text> {"/plugin install - 浏览和安装插件"}</Text><Text>{" "}{"/plugin install <marketplace> - 从指定市场安装"}</Text><Text>{"/plugin install <plugin> - 安装指定插件"}</Text><Text>{" "}{"/plugin install <plugin>@<market> - 从市场安装插件"}</Text><Text> </Text><Text dimColor={true}>{"管理："}</Text><Text> {"/plugin manage - 管理已安装插件"}</Text><Text>{"/plugin enable <plugin> - 启用插件"}</Text><Text>{"/plugin disable <plugin> - 禁用插件"}</Text><Text>{"/plugin uninstall <plugin> - 卸载插件"}</Text><Text> </Text><Text dimColor={true}>{"市场："}</Text><Text> {"/plugin marketplace - 市场管理菜单"}</Text><Text> {"/plugin marketplace add - 添加市场"}</Text><Text>{" "}{"/plugin marketplace add <path/url> - 直接添加市场"}</Text><Text> {"/plugin marketplace update - 更新市场"}</Text><Text>{" "}{"/plugin marketplace update <name> - 更新指定市场"}</Text><Text> {"/plugin marketplace remove - 移除市场"}</Text><Text>{" "}{"/plugin marketplace remove <name> - 移除指定市场"}</Text><Text> {"/plugin marketplace list - 列出所有市场"}</Text><Text> </Text><Text dimColor={true}>{"验证："}</Text><Text>{" "}{"/plugin validate <path> - 验证清单文件或目录"}</Text><Text> </Text><Text dimColor={true}>{"其他："}</Text><Text> {"/plugin - 插件主菜单"}</Text><Text> {"/plugin help - 显示此帮助"}</Text><Text> {"/plugins - /plugin 的别名"}</Text></Box>;
       $[28] = t16;
     } else {
       t16 = $[28];
@@ -1037,7 +1038,7 @@ export function PluginSettings(t0) {
   }
   let t27;
   if ($[67] !== activeTab || $[68] !== childSearchActive || $[69] !== t16 || $[70] !== t17 || $[71] !== t21 || $[72] !== t24 || $[73] !== t26) {
-    t27 = <Pane color="suggestion"><Tabs title="Plugins" selectedTab={activeTab} onTabChange={handleTabChange} color="suggestion" disableNavigation={childSearchActive} banner={t16}>{t17}{t21}{t24}{t26}</Tabs></Pane>;
+    t27 = <Pane color="suggestion"><Tabs title="插件" selectedTab={activeTab} onTabChange={handleTabChange} color="suggestion" disableNavigation={childSearchActive} banner={t16}>{t17}{t21}{t24}{t26}</Tabs></Pane>;
     $[67] = activeTab;
     $[68] = childSearchActive;
     $[69] = t16;

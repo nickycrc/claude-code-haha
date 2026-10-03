@@ -1,9 +1,11 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import figures from 'figures';
-import React, { type ReactNode, useEffect, useRef, useState } from 'react';
+import React, { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { localizeMenuOptions } from '../../utils/i18n/menuOptions.js'
 import { useDeclaredCursor } from '../../ink/hooks/use-declared-cursor.js';
 import { stringWidth } from '../../ink/stringWidth.js';
-import { Ansi, Box, Text } from '../../ink.js';
+import { Ansi, Box } from "../../ink.js";
 import { count } from '../../utils/array.js';
 import type { PastedContent } from '../../utils/config.js';
 import type { ImageDimensions } from '../../utils/imageResizer.js';
@@ -196,7 +198,7 @@ export function Select(t0) {
     hideIndexes: t2,
     visibleOptionCount: t3,
     highlightText,
-    options,
+    options: originalOptions,
     defaultValue,
     onCancel,
     onChange,
@@ -213,6 +215,7 @@ export function Select(t0) {
     pastedContents,
     onRemoveImage
   } = t0;
+  const options = useMemo(() => localizeMenuOptions(originalOptions), [originalOptions])
   const isDisabled = t1 === undefined ? false : t1;
   const hideIndexes = t2 === undefined ? false : t2;
   const visibleOptionCount = t3 === undefined ? 5 : t3;

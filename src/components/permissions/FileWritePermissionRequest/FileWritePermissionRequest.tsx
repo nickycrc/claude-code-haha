@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import { basename, relative } from 'path';
 import React, { useMemo } from 'react';
 import type { z } from 'zod/v4';
-import { Text } from '../../../ink.js';
+
 import { FileWriteTool } from '../../../tools/FileWriteTool/FileWriteTool.js';
 import { getCwd } from '../../../utils/cwd.js';
 import { isENOENT } from '../../../utils/errors.js';
@@ -118,7 +119,7 @@ export function FileWritePermissionRequest(props) {
   }
   let t11;
   if ($[11] !== actionText || $[12] !== t10) {
-    t11 = <Text>Do you want to {actionText} {t10}?</Text>;
+    t11 = <Text>{"是否要"} {actionText} {t10}?</Text>;
     $[11] = actionText;
     $[12] = t10;
     $[13] = t11;

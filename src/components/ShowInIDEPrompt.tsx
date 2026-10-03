@@ -1,7 +1,8 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import { basename, relative } from 'path';
 import React from 'react';
-import { Box, Text } from '../ink.js';
+import { Box } from "../ink.js";
 import { getCwd } from '../utils/cwd.js';
 import { isSupportedVSCodeTerminal } from '../utils/ide.js';
 import { Select } from './CustomSelect/index.js';
@@ -41,7 +42,7 @@ export function ShowInIDEPrompt(t0) {
   } = t0;
   let t1;
   if ($[0] !== ideName) {
-    t1 = <Text bold={true} color="permission">Opened changes in {ideName} ⧉</Text>;
+    t1 = <Text bold={true} color="permission">{"已在以下位置打开修改："} {ideName} ⧉</Text>;
     $[0] = ideName;
     $[1] = t1;
   } else {
@@ -49,7 +50,7 @@ export function ShowInIDEPrompt(t0) {
   }
   let t2;
   if ($[2] !== symlinkTarget) {
-    t2 = symlinkTarget && <Text color="warning">{relative(getCwd(), symlinkTarget).startsWith("..") ? `This will modify ${symlinkTarget} (outside working directory) via a symlink` : `Symlink target: ${symlinkTarget}`}</Text>;
+    t2 = symlinkTarget && <Text color="warning">{relative(getCwd(), symlinkTarget).startsWith("..") ? `这将通过符号链接修改 ${symlinkTarget}（工作目录之外）` : `符号链接目标：${symlinkTarget}`}</Text>;
     $[2] = symlinkTarget;
     $[3] = t2;
   } else {
@@ -57,7 +58,7 @@ export function ShowInIDEPrompt(t0) {
   }
   let t3;
   if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
-    t3 = isSupportedVSCodeTerminal() && <Text dimColor={true}>Save file to continue…</Text>;
+    t3 = isSupportedVSCodeTerminal() && <Text dimColor={true}>{"保存文件后继续……"}</Text>;
     $[4] = t3;
   } else {
     t3 = $[4];
@@ -72,7 +73,7 @@ export function ShowInIDEPrompt(t0) {
   }
   let t5;
   if ($[7] !== t4) {
-    t5 = <Text>Do you want to make this edit to{" "}<Text bold={true}>{t4}</Text>?</Text>;
+    t5 = <Text>{"是否要对以下文件进行此编辑："}{" "}<Text bold={true}>{t4}</Text>?</Text>;
     $[7] = t4;
     $[8] = t5;
   } else {
@@ -148,7 +149,7 @@ export function ShowInIDEPrompt(t0) {
   const t11 = (focusedOption === "yes" && !yesInputMode || focusedOption === "no" && !noInputMode) && " \xB7 Tab to amend";
   let t12;
   if ($[29] !== t11) {
-    t12 = <Box marginTop={1}><Text dimColor={true}>Esc to cancel{t11}</Text></Box>;
+    t12 = <Box marginTop={1}><Text dimColor={true}>{"Esc 取消"}{t11}</Text></Box>;
     $[29] = t11;
     $[30] = t12;
   } else {

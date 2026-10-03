@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import partition from 'lodash-es/partition.js';
 import React, { useCallback } from 'react';
 import { logEvent } from 'src/services/analytics/index.js';
-import { Box, Text } from '../ink.js';
+import { Box } from "../ink.js";
 import { getSettings_DEPRECATED, updateSettingsForSource } from '../utils/settings/settings.js';
 import { ConfigurableShortcutHint } from './ConfigurableShortcutHint.js';
 import { SelectMulti } from './CustomSelect/SelectMulti.js';
@@ -99,7 +100,7 @@ export function MCPServerMultiselectDialog(t0) {
   }
   let t7;
   if ($[14] !== handleEscRejectAll || $[15] !== t3 || $[16] !== t6) {
-    t7 = <Dialog title={t3} subtitle="Select any you wish to enable." color="warning" onCancel={handleEscRejectAll} hideInputGuide={true}>{t4}{t6}</Dialog>;
+    t7 = <Dialog title={t3} subtitle="请选择要启用的项目。" color="warning" onCancel={handleEscRejectAll} hideInputGuide={true}>{t4}{t6}</Dialog>;
     $[14] = handleEscRejectAll;
     $[15] = t3;
     $[16] = t6;
@@ -109,7 +110,7 @@ export function MCPServerMultiselectDialog(t0) {
   }
   let t8;
   if ($[18] === Symbol.for("react.memo_cache_sentinel")) {
-    t8 = <Box paddingX={1}><Text dimColor={true} italic={true}><Byline><KeyboardShortcutHint shortcut="Space" action="select" /><KeyboardShortcutHint shortcut="Enter" action="confirm" /><ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="reject all" /></Byline></Text></Box>;
+    t8 = <Box paddingX={1}><Text dimColor={true} italic={true}><Byline><KeyboardShortcutHint shortcut="Space" action="选择" /><KeyboardShortcutHint shortcut="Enter" action="确认" /><ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="全部拒绝" /></Byline></Text></Box>;
     $[18] = t8;
   } else {
     t8 = $[18];

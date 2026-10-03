@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import * as React from 'react';
 import { useExitOnCtrlCDWithKeybindings } from 'src/hooks/useExitOnCtrlCDWithKeybindings.js';
@@ -5,7 +6,7 @@ import { useShortcutDisplay } from 'src/keybindings/useShortcutDisplay.js';
 import { builtInCommandNames, type Command, type CommandResultDisplay, INTERNAL_ONLY_COMMANDS } from '../../commands.js';
 import { useIsInsideModal } from '../../context/modalContext.js';
 import { useTerminalSize } from '../../hooks/useTerminalSize.js';
-import { Box, Link, Text } from '../../ink.js';
+import { Box, Link } from "../../ink.js";
 import { useKeybinding } from '../../keybindings/useKeybinding.js';
 import { Pane } from '../design-system/Pane.js';
 import { Tab, Tabs } from '../design-system/Tabs.js';
@@ -89,7 +90,7 @@ export function HelpV2(t0) {
     tabs = [t4];
     let t5;
     if ($[16] !== builtinCommands || $[17] !== close || $[18] !== columns || $[19] !== maxHeight) {
-      t5 = <Tab key="commands" title="commands"><Commands commands={builtinCommands} maxHeight={maxHeight} columns={columns} title="Browse default commands:" onCancel={close} /></Tab>;
+      t5 = <Tab key="commands" title="commands"><Commands commands={builtinCommands} maxHeight={maxHeight} columns={columns} title="浏览默认命令：" onCancel={close} /></Tab>;
       $[16] = builtinCommands;
       $[17] = close;
       $[18] = columns;
@@ -101,7 +102,7 @@ export function HelpV2(t0) {
     tabs.push(t5);
     let t6;
     if ($[21] !== close || $[22] !== columns || $[23] !== customCommands || $[24] !== maxHeight) {
-      t6 = <Tab key="custom" title="custom-commands"><Commands commands={customCommands} maxHeight={maxHeight} columns={columns} title="Browse custom commands:" emptyMessage="No custom commands found" onCancel={close} /></Tab>;
+      t6 = <Tab key="custom" title="custom-commands"><Commands commands={customCommands} maxHeight={maxHeight} columns={columns} title="浏览自定义命令：" emptyMessage="未找到自定义命令" onCancel={close} /></Tab>;
       $[21] = close;
       $[22] = columns;
       $[23] = customCommands;
@@ -114,7 +115,7 @@ export function HelpV2(t0) {
     if (false && antOnlyCommands.length > 0) {
       let t7;
       if ($[26] !== antOnlyCommands || $[27] !== close || $[28] !== columns || $[29] !== maxHeight) {
-        t7 = <Tab key="ant-only" title="[ant-only]"><Commands commands={antOnlyCommands} maxHeight={maxHeight} columns={columns} title="Browse ant-only commands:" onCancel={close} /></Tab>;
+        t7 = <Tab key="ant-only" title="[ant-only]"><Commands commands={antOnlyCommands} maxHeight={maxHeight} columns={columns} title="浏览内部命令：" onCancel={close} /></Tab>;
         $[26] = antOnlyCommands;
         $[27] = close;
         $[28] = columns;
@@ -146,14 +147,14 @@ export function HelpV2(t0) {
   }
   let t7;
   if ($[33] === Symbol.for("react.memo_cache_sentinel")) {
-    t7 = <Box marginTop={1}><Text>For more help:{" "}<Link url="https://code.claude.com/docs/en/overview" /></Text></Box>;
+    t7 = <Box marginTop={1}><Text>{"更多帮助："}{" "}<Link url="https://code.claude.com/docs/en/overview" /></Text></Box>;
     $[33] = t7;
   } else {
     t7 = $[33];
   }
   let t8;
   if ($[34] !== dismissShortcut || $[35] !== exitState.keyName || $[36] !== exitState.pending) {
-    t8 = <Box marginTop={1}><Text dimColor={true}>{exitState.pending ? <>Press {exitState.keyName} again to exit</> : <Text italic={true}>{dismissShortcut} to cancel</Text>}</Text></Box>;
+    t8 = <Box marginTop={1}><Text dimColor={true}>{exitState.pending ? <>{"按"} {exitState.keyName} {"再次按下退出"}</> : <Text italic={true}>{dismissShortcut} {"取消"}</Text>}</Text></Box>;
     $[34] = dismissShortcut;
     $[35] = exitState.keyName;
     $[36] = exitState.pending;

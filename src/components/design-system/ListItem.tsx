@@ -3,7 +3,8 @@ import figures from 'figures';
 import type { ReactNode } from 'react';
 import React from 'react';
 import { useDeclaredCursor } from '../../ink/hooks/use-declared-cursor.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from '../../ink.js';
+import { MenuText as Text } from './MenuText.js'
 type ListItemProps = {
   /**
    * Whether this item is currently focused (keyboard selection).

@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import { mkdir, writeFile } from 'fs/promises';
 import { marked, type Tokens } from 'marked';
@@ -13,7 +14,7 @@ import { Pane } from '../../components/design-system/Pane.js';
 import type { KeyboardEvent } from '../../ink/events/keyboard-event.js';
 import { stringWidth } from '../../ink/stringWidth.js';
 import { setClipboard } from '../../ink/termio/osc.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { logEvent } from '../../services/analytics/index.js';
 import type { LocalJSXCommandCall } from '../../types/command.js';
 import type { AssistantMessage, Message } from '../../types/message.js';
@@ -130,7 +131,7 @@ function CopyPicker(t0) {
   let t2;
   if ($[0] !== t1) {
     t2 = {
-      label: "Full response",
+      label: "完整回复",
       value: "full" as const,
       description: t1
     };
@@ -144,9 +145,9 @@ function CopyPicker(t0) {
     let t4;
     if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
       t4 = {
-        label: "Always copy full response",
+        label: "始终复制完整回复",
         value: "always" as const,
-        description: "Skip this picker in the future (revert via /config)"
+        description: "以后跳过此选择器（可在 /config 中恢复）"
       };
       $[5] = t4;
     } else {
@@ -253,7 +254,7 @@ function CopyPicker(t0) {
   const handleKeyDown = t6;
   let t7;
   if ($[19] === Symbol.for("react.memo_cache_sentinel")) {
-    t7 = <Text dimColor={true}>Select content to copy:</Text>;
+    t7 = <Text dimColor={true}>{"选择要复制的内容："}</Text>;
     $[19] = t7;
   } else {
     t7 = $[19];
@@ -301,7 +302,7 @@ function CopyPicker(t0) {
   }
   let t12;
   if ($[29] === Symbol.for("react.memo_cache_sentinel")) {
-    t12 = <Text dimColor={true}><Byline><KeyboardShortcutHint shortcut="enter" action="copy" /><KeyboardShortcutHint shortcut="w" action="write to file" /><KeyboardShortcutHint shortcut="esc" action="cancel" /></Byline></Text>;
+    t12 = <Text dimColor={true}><Byline><KeyboardShortcutHint shortcut="enter" action="复制" /><KeyboardShortcutHint shortcut="w" action="写入文件" /><KeyboardShortcutHint shortcut="esc" action="取消" /></Byline></Text>;
     $[29] = t12;
   } else {
     t12 = $[29];

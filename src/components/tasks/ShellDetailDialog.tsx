@@ -1,10 +1,11 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React, { Suspense, use, useDeferredValue, useEffect, useState } from 'react';
 import type { DeepImmutable } from 'src/types/utils.js';
 import type { CommandResultDisplay } from '../../commands.js';
 import { useTerminalSize } from '../../hooks/useTerminalSize.js';
 import type { KeyboardEvent } from '../../ink/events/keyboard-event.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { useKeybindings } from '../../keybindings/useKeybinding.js';
 import type { LocalShellTaskState } from '../../tasks/LocalShellTask/guards.js';
 import { formatDuration, formatFileSize, truncateToWidth } from '../../utils/format.js';
@@ -164,7 +165,7 @@ export function ShellDetailDialog(t0) {
   const t9 = isMonitor ? "Monitor details" : "Shell details";
   let t10;
   if ($[19] !== onBack || $[20] !== onKillShell || $[21] !== shell.status) {
-    t10 = exitState => exitState.pending ? <Text>Press {exitState.keyName} again to exit</Text> : <Byline>{onBack && <KeyboardShortcutHint shortcut={"\u2190"} action="go back" />}<KeyboardShortcutHint shortcut="Esc/Enter/Space" action="close" />{shell.status === "running" && onKillShell && <KeyboardShortcutHint shortcut="x" action="stop" />}</Byline>;
+    t10 = exitState => exitState.pending ? <Text>{"按"} {exitState.keyName} {"再次按下退出"}</Text> : <Byline>{onBack && <KeyboardShortcutHint shortcut={"\u2190"} action="返回" />}<KeyboardShortcutHint shortcut="Esc/Enter/Space" action="关闭" />{shell.status === "running" && onKillShell && <KeyboardShortcutHint shortcut="x" action="停止" />}</Byline>;
     $[19] = onBack;
     $[20] = onKillShell;
     $[21] = shell.status;
@@ -174,14 +175,14 @@ export function ShellDetailDialog(t0) {
   }
   let t11;
   if ($[23] === Symbol.for("react.memo_cache_sentinel")) {
-    t11 = <Text bold={true}>Status:</Text>;
+    t11 = <Text bold={true}>{"状态："}</Text>;
     $[23] = t11;
   } else {
     t11 = $[23];
   }
   let t12;
   if ($[24] !== shell.result || $[25] !== shell.status) {
-    t12 = <Text>{t11}{" "}{shell.status === "running" ? <Text color="background">{shell.status}{shell.result?.code !== undefined && ` (exit code: ${shell.result.code})`}</Text> : shell.status === "completed" ? <Text color="success">{shell.status}{shell.result?.code !== undefined && ` (exit code: ${shell.result.code})`}</Text> : <Text color="error">{shell.status}{shell.result?.code !== undefined && ` (exit code: ${shell.result.code})`}</Text>}</Text>;
+    t12 = <Text>{t11}{" "}{shell.status === "running" ? <Text color="background">{shell.status}{shell.result?.code !== undefined && `（退出码：${shell.result.code}）`}</Text> : shell.status === "completed" ? <Text color="success">{shell.status}{shell.result?.code !== undefined && `（退出码：${shell.result.code}）`}</Text> : <Text color="error">{shell.status}{shell.result?.code !== undefined && `（退出码：${shell.result.code}）`}</Text>}</Text>;
     $[24] = shell.result;
     $[25] = shell.status;
     $[26] = t12;
@@ -190,7 +191,7 @@ export function ShellDetailDialog(t0) {
   }
   let t13;
   if ($[27] === Symbol.for("react.memo_cache_sentinel")) {
-    t13 = <Text bold={true}>Runtime:</Text>;
+    t13 = <Text bold={true}>{"运行时间："}</Text>;
     $[27] = t13;
   } else {
     t13 = $[27];
@@ -250,14 +251,14 @@ export function ShellDetailDialog(t0) {
   }
   let t22;
   if ($[43] === Symbol.for("react.memo_cache_sentinel")) {
-    t22 = <Text bold={true}>Output:</Text>;
+    t22 = <Text bold={true}>{"输出："}</Text>;
     $[43] = t22;
   } else {
     t22 = $[43];
   }
   let t23;
   if ($[44] === Symbol.for("react.memo_cache_sentinel")) {
-    t23 = <Text dimColor={true}>Loading output…</Text>;
+    t23 = <Text dimColor={true}>{"正在加载输出……"}</Text>;
     $[44] = t23;
   } else {
     t23 = $[44];
@@ -314,7 +315,7 @@ function ShellOutputContent(t0) {
   if (!content) {
     let t1;
     if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
-      t1 = <Text dimColor={true}>No output available</Text>;
+      t1 = <Text dimColor={true}>{"暂无输出"}</Text>;
       $[0] = t1;
     } else {
       t1 = $[0];

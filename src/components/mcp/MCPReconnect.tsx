@@ -86,7 +86,7 @@ export function MCPReconnect(t0) {
   if (isReconnecting) {
     let t3;
     if ($[6] !== serverName) {
-      t3 = <Text color="text">Reconnecting to <Text bold={true}>{serverName}</Text></Text>;
+      t3 = <Text color="text">{"正在重新连接："} <Text bold={true}>{serverName}</Text></Text>;
       $[6] = serverName;
       $[7] = t3;
     } else {
@@ -94,7 +94,7 @@ export function MCPReconnect(t0) {
     }
     let t4;
     if ($[8] === Symbol.for("react.memo_cache_sentinel")) {
-      t4 = <Box><Spinner /><Text> Establishing connection to MCP server</Text></Box>;
+      t4 = <Box><Spinner /><Text> {"正在连接 MCP 服务器"}</Text></Box>;
       $[8] = t4;
     } else {
       t4 = $[8];
@@ -128,7 +128,7 @@ export function MCPReconnect(t0) {
     }
     let t5;
     if ($[15] !== serverName) {
-      t5 = <Text color="error">Failed to reconnect to {serverName}</Text>;
+      t5 = <Text color="error">{"重新连接失败："} {serverName}</Text>;
       $[15] = serverName;
       $[16] = t5;
     } else {
@@ -145,7 +145,7 @@ export function MCPReconnect(t0) {
     }
     let t7;
     if ($[20] !== error) {
-      t7 = <Text dimColor={true}>Error: {error}</Text>;
+      t7 = <Text dimColor={true}>{"错误："} {error}</Text>;
       $[20] = error;
       $[21] = t7;
     } else {

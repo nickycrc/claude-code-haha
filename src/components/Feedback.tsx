@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import axios from 'axios';
 import { readFile, stat } from 'fs/promises';
 import * as React from 'react';
@@ -8,7 +9,7 @@ import { type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS, logEve
 import { getLastAssistantMessage, normalizeMessagesForAPI } from 'src/utils/messages.js';
 import type { CommandResultDisplay } from '../commands.js';
 import { useTerminalSize } from '../hooks/useTerminalSize.js';
-import { Box, Text, useInput } from '../ink.js';
+import { Box, useInput } from "../ink.js";
 import { useKeybinding } from '../keybindings/useKeybinding.js';
 import { queryHaiku } from '../services/api/claude.js';
 import { startsWithApiErrorPrefix } from '../services/api/errors.js';
@@ -307,15 +308,15 @@ export function Feedback({
       void submitReport();
     }
   });
-  return <Dialog title="Submit Feedback / Bug Report" onCancel={handleCancel} isCancelActive={step !== 'userInput'} inputGuide={exitState => exitState.pending ? <Text>Press {exitState.keyName} again to exit</Text> : step === 'userInput' ? <Byline>
-            <KeyboardShortcutHint shortcut="Enter" action="continue" />
-            <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="cancel" />
+  return <Dialog title="提交反馈／问题报告" onCancel={handleCancel} isCancelActive={step !== 'userInput'} inputGuide={exitState => exitState.pending ? <Text>{"按"} {exitState.keyName} {"再次按下退出"}</Text> : step === 'userInput' ? <Byline>
+            <KeyboardShortcutHint shortcut="Enter" action="继续" />
+            <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="取消" />
           </Byline> : step === 'consent' ? <Byline>
-            <KeyboardShortcutHint shortcut="Enter" action="submit" />
-            <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="cancel" />
+            <KeyboardShortcutHint shortcut="Enter" action="提交" />
+            <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="取消" />
           </Byline> : null}>
       {step === 'userInput' && <Box flexDirection="column" gap={1}>
-          <Text>Describe the issue below:</Text>
+          <Text>{"请在下方描述问题："}</Text>
           <TextInput value={description} onChange={value => {
         setDescription(value);
         // Clear error when user starts editing to allow retry
@@ -328,63 +329,61 @@ export function Feedback({
           {error && <Box flexDirection="column" gap={1}>
               <Text color="error">{error}</Text>
               <Text dimColor>
-                Edit and press Enter to retry, or Esc to cancel
+                {"编辑后按 Enter 重试，或按 Esc 取消"}
               </Text>
             </Box>}
         </Box>}
 
       {step === 'consent' && <Box flexDirection="column">
-          <Text>This report will include:</Text>
+          <Text>{"此报告将包含："}</Text>
           <Box marginLeft={2} flexDirection="column">
             <Text>
-              - Your feedback / bug description:{' '}
+              {"- 你的反馈／问题描述："}{' '}
               <Text dimColor>{description}</Text>
             </Text>
             <Text>
-              - Environment info:{' '}
+              {"- 环境信息："}{' '}
               <Text dimColor>
                 {env.platform}, {env.terminal}, v{MACRO.VERSION}
               </Text>
             </Text>
             {envInfo.gitState && <Text>
-                - Git repo metadata:{' '}
+                {"- Git 仓库元数据："}{' '}
                 <Text dimColor>
                   {envInfo.gitState.branchName}
                   {envInfo.gitState.commitHash ? `, ${envInfo.gitState.commitHash.slice(0, 7)}` : ''}
                   {envInfo.gitState.remoteUrl ? ` @ ${envInfo.gitState.remoteUrl}` : ''}
-                  {!envInfo.gitState.isHeadOnRemote && ', not synced'}
-                  {!envInfo.gitState.isClean && ', has local changes'}
+                  {!envInfo.gitState.isHeadOnRemote && "，未同步"}
+                  {!envInfo.gitState.isClean && "，有本地修改"}
                 </Text>
               </Text>}
-            <Text>- Current session transcript</Text>
+            <Text>{"- 当前会话记录"}</Text>
           </Box>
           <Box marginTop={1}>
             <Text wrap="wrap" dimColor>
-              We will use your feedback to debug related issues or to improve{' '}
-              Claude Code&apos;s functionality (eg. to reduce the risk of bugs
-              occurring in the future).
+              {"我们会使用反馈来排查相关问题或改进"}{' '}
+              {"Claude Code 的功能（例如降低未来出现问题的风险）。"}
             </Text>
           </Box>
           <Box marginTop={1}>
             <Text>
-              Press <Text bold>Enter</Text> to confirm and submit.
+              {"按"} <Text bold>Enter</Text> {"确认并提交。"}
             </Text>
           </Box>
         </Box>}
 
       {step === 'submitting' && <Box flexDirection="row" gap={1}>
-          <Text>Submitting report…</Text>
+          <Text>{"正在提交报告……"}</Text>
         </Box>}
 
       {step === 'done' && <Box flexDirection="column">
-          {error ? <Text color="error">{error}</Text> : <Text color="success">Thank you for your report!</Text>}
-          {feedbackId && <Text dimColor>Feedback ID: {feedbackId}</Text>}
+          {error ? <Text color="error">{error}</Text> : <Text color="success">{"感谢你的报告！"}</Text>}
+          {feedbackId && <Text dimColor>{"反馈 ID："} {feedbackId}</Text>}
           <Box marginTop={1}>
-            <Text>Press </Text>
+            <Text>{"按"} </Text>
             <Text bold>Enter </Text>
             <Text>
-              to open your browser and draft a GitHub issue, or any other key to
-              close.
+              {"打开浏览器并起草 GitHub 问题，或按其他任意键关闭。"}
             </Text>
           </Box>
         </Box>}

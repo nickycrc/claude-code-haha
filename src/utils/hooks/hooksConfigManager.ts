@@ -27,45 +27,45 @@ export const getHookEventMetadata = memoize(
   function (toolNames: string[]): Record<HookEvent, HookEventMetadata> {
     return {
       PreToolUse: {
-        summary: 'Before tool execution',
+        summary: "工具执行前",
         description:
-          'Input to command is JSON of tool call arguments.\nExit code 0 - stdout/stderr not shown\nExit code 2 - show stderr to model and block tool call\nOther exit codes - show stderr to user only but continue with tool call',
+          "命令输入为工具调用参数的 JSON。\n退出码 0：不显示标准输出或错误输出\n退出码 2：向模型显示错误输出并阻止工具调用\n其他退出码：仅向用户显示错误输出，继续工具调用",
         matcherMetadata: {
           fieldToMatch: 'tool_name',
           values: toolNames,
         },
       },
       PostToolUse: {
-        summary: 'After tool execution',
+        summary: "工具执行后",
         description:
-          'Input to command is JSON with fields "inputs" (tool call arguments) and "response" (tool call response).\nExit code 0 - stdout shown in transcript mode (ctrl+o)\nExit code 2 - show stderr to model immediately\nOther exit codes - show stderr to user only',
+          "命令输入为 JSON，含 inputs（调用参数）和 response（调用结果）。\n退出码 0：标准输出显示在记录模式（Ctrl+O）\n退出码 2：立即向模型显示错误输出\n其他退出码：仅向用户显示错误输出",
         matcherMetadata: {
           fieldToMatch: 'tool_name',
           values: toolNames,
         },
       },
       PostToolUseFailure: {
-        summary: 'After tool execution fails',
+        summary: "工具执行失败后",
         description:
-          'Input to command is JSON with tool_name, tool_input, tool_use_id, error, error_type, is_interrupt, and is_timeout.\nExit code 0 - stdout shown in transcript mode (ctrl+o)\nExit code 2 - show stderr to model immediately\nOther exit codes - show stderr to user only',
+          "命令输入为 JSON，含 tool_name、tool_input、tool_use_id、error、error_type、is_interrupt 和 is_timeout。\n退出码 0：标准输出显示在记录模式（Ctrl+O）\n退出码 2：立即向模型显示错误输出\n其他退出码：仅向用户显示错误输出",
         matcherMetadata: {
           fieldToMatch: 'tool_name',
           values: toolNames,
         },
       },
       PermissionDenied: {
-        summary: 'After auto mode classifier denies a tool call',
+        summary: "自动模式分类器拒绝工具调用后",
         description:
-          'Input to command is JSON with tool_name, tool_input, tool_use_id, and reason.\nReturn {"hookSpecificOutput":{"hookEventName":"PermissionDenied","retry":true}} to tell the model it may retry.\nExit code 0 - stdout shown in transcript mode (ctrl+o)\nOther exit codes - show stderr to user only',
+          "命令输入为 JSON，含 tool_name、tool_input、tool_use_id 和 reason。\n返回 {\"hookSpecificOutput\":{\"hookEventName\":\"PermissionDenied\",\"retry\":true}} 允许模型重试。\n退出码 0：标准输出显示在记录模式（Ctrl+O）\n其他退出码：仅向用户显示错误输出",
         matcherMetadata: {
           fieldToMatch: 'tool_name',
           values: toolNames,
         },
       },
       Notification: {
-        summary: 'When notifications are sent',
+        summary: "发送通知时",
         description:
-          'Input to command is JSON with notification message and type.\nExit code 0 - stdout/stderr not shown\nOther exit codes - show stderr to user only',
+          "命令输入为包含通知消息和类型的 JSON。\n退出码 0：不显示标准输出或错误输出\n其他退出码：仅向用户显示错误输出",
         matcherMetadata: {
           fieldToMatch: 'notification_type',
           values: [
@@ -79,28 +79,28 @@ export const getHookEventMetadata = memoize(
         },
       },
       UserPromptSubmit: {
-        summary: 'When the user submits a prompt',
+        summary: "用户提交提示词时",
         description:
-          'Input to command is JSON with original user prompt text.\nExit code 0 - stdout shown to Claude\nExit code 2 - block processing, erase original prompt, and show stderr to user only\nOther exit codes - show stderr to user only',
+          "命令输入为包含用户原始提示词的 JSON。\n退出码 0：向 Claude 显示标准输出\n退出码 2：阻止处理，清除原始提示词，仅向用户显示错误输出\n其他退出码：仅向用户显示错误输出",
       },
       SessionStart: {
-        summary: 'When a new session is started',
+        summary: "新会话开始时",
         description:
-          'Input to command is JSON with session start source.\nExit code 0 - stdout shown to Claude\nBlocking errors are ignored\nOther exit codes - show stderr to user only',
+          "命令输入为包含会话启动来源的 JSON。\n退出码 0：向 Claude 显示标准输出\n忽略阻止性错误\n其他退出码：仅向用户显示错误输出",
         matcherMetadata: {
           fieldToMatch: 'source',
           values: ['startup', 'resume', 'clear', 'compact'],
         },
       },
       Stop: {
-        summary: 'Right before Claude concludes its response',
+        summary: "Claude 即将结束回复时",
         description:
-          'Exit code 0 - stdout/stderr not shown\nExit code 2 - show stderr to model and continue conversation\nOther exit codes - show stderr to user only',
+          "退出码 0：不显示标准输出或错误输出\n退出码 2：向模型显示错误输出并继续对话\n其他退出码：仅向用户显示错误输出",
       },
       StopFailure: {
-        summary: 'When the turn ends due to an API error',
+        summary: "回合因 API 错误结束时",
         description:
-          'Fires instead of Stop when an API error (rate limit, auth failure, etc.) ended the turn. Fire-and-forget — hook output and exit codes are ignored.',
+          "API 错误（如限流、认证失败）导致回合结束时触发，代替 Stop。无需等待结果，忽略钩子输出和退出码。",
         matcherMetadata: {
           fieldToMatch: 'error',
           values: [
@@ -115,9 +115,9 @@ export const getHookEventMetadata = memoize(
         },
       },
       SubagentStart: {
-        summary: 'When a subagent (Agent tool call) is started',
+        summary: "子代理（Agent 工具调用）启动时",
         description:
-          'Input to command is JSON with agent_id and agent_type.\nExit code 0 - stdout shown to subagent\nBlocking errors are ignored\nOther exit codes - show stderr to user only',
+          "命令输入为 JSON，含 agent_id 和 agent_type。\n退出码 0：向子代理显示标准输出\n忽略阻止性错误\n其他退出码：仅向用户显示错误输出",
         matcherMetadata: {
           fieldToMatch: 'agent_type',
           values: [], // Will be populated with available agent types
@@ -125,96 +125,96 @@ export const getHookEventMetadata = memoize(
       },
       SubagentStop: {
         summary:
-          'Right before a subagent (Agent tool call) concludes its response',
+          "子代理（Agent 工具调用）即将结束回复时",
         description:
-          'Input to command is JSON with agent_id, agent_type, and agent_transcript_path.\nExit code 0 - stdout/stderr not shown\nExit code 2 - show stderr to subagent and continue having it run\nOther exit codes - show stderr to user only',
+          "命令输入为 JSON，含 agent_id、agent_type 和 agent_transcript_path。\n退出码 0：不显示标准输出或错误输出\n退出码 2：向子代理显示错误输出并继续运行\n其他退出码：仅向用户显示错误输出",
         matcherMetadata: {
           fieldToMatch: 'agent_type',
           values: [], // Will be populated with available agent types
         },
       },
       PreCompact: {
-        summary: 'Before conversation compaction',
+        summary: "对话压缩前",
         description:
-          'Input to command is JSON with compaction details.\nExit code 0 - stdout appended as custom compact instructions\nExit code 2 - block compaction\nOther exit codes - show stderr to user only but continue with compaction',
+          "命令输入为包含压缩详情的 JSON。\n退出码 0：将标准输出追加为自定义压缩指令\n退出码 2：阻止压缩\n其他退出码：仅向用户显示错误输出，继续压缩",
         matcherMetadata: {
           fieldToMatch: 'trigger',
           values: ['manual', 'auto'],
         },
       },
       PostCompact: {
-        summary: 'After conversation compaction',
+        summary: "对话压缩后",
         description:
-          'Input to command is JSON with compaction details and the summary.\nExit code 0 - stdout shown to user\nOther exit codes - show stderr to user only',
+          "命令输入为包含压缩详情和摘要的 JSON。\n退出码 0：向用户显示标准输出\n其他退出码：仅向用户显示错误输出",
         matcherMetadata: {
           fieldToMatch: 'trigger',
           values: ['manual', 'auto'],
         },
       },
       SessionEnd: {
-        summary: 'When a session is ending',
+        summary: "会话结束时",
         description:
-          'Input to command is JSON with session end reason.\nExit code 0 - command completes successfully\nOther exit codes - show stderr to user only',
+          "命令输入为包含会话结束原因的 JSON。\n退出码 0：命令成功完成\n其他退出码：仅向用户显示错误输出",
         matcherMetadata: {
           fieldToMatch: 'reason',
           values: ['clear', 'logout', 'prompt_input_exit', 'other'],
         },
       },
       PermissionRequest: {
-        summary: 'When a permission dialog is displayed',
+        summary: "显示权限对话框时",
         description:
-          'Input to command is JSON with tool_name, tool_input, and tool_use_id.\nOutput JSON with hookSpecificOutput containing decision to allow or deny.\nExit code 0 - use hook decision if provided\nOther exit codes - show stderr to user only',
+          "命令输入为 JSON，含 tool_name、tool_input 和 tool_use_id。\n输出 JSON 的 hookSpecificOutput 中填写允许或拒绝决定。\n退出码 0：使用提供的钩子决定\n其他退出码：仅向用户显示错误输出",
         matcherMetadata: {
           fieldToMatch: 'tool_name',
           values: toolNames,
         },
       },
       Setup: {
-        summary: 'Repo setup hooks for init and maintenance',
+        summary: "仓库初始化和维护钩子",
         description:
-          'Input to command is JSON with trigger (init or maintenance).\nExit code 0 - stdout shown to Claude\nBlocking errors are ignored\nOther exit codes - show stderr to user only',
+          "命令输入为包含 trigger（init 或 maintenance）的 JSON。\n退出码 0：向 Claude 显示标准输出\n忽略阻止性错误\n其他退出码：仅向用户显示错误输出",
         matcherMetadata: {
           fieldToMatch: 'trigger',
           values: ['init', 'maintenance'],
         },
       },
       TeammateIdle: {
-        summary: 'When a teammate is about to go idle',
+        summary: "队友即将进入空闲状态时",
         description:
-          'Input to command is JSON with teammate_name and team_name.\nExit code 0 - stdout/stderr not shown\nExit code 2 - show stderr to teammate and prevent idle (teammate continues working)\nOther exit codes - show stderr to user only',
+          "命令输入为 JSON，含 teammate_name 和 team_name。\n退出码 0：不显示标准输出或错误输出\n退出码 2：向队友显示错误输出并阻止空闲（继续工作）\n其他退出码：仅向用户显示错误输出",
       },
       TaskCreated: {
-        summary: 'When a task is being created',
+        summary: "创建任务时",
         description:
-          'Input to command is JSON with task_id, task_subject, task_description, teammate_name, and team_name.\nExit code 0 - stdout/stderr not shown\nExit code 2 - show stderr to model and prevent task creation\nOther exit codes - show stderr to user only',
+          "命令输入为 JSON，含 task_id、task_subject、task_description、teammate_name 和 team_name。\n退出码 0：不显示标准输出或错误输出\n退出码 2：向模型显示错误输出并阻止创建任务\n其他退出码：仅向用户显示错误输出",
       },
       TaskCompleted: {
-        summary: 'When a task is being marked as completed',
+        summary: "任务即将标记为完成时",
         description:
-          'Input to command is JSON with task_id, task_subject, task_description, teammate_name, and team_name.\nExit code 0 - stdout/stderr not shown\nExit code 2 - show stderr to model and prevent task completion\nOther exit codes - show stderr to user only',
+          "命令输入为 JSON，含 task_id、task_subject、task_description、teammate_name 和 team_name。\n退出码 0：不显示标准输出或错误输出\n退出码 2：向模型显示错误输出并阻止完成任务\n其他退出码：仅向用户显示错误输出",
       },
       Elicitation: {
-        summary: 'When an MCP server requests user input (elicitation)',
+        summary: "MCP 服务器请求用户输入时",
         description:
-          'Input to command is JSON with mcp_server_name, message, and requested_schema.\nOutput JSON with hookSpecificOutput containing action (accept/decline/cancel) and optional content.\nExit code 0 - use hook response if provided\nExit code 2 - deny the elicitation\nOther exit codes - show stderr to user only',
+          "命令输入为 JSON，含 mcp_server_name、message 和 requested_schema。\n输出 JSON 的 hookSpecificOutput 中填写 action（accept／decline／cancel）及可选 content。\n退出码 0：使用提供的钩子响应\n退出码 2：拒绝输入请求\n其他退出码：仅向用户显示错误输出",
         matcherMetadata: {
           fieldToMatch: 'mcp_server_name',
           values: [],
         },
       },
       ElicitationResult: {
-        summary: 'After a user responds to an MCP elicitation',
+        summary: "用户回答 MCP 输入请求后",
         description:
-          'Input to command is JSON with mcp_server_name, action, content, mode, and elicitation_id.\nOutput JSON with hookSpecificOutput containing optional action and content to override the response.\nExit code 0 - use hook response if provided\nExit code 2 - block the response (action becomes decline)\nOther exit codes - show stderr to user only',
+          "命令输入为 JSON，含 mcp_server_name、action、content、mode 和 elicitation_id。\n输出 JSON 的 hookSpecificOutput 可包含 action 和 content 以覆盖响应。\n退出码 0：使用提供的钩子响应\n退出码 2：阻止响应（action 变为 decline）\n其他退出码：仅向用户显示错误输出",
         matcherMetadata: {
           fieldToMatch: 'mcp_server_name',
           values: [],
         },
       },
       ConfigChange: {
-        summary: 'When configuration files change during a session',
+        summary: "会话期间配置文件修改时",
         description:
-          'Input to command is JSON with source (user_settings, project_settings, local_settings, policy_settings, skills) and file_path.\nExit code 0 - allow the change\nExit code 2 - block the change from being applied to the session\nOther exit codes - show stderr to user only',
+          "命令输入为 JSON，含 source（user_settings／project_settings／local_settings／policy_settings／skills）和 file_path。\n退出码 0：允许修改\n退出码 2：阻止将修改应用到会话\n其他退出码：仅向用户显示错误输出",
         matcherMetadata: {
           fieldToMatch: 'source',
           values: [
@@ -227,9 +227,9 @@ export const getHookEventMetadata = memoize(
         },
       },
       InstructionsLoaded: {
-        summary: 'When an instruction file (CLAUDE.md or rule) is loaded',
+        summary: "指令文件（CLAUDE.md 或规则）加载时",
         description:
-          'Input to command is JSON with file_path, memory_type (User, Project, Local, Managed), load_reason (session_start, nested_traversal, path_glob_match, include, compact), globs (optional — the paths: frontmatter patterns that matched), trigger_file_path (optional — the file Claude touched that caused the load), and parent_file_path (optional — the file that @-included this one).\nExit code 0 - command completes successfully\nOther exit codes - show stderr to user only\nThis hook is observability-only and does not support blocking.',
+          "命令输入为 JSON，含 file_path、memory_type（User／Project／Local／Managed）、load_reason（session_start／nested_traversal／path_glob_match／include／compact）、可选 globs（匹配的 paths 配置）、可选 trigger_file_path（触发加载的文件）和可选 parent_file_path（通过 @ 引用此文件的上级文件）。\n退出码 0：命令成功完成\n其他退出码：仅向用户显示错误输出\n此钩子仅用于观察，不支持阻止操作。",
         matcherMetadata: {
           fieldToMatch: 'load_reason',
           values: [
@@ -242,24 +242,24 @@ export const getHookEventMetadata = memoize(
         },
       },
       WorktreeCreate: {
-        summary: 'Create an isolated worktree for VCS-agnostic isolation',
+        summary: "创建隔离工作树（不限版本控制系统）",
         description:
-          'Input to command is JSON with name (suggested worktree slug).\nStdout should contain the absolute path to the created worktree directory.\nExit code 0 - worktree created successfully\nOther exit codes - worktree creation failed',
+          "命令输入为包含 name（建议的工作树名称）的 JSON。\n标准输出应为创建的工作树目录的绝对路径。\n退出码 0：工作树创建成功\n其他退出码：工作树创建失败",
       },
       WorktreeRemove: {
-        summary: 'Remove a previously created worktree',
+        summary: "删除已创建的工作树",
         description:
-          'Input to command is JSON with worktree_path (absolute path to worktree).\nExit code 0 - worktree removed successfully\nOther exit codes - show stderr to user only',
+          "命令输入为包含 worktree_path（工作树绝对路径）的 JSON。\n退出码 0：工作树删除成功\n其他退出码：仅向用户显示错误输出",
       },
       CwdChanged: {
-        summary: 'After the working directory changes',
+        summary: "工作目录修改后",
         description:
-          'Input to command is JSON with old_cwd and new_cwd.\nCLAUDE_ENV_FILE is set — write bash exports there to apply env to subsequent BashTool commands.\nHook output can include hookSpecificOutput.watchPaths (array of absolute paths) to register with the FileChanged watcher.\nExit code 0 - command completes successfully\nOther exit codes - show stderr to user only',
+          "命令输入为 JSON，含 old_cwd 和 new_cwd。\nCLAUDE_ENV_FILE 已设置，可写入 Bash export 指令以应用到后续 BashTool 命令。\n钩子输出可包含 hookSpecificOutput.watchPaths（绝对路径数组），注册到 FileChanged 监视器。\n退出码 0：命令成功完成\n其他退出码：仅向用户显示错误输出",
       },
       FileChanged: {
-        summary: 'When a watched file changes',
+        summary: "监视的文件修改时",
         description:
-          'Input to command is JSON with file_path and event (change, add, unlink).\nCLAUDE_ENV_FILE is set — write bash exports there to apply env to subsequent BashTool commands.\nThe matcher field specifies filenames to watch in the current directory (e.g. ".envrc|.env").\nHook output can include hookSpecificOutput.watchPaths (array of absolute paths) to dynamically update the watch list.\nExit code 0 - command completes successfully\nOther exit codes - show stderr to user only',
+          "命令输入为 JSON，含 file_path 和 event（change／add／unlink）。\nCLAUDE_ENV_FILE 已设置，可写入 Bash export 指令以应用到后续 BashTool 命令。\n匹配器指定当前目录下需要监视的文件名（例如 .envrc|.env）。\n钩子输出可包含 hookSpecificOutput.watchPaths（绝对路径数组），动态更新监视列表。\n退出码 0：命令成功完成\n其他退出码：仅向用户显示错误输出",
       },
     }
   },

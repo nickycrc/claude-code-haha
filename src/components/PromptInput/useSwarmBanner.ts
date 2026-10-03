@@ -85,7 +85,7 @@ export function useSwarmBanner(): SwarmBannerInfo {
 
     if (insideTmux === false && !inProcessMode && !nativePanes) {
       return {
-        text: `View teammates: \`tmux -L ${getSwarmSocketName()} a\``,
+        text: `查看队友：\`tmux -L ${getSwarmSocketName()} a\``,
         bgColor: viewedColor,
       }
     }

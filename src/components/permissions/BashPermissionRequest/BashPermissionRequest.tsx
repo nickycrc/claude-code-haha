@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import { feature } from 'bun:bundle';
 import figures from 'figures';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Box, Text, useTheme } from '../../../ink.js';
+import { Box, useTheme } from "../../../ink.js";
 import { useKeybinding } from '../../../keybindings/useKeybinding.js';
 import { getFeatureValue_CACHED_MAY_BE_STALE } from '../../../services/analytics/growthbook.js';
 import { type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS, logEvent } from '../../../services/analytics/index.js';
@@ -425,14 +426,14 @@ function BashPermissionRequestInner({
     }
   }
   const classifierSubtitle = feature('BASH_CLASSIFIER') ? toolUseConfirm.classifierAutoApproved ? <Text>
-        <Text color="success">{figures.tick} Auto-approved</Text>
+        <Text color="success">{figures.tick} {"已自动批准"}</Text>
         {toolUseConfirm.classifierMatchedRule && <Text dimColor>
-            {' \u00b7 matched "'}
+            {"· 匹配到“"}
             {toolUseConfirm.classifierMatchedRule}
             {'"'}
           </Text>}
-      </Text> : toolUseConfirm.classifierCheckInProgress ? <ClassifierCheckingSubtitle /> : classifierWasChecking ? <Text dimColor>Requires manual approval</Text> : undefined : undefined;
-  return <PermissionDialog workerBadge={workerBadge} title={sandboxingEnabled_0 && !isSandboxed_0 ? 'Bash command (unsandboxed)' : 'Bash command'} subtitle={classifierSubtitle}>
+      </Text> : toolUseConfirm.classifierCheckInProgress ? <ClassifierCheckingSubtitle /> : classifierWasChecking ? <Text dimColor>{"需要手动批准"}</Text> : undefined : undefined;
+  return <PermissionDialog workerBadge={workerBadge} title={sandboxingEnabled_0 && !isSandboxed_0 ? "Bash 命令（沙箱外）" : "Bash 命令"} subtitle={classifierSubtitle}>
       <Box flexDirection="column" paddingX={2} paddingY={1}>
         <Text dimColor={explainerState.visible}>
           {BashTool.renderToolUseMessage({
@@ -450,7 +451,7 @@ function BashPermissionRequestInner({
       {showPermissionDebug ? <>
           <PermissionDecisionDebugInfo permissionResult={toolUseConfirm.permissionResult} toolName="Bash" />
           {toolUseContext.options.debug && <Box justifyContent="flex-end" marginTop={1}>
-              <Text dimColor>Ctrl-D to hide debug info</Text>
+              <Text dimColor>{"Ctrl-D 隐藏调试信息"}</Text>
             </Box>}
         </> : <>
           <Box flexDirection="column">
@@ -461,7 +462,7 @@ function BashPermissionRequestInner({
                 </Text>
               </Box>}
             <Text dimColor={feature('BASH_CLASSIFIER') ? toolUseConfirm.classifierAutoApproved : false}>
-              Do you want to proceed?
+              {"是否继续？"}
             </Text>
             <Select options={feature('BASH_CLASSIFIER') ? toolUseConfirm.classifierAutoApproved ? options.map(o => ({
           ...o,
@@ -470,11 +471,11 @@ function BashPermissionRequestInner({
           </Box>
           <Box justifyContent="space-between" marginTop={1}>
             <Text dimColor>
-              Esc to cancel
-              {(focusedOption === 'yes' && !yesInputMode || focusedOption === 'no' && !noInputMode) && ' · Tab to amend'}
-              {explainerState.enabled && ` · ctrl+e to ${explainerState.visible ? 'hide' : 'explain'}`}
+              {"Esc 取消"}
+              {(focusedOption === 'yes' && !yesInputMode || focusedOption === 'no' && !noInputMode) && "· Tab 修改"}
+              {explainerState.enabled && `· ctrl+e ${explainerState.visible ? "隐藏" : "查看说明"}`}
             </Text>
-            {toolUseContext.options.debug && <Text dimColor>Ctrl+d to show debug info</Text>}
+            {toolUseContext.options.debug && <Text dimColor>{"Ctrl+d 显示调试信息"}</Text>}
           </Box>
         </>}
     </PermissionDialog>;

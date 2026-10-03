@@ -334,7 +334,7 @@ function TranscriptModeFooter(t0) {
   const t2 = searchBadge ? " \xB7 n/N to navigate" : virtualScroll ? ` · ${figures.arrowUp}${figures.arrowDown} scroll · home/end top/bottom` : suppressShowAll ? "" : ` · ${showAllShortcut} to ${showAllInTranscript ? "collapse" : "show all"}`;
   let t3;
   if ($[0] !== t2 || $[1] !== toggleShortcut) {
-    t3 = <Text dimColor={true}>Showing detailed transcript · {toggleShortcut} to toggle{t2}</Text>;
+    t3 = <Text dimColor={true}>{"正在显示详细会话记录 ·"} {toggleShortcut} {"切换"}{t2}</Text>;
     $[0] = t2;
     $[1] = toggleShortcut;
     $[2] = t3;
@@ -460,7 +460,7 @@ function TranscriptSearchBar({
       <Text inverse>{cursorChar}</Text>
       {off < query.length && <Text>{query.slice(off + 1)}</Text>}
       <Box flexGrow={1} />
-      {indexStatus === 'building' ? <Text dimColor>indexing… </Text> : indexStatus ? <Text dimColor>indexed in {indexStatus.ms}ms </Text> : count === 0 && query ? <Text color="error">no matches </Text> : count > 0 ?
+      {indexStatus === 'building' ? <Text dimColor>{"正在建立索引……"} </Text> : indexStatus ? <Text dimColor>{"索引完成，耗时"} {indexStatus.ms}ms </Text> : count === 0 && query ? <Text color="error">{"没有匹配项"} </Text> : count > 0 ?
     // Engine-counted (indexOf on extractSearchText). May drift from
     // render-count for ghost/phantom messages — badge is a rough
     // location hint. scanElement gives exact per-message positions
@@ -2327,7 +2327,7 @@ export function REPL({
     addNotification({
       key: 'sandbox-unavailable',
       jsx: <>
-          <Text color="warning">sandbox disabled</Text>
+          <Text color="warning">{"沙箱已禁用"}</Text>
           <Text dimColor> · /sandbox</Text>
         </>,
       priority: 'medium'
@@ -3560,7 +3560,7 @@ export function REPL({
           addNotification({
             key: `resume-agent-failed-${task.id}`,
             jsx: <Text color="error">
-                  Failed to resume agent: {errorMessage(err)}
+                  {"恢复代理失败："} {errorMessage(err)}
                 </Text>,
             priority: 'low'
           });
@@ -3757,7 +3757,7 @@ export function REPL({
       addNotification({
         // Same key as text-selection copy — repeated copies replace toast, don't queue.
         key: 'selection-copied',
-        text: 'copied',
+        text: "已复制",
         color: 'success',
         priority: 'immediate',
         timeoutMs: 2000
@@ -3929,7 +3929,7 @@ export function REPL({
       // Use ref to get current dialog state, avoiding stale closure
       focusedInputDialogRef.current === undefined && idleTimeSinceResponse >= getGlobalConfig().messageIdleNotifThresholdMs) {
         void sendNotification({
-          message: 'Claude is waiting for your input',
+          message: "Claude 正在等待你的输入",
           notificationType: 'idle_prompt'
         }, terminal);
       }
@@ -3959,12 +3959,12 @@ export function REPL({
       addNotif({
         key: 'idle-return-hint',
         jsx: mode === 'hint_v2' ? <>
-                <Text dimColor>new task? </Text>
+                <Text dimColor>{"新任务？"} </Text>
                 <Text color="suggestion">/clear</Text>
-                <Text dimColor> to save </Text>
-                <Text color="suggestion">{formattedTokens} tokens</Text>
+                <Text dimColor> {"保存"} </Text>
+                <Text color="suggestion">{formattedTokens} {"令牌"}</Text>
               </> : <Text color="warning">
-                new task? /clear to save {formattedTokens} tokens
+                {"新任务？使用 /clear 节省用量"} {formattedTokens} {"令牌"}
               </Text>,
         priority: 'medium',
         // Persist until submit — the hint fires at T+75min idle, user may
@@ -4669,7 +4669,7 @@ export function REPL({
                 {/* Show pending indicator on worker while waiting for leader approval */}
                 {pendingWorkerRequest && <WorkerPendingPermission toolName={pendingWorkerRequest.toolName} description={pendingWorkerRequest.description} />}
                 {/* Show pending indicator for sandbox permission on worker side */}
-                {pendingSandboxRequest && <WorkerPendingPermission toolName="Network Access" description={`Waiting for leader to approve network access to ${pendingSandboxRequest.host}`} />}
+                {pendingSandboxRequest && <WorkerPendingPermission toolName="Network Access" description={`正在等待负责人批准访问 ${pendingSandboxRequest.host} 的网络权限`} />}
                 {/* Worker sandbox permission requests from swarm workers */}
                 {focusedInputDialog === 'worker-sandbox-permission' && <SandboxPermissionRequest key={workerSandboxPermissions.queue[0]!.requestId} hostPattern={{
             host: workerSandboxPermissions.queue[0]!.host,
@@ -4890,7 +4890,7 @@ export function REPL({
 
                 {!toolJSX?.shouldHidePromptInput && !focusedInputDialog && !isExiting && !disabled && !cursor && <>
                       {autoRunIssueReason && <AutoRunIssueNotification onRun={handleAutoRunIssue} onCancel={handleCancelAutoRunIssue} reason={getAutoRunIssueReasonText(autoRunIssueReason)} />}
-                      {postCompactSurvey.state !== 'closed' ? <FeedbackSurvey state={postCompactSurvey.state} lastResponse={postCompactSurvey.lastResponse} handleSelect={postCompactSurvey.handleSelect} inputValue={inputValue} setInputValue={setInputValue} onRequestFeedback={handleSurveyRequestFeedback} /> : memorySurvey.state !== 'closed' ? <FeedbackSurvey state={memorySurvey.state} lastResponse={memorySurvey.lastResponse} handleSelect={memorySurvey.handleSelect} handleTranscriptSelect={memorySurvey.handleTranscriptSelect} inputValue={inputValue} setInputValue={setInputValue} onRequestFeedback={handleSurveyRequestFeedback} message="How well did Claude use its memory? (optional)" /> : <FeedbackSurvey state={feedbackSurvey.state} lastResponse={feedbackSurvey.lastResponse} handleSelect={feedbackSurvey.handleSelect} handleTranscriptSelect={feedbackSurvey.handleTranscriptSelect} inputValue={inputValue} setInputValue={setInputValue} onRequestFeedback={didAutoRunIssueRef.current ? undefined : handleSurveyRequestFeedback} />}
+                      {postCompactSurvey.state !== 'closed' ? <FeedbackSurvey state={postCompactSurvey.state} lastResponse={postCompactSurvey.lastResponse} handleSelect={postCompactSurvey.handleSelect} inputValue={inputValue} setInputValue={setInputValue} onRequestFeedback={handleSurveyRequestFeedback} /> : memorySurvey.state !== 'closed' ? <FeedbackSurvey state={memorySurvey.state} lastResponse={memorySurvey.lastResponse} handleSelect={memorySurvey.handleSelect} handleTranscriptSelect={memorySurvey.handleTranscriptSelect} inputValue={inputValue} setInputValue={setInputValue} onRequestFeedback={handleSurveyRequestFeedback} message="Claude 使用记忆的效果如何？（可选）" /> : <FeedbackSurvey state={feedbackSurvey.state} lastResponse={feedbackSurvey.lastResponse} handleSelect={feedbackSurvey.handleSelect} handleTranscriptSelect={feedbackSurvey.handleTranscriptSelect} inputValue={inputValue} setInputValue={setInputValue} onRequestFeedback={didAutoRunIssueRef.current ? undefined : handleSurveyRequestFeedback} />}
                       {/* Frustration-triggered transcript sharing prompt */}
                       {frustrationDetection.state !== 'closed' && <FeedbackSurvey state={frustrationDetection.state} lastResponse={null} handleSelect={() => {}} handleTranscriptSelect={frustrationDetection.handleTranscriptSelect} inputValue={inputValue} setInputValue={setInputValue} />}
                       {/* Skill improvement survey - appears when improvements detected (ant-only) */}
@@ -4979,7 +4979,7 @@ export function REPL({
             const historyShortcut = getShortcutDisplay('app:toggleTranscript', 'Global', 'ctrl+o');
             addNotification({
               key: 'summarize-ctrl-o-hint',
-              text: `Conversation summarized (${historyShortcut} for history)`,
+              text: `对话已总结（${historyShortcut} 查看历史记录）`,
               priority: 'medium',
               timeoutMs: 8000
             });

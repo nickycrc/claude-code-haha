@@ -1,6 +1,7 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React, { useCallback } from 'react';
-import { Text } from '../ink.js';
+
 import { getGlobalConfig, saveGlobalConfig } from '../utils/config.js';
 import { isSupportedTerminal } from '../utils/ide.js';
 import { Select } from './CustomSelect/index.js';
@@ -33,10 +34,10 @@ export function IdeAutoConnectDialog(t0) {
   let t2;
   if ($[2] === Symbol.for("react.memo_cache_sentinel")) {
     t2 = [{
-      label: "Yes",
+      label: "是",
       value: "yes"
     }, {
-      label: "No",
+      label: "否",
       value: "no"
     }];
     $[2] = t2;
@@ -54,14 +55,14 @@ export function IdeAutoConnectDialog(t0) {
   }
   let t4;
   if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
-    t4 = <Text dimColor={true}>You can also configure this in /config or with the --ide flag</Text>;
+    t4 = <Text dimColor={true}>{"也可通过 /config 或 --ide 参数配置"}</Text>;
     $[5] = t4;
   } else {
     t4 = $[5];
   }
   let t5;
   if ($[6] !== onComplete || $[7] !== t3) {
-    t5 = <Dialog title="Do you wish to enable auto-connect to IDE?" color="ide" onCancel={onComplete}>{t3}{t4}</Dialog>;
+    t5 = <Dialog title="启用 IDE 自动连接？" color="ide" onCancel={onComplete}>{t3}{t4}</Dialog>;
     $[6] = onComplete;
     $[7] = t3;
     $[8] = t5;
@@ -111,10 +112,10 @@ export function IdeDisableAutoConnectDialog(t0) {
   let t3;
   if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
     t3 = [{
-      label: "No",
+      label: "否",
       value: "no"
     }, {
-      label: "Yes",
+      label: "是",
       value: "yes"
     }];
     $[4] = t3;
@@ -132,7 +133,7 @@ export function IdeDisableAutoConnectDialog(t0) {
   }
   let t5;
   if ($[7] !== handleCancel || $[8] !== t4) {
-    t5 = <Dialog title="Do you wish to disable auto-connect to IDE?" subtitle="You can also configure this in /config" onCancel={handleCancel} color="ide">{t4}</Dialog>;
+    t5 = <Dialog title="禁用 IDE 自动连接？" subtitle="也可在 /config 中配置" onCancel={handleCancel} color="ide">{t4}</Dialog>;
     $[7] = handleCancel;
     $[8] = t4;
     $[9] = t5;

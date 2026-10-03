@@ -66,8 +66,8 @@ function InstallGitHubApp(props: {
     });
     if (ghVersionResult.exitCode !== 0) {
       warnings.push({
-        title: 'GitHub CLI not found',
-        message: 'GitHub CLI (gh) does not appear to be installed or accessible.',
+        title: "未找到 GitHub CLI",
+        message: "GitHub CLI（gh）似乎尚未安装或无法访问。",
         instructions: ['Install GitHub CLI from https://cli.github.com/', 'macOS: brew install gh', 'Windows: winget install --id GitHub.cli', 'Linux: See installation instructions at https://github.com/cli/cli#installation']
       });
     }
@@ -79,8 +79,8 @@ function InstallGitHubApp(props: {
     });
     if (authResult.exitCode !== 0) {
       warnings.push({
-        title: 'GitHub CLI not authenticated',
-        message: 'GitHub CLI does not appear to be authenticated.',
+        title: "GitHub CLI 尚未验证身份",
+        message: "GitHub CLI 似乎尚未完成身份验证。",
         instructions: ['Run: gh auth login', 'Follow the prompts to authenticate with GitHub', 'Or set up authentication using environment variables or other methods']
       });
     } else {
@@ -285,8 +285,8 @@ function InstallGitHubApp(props: {
         const match = repoName_1.match(/github\.com[:/]([^/]+\/[^/]+)(\.git)?$/);
         if (!match) {
           repoWarnings.push({
-            title: 'Invalid GitHub URL format',
-            message: 'The repository URL format appears to be invalid.',
+            title: "GitHub 地址格式无效",
+            message: "仓库地址格式似乎无效。",
             instructions: ['Use format: owner/repo or https://github.com/owner/repo', 'Example: anthropics/claude-cli']
           });
         } else {
@@ -295,22 +295,22 @@ function InstallGitHubApp(props: {
       }
       if (!repoName_1.includes('/')) {
         repoWarnings.push({
-          title: 'Repository format warning',
-          message: 'Repository should be in format "owner/repo"',
+          title: "仓库格式警告",
+          message: "仓库应使用 \"owner/repo\" 格式",
           instructions: ['Use format: owner/repo', 'Example: anthropics/claude-cli']
         });
       }
       const permissionCheck = await checkRepositoryPermissions(repoName_1);
       if (permissionCheck.error === 'repository_not_found') {
         repoWarnings.push({
-          title: 'Repository not found',
-          message: `Repository ${repoName_1} was not found or you don't have access.`,
+          title: "未找到仓库",
+          message: `未找到仓库 ${repoName_1}，或你没有访问权限。`,
           instructions: [`Check that the repository name is correct: ${repoName_1}`, 'Ensure you have access to this repository', 'For private repositories, make sure your GitHub token has the "repo" scope', 'You can add the repo scope with: gh auth refresh -h github.com -s repo,workflow']
         });
       } else if (!permissionCheck.hasAccess) {
         repoWarnings.push({
-          title: 'Admin permissions required',
-          message: `You might need admin permissions on ${repoName_1} to set up GitHub Actions.`,
+          title: "需要管理员权限",
+          message: `配置 GitHub Actions 可能需要 ${repoName_1} 的管理员权限。`,
           instructions: ['Repository admins can install GitHub Apps and set secrets', 'Ask a repository admin to run this command if setup fails', 'Alternatively, you can use the manual setup instructions']
         });
       }

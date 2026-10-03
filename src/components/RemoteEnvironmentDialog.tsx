@@ -1,9 +1,10 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import chalk from 'chalk';
 import figures from 'figures';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { Text } from '../ink.js';
+
 import { useKeybinding } from '../keybindings/useKeybinding.js';
 import { toError } from '../utils/errors.js';
 import { logError } from '../utils/log.js';
@@ -110,7 +111,7 @@ export function RemoteEnvironmentDialog(t0) {
   if (loadingState === "loading") {
     let t5;
     if ($[6] === Symbol.for("react.memo_cache_sentinel")) {
-      t5 = <LoadingState message={"Loading environments\u2026"} />;
+      t5 = <LoadingState message={"正在加载环境……"} />;
       $[6] = t5;
     } else {
       t5 = $[6];
@@ -128,7 +129,7 @@ export function RemoteEnvironmentDialog(t0) {
   if (error) {
     let t5;
     if ($[9] !== error) {
-      t5 = <Text color="error">Error: {error}</Text>;
+      t5 = <Text color="error">{"错误："} {error}</Text>;
       $[9] = error;
       $[10] = t5;
     } else {
@@ -148,7 +149,7 @@ export function RemoteEnvironmentDialog(t0) {
   if (!selectedEnvironment) {
     let t5;
     if ($[14] === Symbol.for("react.memo_cache_sentinel")) {
-      t5 = <Text>No remote environments available.</Text>;
+      t5 = <Text>{"没有可用的远程环境。"}</Text>;
       $[14] = t5;
     } else {
       t5 = $[14];
@@ -213,7 +214,7 @@ function EnvironmentLabel(t0) {
   }
   let t3;
   if ($[4] !== t1 || $[5] !== t2) {
-    t3 = <Text>{figures.tick} Using {t1}{" "}{t2}</Text>;
+    t3 = <Text>{figures.tick} {"正在使用"} {t1}{" "}{t2}</Text>;
     $[4] = t1;
     $[5] = t2;
     $[6] = t3;
@@ -286,7 +287,7 @@ function MultipleEnvironmentsContent(t0) {
   }
   let t3;
   if ($[4] !== sourceSuffix || $[5] !== t2) {
-    t3 = <Text>Currently using: {t2}{sourceSuffix}</Text>;
+    t3 = <Text>{"当前使用："} {t2}{sourceSuffix}</Text>;
     $[4] = sourceSuffix;
     $[5] = t2;
     $[6] = t3;
@@ -303,7 +304,7 @@ function MultipleEnvironmentsContent(t0) {
   }
   let t5;
   if ($[8] !== environments || $[9] !== loadingState || $[10] !== onSelect || $[11] !== selectedEnvironment.environment_id) {
-    t5 = loadingState === "updating" ? <LoadingState message={"Updating\u2026"} /> : <Select options={environments.map(_temp)} defaultValue={selectedEnvironment.environment_id} onChange={onSelect} onCancel={() => onSelect("cancel")} layout="compact-vertical" />;
+    t5 = loadingState === "updating" ? <LoadingState message={"正在更新……"} /> : <Select options={environments.map(_temp)} defaultValue={selectedEnvironment.environment_id} onChange={onSelect} onCancel={() => onSelect("cancel")} layout="compact-vertical" />;
     $[8] = environments;
     $[9] = loadingState;
     $[10] = onSelect;
@@ -314,7 +315,7 @@ function MultipleEnvironmentsContent(t0) {
   }
   let t6;
   if ($[13] === Symbol.for("react.memo_cache_sentinel")) {
-    t6 = <Text dimColor={true}><Byline><KeyboardShortcutHint shortcut="Enter" action="select" /><ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="cancel" /></Byline></Text>;
+    t6 = <Text dimColor={true}><Byline><KeyboardShortcutHint shortcut="Enter" action="选择" /><ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="取消" /></Byline></Text>;
     $[13] = t6;
   } else {
     t6 = $[13];

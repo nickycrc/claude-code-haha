@@ -1,9 +1,10 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import { feature } from 'bun:bundle';
 import * as React from 'react';
 import { useExitOnCtrlCDWithKeybindings } from '../hooks/useExitOnCtrlCDWithKeybindings.js';
 import { useTerminalSize } from '../hooks/useTerminalSize.js';
-import { Box, Text, usePreviewTheme, useTheme, useThemeSetting } from '../ink.js';
+import { Box, usePreviewTheme, useTheme, useThemeSetting } from "../ink.js";
 import { useRegisterKeybindingContext } from '../keybindings/KeybindingContext.js';
 import { useKeybinding } from '../keybindings/useKeybinding.js';
 import { useShortcutDisplay } from '../keybindings/useShortcutDisplay.js';
@@ -111,25 +112,25 @@ export function ThemePicker(t0) {
   let t10;
   if ($[7] === Symbol.for("react.memo_cache_sentinel")) {
     t10 = [...(feature("AUTO_THEME") ? [{
-      label: "Auto (match terminal)",
+      label: "自动（匹配终端）",
       value: "auto" as const
     }] : []), {
-      label: "Dark mode",
+      label: "深色模式",
       value: "dark"
     }, {
-      label: "Light mode",
+      label: "浅色模式",
       value: "light"
     }, {
-      label: "Dark mode (colorblind-friendly)",
+      label: "深色模式（色盲友好）",
       value: "dark-daltonized"
     }, {
-      label: "Light mode (colorblind-friendly)",
+      label: "浅色模式（色盲友好）",
       value: "light-daltonized"
     }, {
-      label: "Dark mode (ANSI colors only)",
+      label: "深色模式（仅 ANSI 颜色）",
       value: "dark-ansi"
     }, {
-      label: "Light mode (ANSI colors only)",
+      label: "浅色模式（仅 ANSI 颜色）",
       value: "light-ansi"
     }];
     $[7] = t10;
@@ -139,7 +140,7 @@ export function ThemePicker(t0) {
   const themeOptions = t10;
   let t11;
   if ($[8] !== showIntroText) {
-    t11 = showIntroText ? <Text>Let's get started.</Text> : <Text bold={true} color="permission">Theme</Text>;
+    t11 = showIntroText ? <Text>{"开始配置吧。"}</Text> : <Text bold={true} color="permission">{"主题"}</Text>;
     $[8] = showIntroText;
     $[9] = t11;
   } else {
@@ -147,7 +148,7 @@ export function ThemePicker(t0) {
   }
   let t12;
   if ($[10] === Symbol.for("react.memo_cache_sentinel")) {
-    t12 = <Text bold={true}>Choose the text style that looks best with your terminal</Text>;
+    t12 = <Text bold={true}>{"选择最适合你的终端的文字风格"}</Text>;
     $[10] = t12;
   } else {
     t12 = $[10];
@@ -297,7 +298,7 @@ export function ThemePicker(t0) {
     }
     let t28;
     if ($[50] !== exitState || $[51] !== hideEscToCancel) {
-      t28 = !hideEscToCancel && <Box><Text dimColor={true} italic={true}>{exitState.pending ? <>Press {exitState.keyName} again to exit</> : <Byline><KeyboardShortcutHint shortcut="Enter" action="select" /><KeyboardShortcutHint shortcut="Esc" action="cancel" /></Byline>}</Text></Box>;
+      t28 = !hideEscToCancel && <Box><Text dimColor={true} italic={true}>{exitState.pending ? <>{"按"} {exitState.keyName} {"再次按下退出"}</> : <Byline><KeyboardShortcutHint shortcut="Enter" action="选择" /><KeyboardShortcutHint shortcut="Esc" action="取消" /></Byline>}</Text></Box>;
       $[50] = exitState;
       $[51] = hideEscToCancel;
       $[52] = t28;

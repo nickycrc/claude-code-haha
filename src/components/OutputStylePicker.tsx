@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { getAllOutputStyles, OUTPUT_STYLE_CONFIG, type OutputStyleConfig } from '../constants/outputStyles.js';
-import { Box, Text } from '../ink.js';
+import { Box } from "../ink.js";
 import type { OutputStyle } from '../utils/config.js';
 import { getCwd } from '../utils/cwd.js';
 import type { OptionWithDescription } from './CustomSelect/select.js';
@@ -80,14 +81,14 @@ export function OutputStylePicker(t0) {
   const t6 = !isStandaloneCommand;
   let t7;
   if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
-    t7 = <Box marginTop={1}><Text dimColor={true}>This changes how Claude Code communicates with you</Text></Box>;
+    t7 = <Box marginTop={1}><Text dimColor={true}>{"此设置会改变 Claude Code 与你的交流方式"}</Text></Box>;
     $[5] = t7;
   } else {
     t7 = $[5];
   }
   let t8;
   if ($[6] !== handleStyleSelect || $[7] !== initialStyle || $[8] !== isLoading || $[9] !== styleOptions) {
-    t8 = <Box flexDirection="column" gap={1}>{t7}{isLoading ? <Text dimColor={true}>Loading output styles…</Text> : <Select options={styleOptions} onChange={handleStyleSelect} visibleOptionCount={10} defaultValue={initialStyle} />}</Box>;
+    t8 = <Box flexDirection="column" gap={1}>{t7}{isLoading ? <Text dimColor={true}>{"正在加载输出风格……"}</Text> : <Select options={styleOptions} onChange={handleStyleSelect} visibleOptionCount={10} defaultValue={initialStyle} />}</Box>;
     $[6] = handleStyleSelect;
     $[7] = initialStyle;
     $[8] = isLoading;
@@ -98,7 +99,7 @@ export function OutputStylePicker(t0) {
   }
   let t9;
   if ($[11] !== onCancel || $[12] !== t5 || $[13] !== t6 || $[14] !== t8) {
-    t9 = <Dialog title="Preferred output style" onCancel={onCancel} hideInputGuide={t5} hideBorder={t6}>{t8}</Dialog>;
+    t9 = <Dialog title="首选输出风格" onCancel={onCancel} hideInputGuide={t5} hideBorder={t6}>{t8}</Dialog>;
     $[11] = onCancel;
     $[12] = t5;
     $[13] = t6;

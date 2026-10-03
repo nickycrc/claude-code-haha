@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import figures from 'figures';
 import React, { useCallback, useMemo, useState } from 'react';
@@ -23,7 +24,7 @@ import { TungstenTool } from 'src/tools/TungstenTool/TungstenTool.js';
 import { WebFetchTool } from 'src/tools/WebFetchTool/WebFetchTool.js';
 import { WebSearchTool } from 'src/tools/WebSearchTool/WebSearchTool.js';
 import type { KeyboardEvent } from '../../ink/events/keyboard-event.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { useKeybinding } from '../../keybindings/useKeybinding.js';
 import { count } from '../../utils/array.js';
 import { plural } from '../../utils/stringUtils.js';
@@ -269,7 +270,7 @@ export function ToolSelector(t0) {
     navigableItems = [];
     navigableItems.push({
       id: "continue",
-      label: "Continue",
+      label: "继续",
       action: handleConfirm,
       isContinue: true
     });
@@ -287,7 +288,7 @@ export function ToolSelector(t0) {
     }
     navigableItems.push({
       id: "bucket-all",
-      label: `${isAllSelected ? figures.checkboxOn : figures.checkboxOff} All tools`,
+      label: `${isAllSelected ? figures.checkboxOn : figures.checkboxOff} 所有工具`,
       action: t10
     });
     const toolBuckets_0 = getToolBuckets();
@@ -347,7 +348,7 @@ export function ToolSelector(t0) {
     }
     navigableItems.push({
       id: "toggle-individual",
-      label: showIndividualTools ? "Hide advanced options" : "Show advanced options",
+      label: showIndividualTools ? "隐藏高级选项" : "显示高级选项",
       action: t12,
       isToggle: true
     });
@@ -356,7 +357,7 @@ export function ToolSelector(t0) {
       if (mcpServerBuckets.length > 0) {
         navigableItems.push({
           id: "mcp-servers-header",
-          label: "MCP Servers:",
+          label: "MCP 服务器：",
           action: _temp6,
           isHeader: true
         });
@@ -378,7 +379,7 @@ export function ToolSelector(t0) {
         });
         navigableItems.push({
           id: "tools-header",
-          label: "Individual Tools:",
+          label: "独立工具：",
           action: _temp8,
           isHeader: true
         });
@@ -480,7 +481,7 @@ export function ToolSelector(t0) {
   const t15 = focusIndex === 0 ? `${figures.pointer} ` : "  ";
   let t16;
   if ($[52] !== t13 || $[53] !== t14 || $[54] !== t15) {
-    t16 = <Text color={t13} bold={t14}>{t15}[ Continue ]</Text>;
+    t16 = <Text color={t13} bold={t14}>{t15}{"[ 继续 ]"}</Text>;
     $[52] = t13;
     $[53] = t14;
     $[54] = t15;

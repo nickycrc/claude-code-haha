@@ -1,7 +1,8 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import figures from 'figures';
 import * as React from 'react';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { getPluginTrustMessage } from '../../utils/plugins/marketplaceHelpers.js';
 export function PluginTrustWarning() {
   const $ = _c(3);
@@ -22,7 +23,7 @@ export function PluginTrustWarning() {
   }
   let t2;
   if ($[2] === Symbol.for("react.memo_cache_sentinel")) {
-    t2 = <Box marginBottom={1}>{t1}<Text dimColor={true} italic={true}>Make sure you trust a plugin before installing, updating, or using it. Anthropic does not control what MCP servers, files, or other software are included in plugins and cannot verify that they will work as intended or that they won't change. See each plugin's homepage for more information.{customMessage ? ` ${customMessage}` : ""}</Text></Box>;
+    t2 = <Box marginBottom={1}>{t1}<Text dimColor={true} italic={true}>{"安装、更新或使用插件前，请确认信任它。Anthropic 无法控制插件包含的 MCP 服务器、文件或其他软件，也无法保证其行为符合预期或保持不变。更多信息请查看各插件主页。"}{customMessage ? ` ${customMessage}` : ""}</Text></Box>;
     $[2] = t2;
   } else {
     t2 = $[2];

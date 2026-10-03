@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import { randomUUID } from 'crypto';
 import figures from 'figures';
@@ -7,7 +8,7 @@ import { useInterval } from 'usehooks-ts';
 import { useRegisterOverlay } from '../../context/overlayContext.js';
 import { stringWidth } from '../../ink/stringWidth.js';
 // eslint-disable-next-line custom-rules/prefer-use-keybindings -- raw j/k/arrow dialog navigation
-import { Box, Text, useInput } from '../../ink.js';
+import { Box, useInput } from "../../ink.js";
 import { useKeybindings } from '../../keybindings/useKeybinding.js';
 import { useShortcutDisplay } from '../../keybindings/useShortcutDisplay.js';
 import { type AppState, useAppState, useSetAppState } from '../../state/AppState.js';
@@ -254,7 +255,7 @@ function TeamDetailView(t0) {
   const t1 = `Team ${teamName}`;
   let t2;
   if ($[0] !== selectedIndex || $[1] !== teammates) {
-    t2 = teammates.length === 0 ? <Text dimColor={true}>No teammates</Text> : <Box flexDirection="column">{teammates.map((teammate, index) => <TeammateListItem key={teammate.agentId} teammate={teammate} isSelected={index === selectedIndex} />)}</Box>;
+    t2 = teammates.length === 0 ? <Text dimColor={true}>{"没有队友"}</Text> : <Box flexDirection="column">{teammates.map((teammate, index) => <TeammateListItem key={teammate.agentId} teammate={teammate} isSelected={index === selectedIndex} />)}</Box>;
     $[0] = selectedIndex;
     $[1] = teammates;
     $[2] = t2;
@@ -274,7 +275,7 @@ function TeamDetailView(t0) {
   }
   let t4;
   if ($[8] !== cycleModeShortcut) {
-    t4 = <Box marginLeft={1}><Text dimColor={true}>{figures.arrowUp}/{figures.arrowDown} select · Enter view · k kill · s shutdown · p prune idle{supportsHideShow && " \xB7 h hide/show \xB7 H hide/show all"}{" \xB7 "}{cycleModeShortcut} sync cycle modes for all · Esc close</Text></Box>;
+    t4 = <Box marginLeft={1}><Text dimColor={true}>{figures.arrowUp}/{figures.arrowDown} {"选择 · Enter 查看 · k 强制结束 · s 关闭 · p 清理空闲队友"}{supportsHideShow && "· h 隐藏／显示 · H 全部隐藏／显示"}{" \xB7 "}{cycleModeShortcut} {"同步所有队友的模式 · Esc 关闭"}</Text></Box>;
     $[8] = cycleModeShortcut;
     $[9] = t4;
   } else {
@@ -321,7 +322,7 @@ function TeammateListItem(t0) {
   const t3 = isSelected ? figures.pointer + " " : "  ";
   let t4;
   if ($[3] !== teammate.isHidden) {
-    t4 = teammate.isHidden && <Text dimColor={true}>[hidden] </Text>;
+    t4 = teammate.isHidden && <Text dimColor={true}>{"[已隐藏]"} </Text>;
     $[3] = teammate.isHidden;
     $[4] = t4;
   } else {
@@ -329,7 +330,7 @@ function TeammateListItem(t0) {
   }
   let t5;
   if ($[5] !== isIdle) {
-    t5 = isIdle && <Text dimColor={true}>[idle] </Text>;
+    t5 = isIdle && <Text dimColor={true}>{"[空闲]"} </Text>;
     $[5] = isIdle;
     $[6] = t5;
   } else {
@@ -492,7 +493,7 @@ function TeammateDetailView(t0) {
   const title = t8;
   let t9;
   if ($[23] !== teammateTasks) {
-    t9 = teammateTasks.length > 0 && <Box flexDirection="column"><Text bold={true}>Tasks</Text>{teammateTasks.map(_temp2)}</Box>;
+    t9 = teammateTasks.length > 0 && <Box flexDirection="column"><Text bold={true}>{"任务"}</Text>{teammateTasks.map(_temp2)}</Box>;
     $[23] = teammateTasks;
     $[24] = t9;
   } else {
@@ -500,7 +501,7 @@ function TeammateDetailView(t0) {
   }
   let t10;
   if ($[25] !== promptExpanded || $[26] !== teammate.prompt) {
-    t10 = teammate.prompt && <Box flexDirection="column"><Text bold={true}>Prompt</Text><Text>{promptExpanded ? teammate.prompt : truncateToWidth(teammate.prompt, 80)}{stringWidth(teammate.prompt) > 80 && !promptExpanded && <Text dimColor={true}> (p to expand)</Text>}</Text></Box>;
+    t10 = teammate.prompt && <Box flexDirection="column"><Text bold={true}>{"提示词"}</Text><Text>{promptExpanded ? teammate.prompt : truncateToWidth(teammate.prompt, 80)}{stringWidth(teammate.prompt) > 80 && !promptExpanded && <Text dimColor={true}> {"（p 展开）"}</Text>}</Text></Box>;
     $[25] = promptExpanded;
     $[26] = teammate.prompt;
     $[27] = t10;
@@ -521,7 +522,7 @@ function TeammateDetailView(t0) {
   }
   let t12;
   if ($[34] !== cycleModeShortcut) {
-    t12 = <Box marginLeft={1}><Text dimColor={true}>{figures.arrowLeft} back · Esc close · k kill · s shutdown{getCachedBackend()?.supportsHideShow && " \xB7 h hide/show"}{" \xB7 "}{cycleModeShortcut} cycle mode</Text></Box>;
+    t12 = <Box marginLeft={1}><Text dimColor={true}>{figures.arrowLeft} {"返回 · Esc 关闭 · k 强制结束 · s 关闭"}{getCachedBackend()?.supportsHideShow && "· h 隐藏／显示"}{" \xB7 "}{cycleModeShortcut} {"切换模式"}</Text></Box>;
     $[34] = cycleModeShortcut;
     $[35] = t12;
   } else {

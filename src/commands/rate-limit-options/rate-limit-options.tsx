@@ -85,7 +85,7 @@ function RateLimitOptionsMenu(t0) {
         let t4;
         if ($[7] === Symbol.for("react.memo_cache_sentinel")) {
           t4 = {
-            label: "Upgrade your plan",
+            label: "升级计划",
             value: "upgrade"
           };
           $[7] = t4;
@@ -103,7 +103,7 @@ function RateLimitOptionsMenu(t0) {
     let t4;
     if ($[8] === Symbol.for("react.memo_cache_sentinel")) {
       t4 = {
-        label: "Stop and wait for limit to reset",
+        label: "停止并等待限额重置",
         value: "cancel"
       };
       $[8] = t4;
@@ -195,7 +195,7 @@ function RateLimitOptionsMenu(t0) {
   }
   let t7;
   if ($[22] !== handleCancel || $[23] !== t6) {
-    t7 = <Dialog title="What do you want to do?" onCancel={handleCancel} color="suggestion">{t6}</Dialog>;
+    t7 = <Dialog title="你希望如何操作？" onCancel={handleCancel} color="suggestion">{t6}</Dialog>;
     $[22] = handleCancel;
     $[23] = t6;
     $[24] = t7;

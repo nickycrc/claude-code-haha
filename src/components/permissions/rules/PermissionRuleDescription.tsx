@@ -1,6 +1,7 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import * as React from 'react';
-import { Text } from '../../../ink.js';
+
 import { BashTool } from '../../../tools/BashTool/BashTool.js';
 import type { PermissionRuleValue } from '../../../utils/permissions/PermissionRule.js';
 type RuleSubtitleProps = {
@@ -26,7 +27,7 @@ export function PermissionRuleDescription(t0) {
             }
             let t2;
             if ($[2] !== t1) {
-              t2 = <Text dimColor={true}>Any Bash command starting with{" "}<Text bold={true}>{t1}</Text></Text>;
+              t2 = <Text dimColor={true}>{"以以下内容开头的任意 Bash 命令："}{" "}<Text bold={true}>{t1}</Text></Text>;
               $[2] = t1;
               $[3] = t2;
             } else {
@@ -36,7 +37,7 @@ export function PermissionRuleDescription(t0) {
           } else {
             let t1;
             if ($[4] !== ruleValue.ruleContent) {
-              t1 = <Text dimColor={true}>The Bash command <Text bold={true}>{ruleValue.ruleContent}</Text></Text>;
+              t1 = <Text dimColor={true}>{"以下 Bash 命令："} <Text bold={true}>{ruleValue.ruleContent}</Text></Text>;
               $[4] = ruleValue.ruleContent;
               $[5] = t1;
             } else {
@@ -47,7 +48,7 @@ export function PermissionRuleDescription(t0) {
         } else {
           let t1;
           if ($[6] === Symbol.for("react.memo_cache_sentinel")) {
-            t1 = <Text dimColor={true}>Any Bash command</Text>;
+            t1 = <Text dimColor={true}>{"任意 Bash 命令"}</Text>;
             $[6] = t1;
           } else {
             t1 = $[6];
@@ -60,7 +61,7 @@ export function PermissionRuleDescription(t0) {
         if (!ruleValue.ruleContent) {
           let t1;
           if ($[7] !== ruleValue.toolName) {
-            t1 = <Text dimColor={true}>Any use of the <Text bold={true}>{ruleValue.toolName}</Text> tool</Text>;
+            t1 = <Text dimColor={true}>{"对以下工具的任意使用："} <Text bold={true}>{ruleValue.toolName}</Text> {"工具"}</Text>;
             $[7] = ruleValue.toolName;
             $[8] = t1;
           } else {

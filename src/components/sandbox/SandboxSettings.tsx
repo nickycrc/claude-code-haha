@@ -1,6 +1,7 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React from 'react';
-import { Box, color, Link, Text, useTheme } from '../../ink.js';
+import { Box, color, Link, useTheme } from "../../ink.js";
 import { useKeybindings } from '../../keybindings/useKeybinding.js';
 import type { CommandResultDisplay } from '../../types/command.js';
 import type { SandboxDependencyCheck } from '../../utils/sandbox/sandbox-adapter.js';
@@ -211,7 +212,7 @@ export function SandboxSettings(t0) {
   const tabs = t16;
   let t17;
   if ($[32] !== tabs) {
-    t17 = <Pane color="permission"><Tabs title="Sandbox:" color="permission" defaultTab="Mode">{tabs}</Tabs></Pane>;
+    t17 = <Pane color="permission"><Tabs title="沙箱：" color="permission" defaultTab="Mode">{tabs}</Tabs></Pane>;
     $[32] = tabs;
     $[33] = t17;
   } else {
@@ -233,7 +234,7 @@ function SandboxModeTab(t0) {
   } = useTabHeaderFocus();
   let t1;
   if ($[0] !== showSocketWarning) {
-    t1 = showSocketWarning && <Box marginBottom={1}><Text color="warning">Cannot block unix domain sockets (see Dependencies tab)</Text></Box>;
+    t1 = showSocketWarning && <Box marginBottom={1}><Text color="warning">{"无法阻止 Unix 域套接字（请查看“依赖”标签）"}</Text></Box>;
     $[0] = showSocketWarning;
     $[1] = t1;
   } else {
@@ -241,7 +242,7 @@ function SandboxModeTab(t0) {
   }
   let t2;
   if ($[2] === Symbol.for("react.memo_cache_sentinel")) {
-    t2 = <Box marginBottom={1}><Text bold={true}>Configure Mode:</Text></Box>;
+    t2 = <Box marginBottom={1}><Text bold={true}>{"配置模式："}</Text></Box>;
     $[2] = t2;
   } else {
     t2 = $[2];
@@ -270,14 +271,14 @@ function SandboxModeTab(t0) {
   }
   let t5;
   if ($[11] === Symbol.for("react.memo_cache_sentinel")) {
-    t5 = <Text dimColor={true}><Text bold={true} dimColor={true}>Auto-allow mode:</Text>{" "}Commands will try to run in the sandbox automatically, and attempts to run outside of the sandbox fallback to regular permissions. Explicit ask/deny rules are always respected.</Text>;
+    t5 = <Text dimColor={true}><Text bold={true} dimColor={true}>{"自动允许模式："}</Text>{" "}{"命令会自动尝试在沙箱中执行；沙箱外执行会沿用普通权限规则。明确的询问／拒绝规则始终生效。"}</Text>;
     $[11] = t5;
   } else {
     t5 = $[11];
   }
   let t6;
   if ($[12] === Symbol.for("react.memo_cache_sentinel")) {
-    t6 = <Box flexDirection="column" marginTop={1} gap={1}>{t5}<Text dimColor={true}>Learn more:{" "}<Link url="https://code.claude.com/docs/en/sandboxing">code.claude.com/docs/en/sandboxing</Link></Text></Box>;
+    t6 = <Box flexDirection="column" marginTop={1} gap={1}>{t5}<Text dimColor={true}>{"了解更多："}{" "}<Link url="https://code.claude.com/docs/en/sandboxing">code.claude.com/docs/en/sandboxing</Link></Text></Box>;
     $[12] = t6;
   } else {
     t6 = $[12];

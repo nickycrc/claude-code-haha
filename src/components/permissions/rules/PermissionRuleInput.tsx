@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import figures from 'figures';
 import * as React from 'react';
@@ -5,7 +6,7 @@ import { useState } from 'react';
 import TextInput from '../../../components/TextInput.js';
 import { useExitOnCtrlCDWithKeybindings } from '../../../hooks/useExitOnCtrlCDWithKeybindings.js';
 import { useTerminalSize } from '../../../hooks/useTerminalSize.js';
-import { Box, Newline, Text } from '../../../ink.js';
+import { Box, Newline } from "../../../ink.js";
 import { useKeybinding } from '../../../keybindings/useKeybinding.js';
 import { BashTool } from '../../../tools/BashTool/BashTool.js';
 import { WebFetchTool } from '../../../tools/WebFetchTool/WebFetchTool.js';
@@ -59,7 +60,7 @@ export function PermissionRuleInput(t0) {
   const handleSubmit = t2;
   let t3;
   if ($[4] !== ruleBehavior) {
-    t3 = <Text bold={true} color="permission">Add {ruleBehavior} permission rule</Text>;
+    t3 = <Text bold={true} color="permission">{"添加"} {ruleBehavior} {"权限规则"}</Text>;
     $[4] = ruleBehavior;
     $[5] = t3;
   } else {
@@ -78,7 +79,7 @@ export function PermissionRuleInput(t0) {
     t5 = <Text bold={true}>{permissionRuleValueToString({
         toolName: WebFetchTool.name
       })}</Text>;
-    t6 = <Text bold={false}> or </Text>;
+    t6 = <Text bold={false}> {"或"} </Text>;
     $[7] = t5;
     $[8] = t6;
   } else {
@@ -87,7 +88,7 @@ export function PermissionRuleInput(t0) {
   }
   let t7;
   if ($[9] === Symbol.for("react.memo_cache_sentinel")) {
-    t7 = <Text>Permission rules are a tool name, optionally followed by a specifier in parentheses.{t4}e.g.,{" "}{t5}{t6}<Text bold={true}>{permissionRuleValueToString({
+    t7 = <Text>{"权限规则由工具名称组成，可在括号中附加限定条件。"}{t4}e.g.,{" "}{t5}{t6}<Text bold={true}>{permissionRuleValueToString({
           toolName: BashTool.name,
           ruleContent: "ls:*"
         })}</Text></Text>;
@@ -97,7 +98,7 @@ export function PermissionRuleInput(t0) {
   }
   let t8;
   if ($[10] !== cursorOffset || $[11] !== handleSubmit || $[12] !== inputValue || $[13] !== textInputColumns) {
-    t8 = <Box flexDirection="column">{t7}<Box borderDimColor={true} borderStyle="round" marginY={1} paddingLeft={1}><TextInput showCursor={true} value={inputValue} onChange={setInputValue} onSubmit={handleSubmit} placeholder={`Enter permission rule${figures.ellipsis}`} columns={textInputColumns} cursorOffset={cursorOffset} onChangeCursorOffset={setCursorOffset} /></Box></Box>;
+    t8 = <Box flexDirection="column">{t7}<Box borderDimColor={true} borderStyle="round" marginY={1} paddingLeft={1}><TextInput showCursor={true} value={inputValue} onChange={setInputValue} onSubmit={handleSubmit} placeholder={`输入权限规则${figures.ellipsis}`} columns={textInputColumns} cursorOffset={cursorOffset} onChangeCursorOffset={setCursorOffset} /></Box></Box>;
     $[10] = cursorOffset;
     $[11] = handleSubmit;
     $[12] = inputValue;
@@ -117,7 +118,7 @@ export function PermissionRuleInput(t0) {
   }
   let t10;
   if ($[18] !== exitState.keyName || $[19] !== exitState.pending) {
-    t10 = <Box marginLeft={3}>{exitState.pending ? <Text dimColor={true}>Press {exitState.keyName} again to exit</Text> : <Text dimColor={true}>Enter to submit · Esc to cancel</Text>}</Box>;
+    t10 = <Box marginLeft={3}>{exitState.pending ? <Text dimColor={true}>{"按"} {exitState.keyName} {"再次按下退出"}</Text> : <Text dimColor={true}>{"Enter 提交 · Esc 取消"}</Text>}</Box>;
     $[18] = exitState.keyName;
     $[19] = exitState.pending;
     $[20] = t10;

@@ -69,51 +69,51 @@ type PrimaryInput = {
 const str = (k: string) => (i: Record<string, unknown>) => typeof i[k] === 'string' ? i[k] : undefined;
 const PRIMARY_INPUT: Record<string, PrimaryInput> = {
   Read: {
-    label: 'path',
+    label: "路径",
     extract: str('file_path')
   },
   Edit: {
-    label: 'path',
+    label: "路径",
     extract: str('file_path')
   },
   Write: {
-    label: 'path',
+    label: "路径",
     extract: str('file_path')
   },
   NotebookEdit: {
-    label: 'path',
+    label: "路径",
     extract: str('notebook_path')
   },
   Bash: {
-    label: 'command',
+    label: "命令",
     extract: str('command')
   },
   Grep: {
-    label: 'pattern',
+    label: "模式",
     extract: str('pattern')
   },
   Glob: {
-    label: 'pattern',
+    label: "模式",
     extract: str('pattern')
   },
   WebFetch: {
-    label: 'url',
+    label: "地址",
     extract: str('url')
   },
   WebSearch: {
-    label: 'query',
+    label: "查询",
     extract: str('query')
   },
   Task: {
-    label: 'prompt',
+    label: "提示词",
     extract: str('prompt')
   },
   Agent: {
-    label: 'prompt',
+    label: "提示词",
     extract: str('prompt')
   },
   Tmux: {
-    label: 'command',
+    label: "命令",
     extract: i => Array.isArray(i.args) ? `tmux ${i.args.join(' ')}` : undefined
   }
 };
@@ -157,25 +157,25 @@ function action<const T extends NavigableType, const K extends string>(a: {
 }
 export const MESSAGE_ACTIONS = [action({
   key: 'enter',
-  label: s => s.expanded ? 'collapse' : 'expand',
+  label: s => s.expanded ? "折叠" : "展开",
   types: ['grouped_tool_use', 'collapsed_read_search', 'attachment', 'system'],
   stays: true,
   // Empty — `stays` handled inline by dispatch.
   run: () => {}
 }), action({
   key: 'enter',
-  label: 'edit',
+  label: "编辑",
   types: ['user'],
   run: (m, c) => void c.edit(m)
 }), action({
   key: 'c',
-  label: 'copy',
+  label: "复制",
   types: NAVIGABLE_TYPES,
   run: (m, c) => c.copy(copyTextOf(m))
 }), action({
   key: 'p',
   // `!` safe: applies() guarantees toolName ∈ PRIMARY_INPUT.
-  label: s => `copy ${PRIMARY_INPUT[s.toolName!]!.label}`,
+  label: s => `复制 ${PRIMARY_INPUT[s.toolName!]!.label}`,
   types: ['grouped_tool_use', 'assistant'],
   applies: s => s.toolName != null && s.toolName in PRIMARY_INPUT,
   run: (m, c) => {
@@ -355,9 +355,9 @@ export function MessageActionsBar(t0) {
   if ($[11] === Symbol.for("react.memo_cache_sentinel")) {
     t8 = <Text dimColor={true}> · </Text>;
     t9 = <Text bold={true} dimColor={false}>{figures.arrowUp}{figures.arrowDown}</Text>;
-    t10 = <Text dimColor={true}> navigate · </Text>;
+    t10 = <Text dimColor={true}> {"导航 ·"} </Text>;
     t11 = <Text bold={true} dimColor={false}>esc</Text>;
-    t12 = <Text dimColor={true}> back</Text>;
+    t12 = <Text dimColor={true}> {"返回"}</Text>;
     $[11] = t10;
     $[12] = t11;
     $[13] = t12;

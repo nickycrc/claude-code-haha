@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 /**
  * HooksConfigMenu is a read-only browser for configured hooks.
@@ -17,7 +18,7 @@ import type { HookEvent } from 'src/entrypoints/agentSdkTypes.js';
 import { useAppState, useAppStateStore } from 'src/state/AppState.js';
 import type { CommandResultDisplay } from '../../commands.js';
 import { useSettingsChange } from '../../hooks/useSettingsChange.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { useKeybinding } from '../../keybindings/useKeybinding.js';
 import { getHookEventMetadata, getHooksForMatcher, getMatcherMetadata, getSortedMatchersForEvent, groupHooksByEventAndMatcher } from '../../utils/hooks/hooksConfigManager.js';
 import type { IndividualHookConfig } from '../../utils/hooks/hooksSettings.js';
@@ -281,7 +282,7 @@ export function HooksConfigMenu(t0) {
   if (hooksDisabled_1) {
     let t21;
     if ($[35] === Symbol.for("react.memo_cache_sentinel")) {
-      t21 = <Text bold={true}>disabled</Text>;
+      t21 = <Text bold={true}>{"已禁用"}</Text>;
       $[35] = t21;
     } else {
       t21 = $[35];
@@ -313,7 +314,7 @@ export function HooksConfigMenu(t0) {
     }
     let t26;
     if ($[42] !== t22 || $[43] !== t23 || $[44] !== t24 || $[45] !== t25) {
-      t26 = <Text>All hooks are currently {t21}{t22}. You have{" "}{t23} configured{" "}{t24} that{" "}{t25} not running.</Text>;
+      t26 = <Text>{"所有钩子目前均为"} {t21}{t22}{"。共有"}{" "}{t23} {"已配置"}{" "}{t24} {"，"}{" "}{t25} {"未运行。"}</Text>;
       $[42] = t22;
       $[43] = t23;
       $[44] = t24;
@@ -327,10 +328,10 @@ export function HooksConfigMenu(t0) {
     let t29;
     let t30;
     if ($[47] === Symbol.for("react.memo_cache_sentinel")) {
-      t27 = <Box marginTop={1}><Text dimColor={true}>When hooks are disabled:</Text></Box>;
-      t28 = <Text dimColor={true}>· No hook commands will execute</Text>;
-      t29 = <Text dimColor={true}>· StatusLine will not be displayed</Text>;
-      t30 = <Text dimColor={true}>· Tool operations will proceed without hook validation</Text>;
+      t27 = <Box marginTop={1}><Text dimColor={true}>{"禁用钩子时："}</Text></Box>;
+      t28 = <Text dimColor={true}>{"· 不执行任何钩子命令"}</Text>;
+      t29 = <Text dimColor={true}>{"· 不显示状态栏"}</Text>;
+      t30 = <Text dimColor={true}>{"· 工具操作跳过钩子验证"}</Text>;
       $[47] = t27;
       $[48] = t28;
       $[49] = t29;
@@ -351,7 +352,7 @@ export function HooksConfigMenu(t0) {
     }
     let t32;
     if ($[53] !== disabledByPolicy) {
-      t32 = !disabledByPolicy && <Text dimColor={true}>To re-enable hooks, remove "disableAllHooks" from settings.json or ask Claude.</Text>;
+      t32 = !disabledByPolicy && <Text dimColor={true}>{"如需重新启用钩子，请从 settings.json 中移除 \"disableAllHooks\"，或让 Claude 处理。"}</Text>;
       $[53] = disabledByPolicy;
       $[54] = t32;
     } else {
@@ -368,7 +369,7 @@ export function HooksConfigMenu(t0) {
     }
     let t34;
     if ($[58] !== handleExit || $[59] !== t33) {
-      t34 = <Dialog title="Hook Configuration - Disabled" onCancel={handleExit} inputGuide={_temp6}>{t33}</Dialog>;
+      t34 = <Dialog title="钩子配置 - 已禁用" onCancel={handleExit} inputGuide={_temp6}>{t33}</Dialog>;
       $[58] = handleExit;
       $[59] = t33;
       $[60] = t34;
@@ -556,7 +557,7 @@ export function HooksConfigMenu(t0) {
   }
 }
 function _temp6() {
-  return <Text>Esc to close</Text>;
+  return <Text>{"Esc 关闭"}</Text>;
 }
 function _temp5(sum, hooks) {
   return sum + hooks.length;

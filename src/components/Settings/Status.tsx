@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import figures from 'figures';
 import * as React from 'react';
@@ -5,7 +6,7 @@ import { Suspense, use } from 'react';
 import { getSessionId } from '../../bootstrap/state.js';
 import type { LocalJSXCommandContext } from '../../commands.js';
 import { useIsInsideModal } from '../../context/modalContext.js';
-import { Box, Text, useTheme } from '../../ink.js';
+import { Box, useTheme } from "../../ink.js";
 import { type AppState, useAppState } from '../../state/AppState.js';
 import { getCwd } from '../../utils/cwd.js';
 import { getCurrentSessionTitle } from '../../utils/sessionStorage.js';
@@ -19,18 +20,18 @@ type Props = {
 function buildPrimarySection(): Property[] {
   const sessionId = getSessionId();
   const customTitle = getCurrentSessionTitle(sessionId);
-  const nameValue = customTitle ?? <Text dimColor>/rename to add a name</Text>;
+  const nameValue = customTitle ?? <Text dimColor>{"使用 /rename 添加名称"}</Text>;
   return [{
-    label: 'Version',
+    label: "版本",
     value: MACRO.VERSION
   }, {
-    label: 'Session name',
+    label: "会话名称",
     value: nameValue
   }, {
-    label: 'Session ID',
+    label: "会话 ID",
     value: sessionId
   }, {
-    label: 'cwd',
+    label: "工作目录",
     value: getCwd()
   }, ...buildAccountProperties(), ...buildAPIProviderProperties()];
 }
@@ -47,7 +48,7 @@ function buildSecondarySection({
 }): Property[] {
   const modelLabel = getModelDisplayLabel(mainLoopModel);
   return [{
-    label: 'Model',
+    label: "模型",
     value: modelLabel
   }, ...buildIDEProperties(mcp.clients, context.options.ideInstallationStatus, theme), ...buildMcpProperties(mcp.clients, theme), ...buildSandboxProperties(), ...buildSettingSourcesProperties()];
 }
@@ -169,7 +170,7 @@ export function Status(t0) {
   }
   let t7;
   if ($[16] === Symbol.for("react.memo_cache_sentinel")) {
-    t7 = <Text dimColor={true}><ConfigurableShortcutHint action="confirm:no" context="Settings" fallback="Esc" description="cancel" /></Text>;
+    t7 = <Text dimColor={true}><ConfigurableShortcutHint action="confirm:no" context="Settings" fallback="Esc" description="取消" /></Text>;
     $[16] = t7;
   } else {
     t7 = $[16];
@@ -212,7 +213,7 @@ function Diagnostics(t0) {
   }
   let t1;
   if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
-    t1 = <Text bold={true}>System Diagnostics</Text>;
+    t1 = <Text bold={true}>{"系统诊断"}</Text>;
     $[0] = t1;
   } else {
     t1 = $[0];

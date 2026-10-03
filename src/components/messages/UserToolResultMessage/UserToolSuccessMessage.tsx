@@ -88,12 +88,12 @@ export function UserToolSuccessMessage({
         {feature('BASH_CLASSIFIER') ? classifierRule && <MessageResponse height={1}>
                 <Text dimColor>
                   <Text color="success">{figures.tick}</Text>
-                  {' Auto-approved \u00b7 matched '}
+                  {"已自动批准 · 匹配到"}
                   {`"${classifierRule}"`}
                 </Text>
               </MessageResponse> : null}
         {feature('TRANSCRIPT_CLASSIFIER') ? yoloReason && <MessageResponse height={1}>
-                <Text dimColor>Allowed by auto mode classifier</Text>
+                <Text dimColor>{"自动模式分类器已允许"}</Text>
               </MessageResponse> : null}
       </Box>
       <SentryErrorBoundary>

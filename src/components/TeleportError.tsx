@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React, { useCallback, useEffect, useState } from 'react';
 import { checkIsGitClean, checkNeedsClaudeAiLogin } from 'src/utils/background/remote/preconditions.js';
 import { gracefulShutdownSync } from 'src/utils/gracefulShutdown.js';
-import { Box, Text } from '../ink.js';
+import { Box } from "../ink.js";
 import { ConsoleOAuthFlow } from './ConsoleOAuthFlow.js';
 import { Select } from './CustomSelect/index.js';
 import { Dialog } from './design-system/Dialog.js';
@@ -145,18 +146,18 @@ export function TeleportError(t0) {
         }
         let t9;
         if ($[16] === Symbol.for("react.memo_cache_sentinel")) {
-          t9 = <Box flexDirection="column"><Text dimColor={true}>Teleport requires a Claude.ai account.</Text><Text dimColor={true}>Your Claude Pro/Max subscription will be used by Claude Code.</Text></Box>;
+          t9 = <Box flexDirection="column"><Text dimColor={true}>{"会话转移需要 Claude.ai 账户。"}</Text><Text dimColor={true}>{"Claude Code 将使用你的 Claude Pro/Max 订阅。"}</Text></Box>;
           $[16] = t9;
         } else {
           t9 = $[16];
         }
         let t10;
         if ($[17] === Symbol.for("react.memo_cache_sentinel")) {
-          t10 = <Dialog title="Log in to Claude" onCancel={onCancel}>{t9}<Select options={[{
-              label: "Login with Claude account",
+          t10 = <Dialog title="登录 Claude" onCancel={onCancel}>{t9}<Select options={[{
+              label: "使用 Claude 账户登录",
               value: "login"
             }, {
-              label: "Exit",
+              label: "退出",
               value: "exit"
             }]} onChange={handleLoginDialogSelect} /></Dialog>;
           $[17] = t10;

@@ -235,8 +235,8 @@ export function CollapsedReadSearchContent({
       })}
         {message.hookInfos && message.hookInfos.length > 0 && <>
             <Text dimColor>
-              {'  ⎿  '}Ran {message.hookCount} PreToolUse{' '}
-              {message.hookCount === 1 ? 'hook' : 'hooks'} (
+              {'  ⎿  '}{"已运行"} {message.hookCount} PreToolUse{' '}
+              {message.hookCount === 1 ? "钩子" : "钩子"} (
               {formatSecondsShort(message.hookTotalMs ?? 0)})
             </Text>
             {message.hookInfos.map((info, idx) => <Text key={`hook-${idx}`} dimColor>
@@ -246,7 +246,7 @@ export function CollapsedReadSearchContent({
           </>}
         {message.relevantMemories?.map(m => <Box key={m.path} flexDirection="column" marginTop={1}>
             <Text dimColor>
-              {'  ⎿  '}Recalled {basename(m.path)}
+              {'  ⎿  '}{"已回忆"} {basename(m.path)}
             </Text>
             <Box paddingLeft={5}>
               <Text>
@@ -350,7 +350,7 @@ export function CollapsedReadSearchContent({
     }
     nonMemParts.push(<Text key="search">
         {searchVerb} <Text bold>{searchCount}</Text>{' '}
-        {searchCount === 1 ? 'pattern' : 'patterns'}
+        {searchCount === 1 ? "模式" : "模式"}
       </Text>);
   }
   if (readCount > 0) {
@@ -361,7 +361,7 @@ export function CollapsedReadSearchContent({
     }
     nonMemParts.push(<Text key="read">
         {readVerb} <Text bold>{readCount}</Text>{' '}
-        {readCount === 1 ? 'file' : 'files'}
+        {readCount === 1 ? "文件" : "个文件"}
       </Text>);
   }
   if (listCount > 0) {
@@ -372,7 +372,7 @@ export function CollapsedReadSearchContent({
     }
     nonMemParts.push(<Text key="list">
         {listVerb} <Text bold>{listCount}</Text>{' '}
-        {listCount === 1 ? 'directory' : 'directories'}
+        {listCount === 1 ? "目录" : "目录"}
       </Text>);
   }
   if (replCount > 0) {
@@ -382,7 +382,7 @@ export function CollapsedReadSearchContent({
     }
     nonMemParts.push(<Text key="repl">
         {replVerb} <Text bold>{replCount}</Text>{' '}
-        {replCount === 1 ? 'time' : 'times'}
+        {replCount === 1 ? "次" : "次"}
       </Text>);
   }
   if (mcpCallCount > 0) {
@@ -396,7 +396,7 @@ export function CollapsedReadSearchContent({
         {verb_0} {serverLabel}
         {mcpCallCount > 1 && <>
             {' '}
-            <Text bold>{mcpCallCount}</Text> times
+            <Text bold>{mcpCallCount}</Text> {"次"}
           </>}
       </Text>);
   }
@@ -408,7 +408,7 @@ export function CollapsedReadSearchContent({
     }
     nonMemParts.push(<Text key="bash">
         {verb_1} <Text bold>{bashCount}</Text> bash{' '}
-        {bashCount === 1 ? 'command' : 'commands'}
+        {bashCount === 1 ? "命令" : "命令"}
       </Text>);
   }
 
@@ -423,7 +423,7 @@ export function CollapsedReadSearchContent({
     }
     memParts.push(<Text key="mem-read">
         {verb_2} <Text bold>{memoryReadCount}</Text>{' '}
-        {memoryReadCount === 1 ? 'memory' : 'memories'}
+        {memoryReadCount === 1 ? "记忆" : "记忆"}
       </Text>);
   }
   if (memorySearchCount > 0) {
@@ -432,7 +432,7 @@ export function CollapsedReadSearchContent({
     if (!isFirst_6) {
       memParts.push(<Text key="comma-ms">, </Text>);
     }
-    memParts.push(<Text key="mem-search">{`${verb_3} memories`}</Text>);
+    memParts.push(<Text key="mem-search">{`${verb_3} 条记忆`}</Text>);
   }
   if (memoryWriteCount > 0) {
     const isFirst_7 = !hasPrecedingNonMem && memParts.length === 0;
@@ -442,7 +442,7 @@ export function CollapsedReadSearchContent({
     }
     memParts.push(<Text key="mem-write">
         {verb_4} <Text bold>{memoryWriteCount}</Text>{' '}
-        {memoryWriteCount === 1 ? 'memory' : 'memories'}
+        {memoryWriteCount === 1 ? "记忆" : "记忆"}
       </Text>);
   }
   return <Box flexDirection="column" marginTop={1} backgroundColor={bg}>
@@ -475,8 +475,8 @@ export function CollapsedReadSearchContent({
           </Box>
         </Box>}
       {message.hookTotalMs !== undefined && message.hookTotalMs > 0 && <Text dimColor>
-          {'  ⎿  '}Ran {message.hookCount} PreToolUse{' '}
-          {message.hookCount === 1 ? 'hook' : 'hooks'} (
+          {'  ⎿  '}{"已运行"} {message.hookCount} PreToolUse{' '}
+          {message.hookCount === 1 ? "钩子" : "钩子"} (
           {formatSecondsShort(message.hookTotalMs)})
         </Text>}
     </Box>;

@@ -296,7 +296,7 @@ function BridgeDisconnectDialog(t0) {
     t11 = 1;
     const t17 = displayUrl ? ` at ${displayUrl}` : "";
     if ($[30] !== t17) {
-      t12 = <Text>This session is available via Remote Control{t17}.</Text>;
+      t12 = <Text>{"此会话已可通过远程控制访问"}{t17}.</Text>;
       $[30] = t17;
       $[31] = t12;
     } else {
@@ -330,7 +330,7 @@ function BridgeDisconnectDialog(t0) {
   const t17 = focusIndex === 0;
   let t18;
   if ($[32] === Symbol.for("react.memo_cache_sentinel")) {
-    t18 = <Text>Disconnect this session</Text>;
+    t18 = <Text>{"断开此会话"}</Text>;
     $[32] = t18;
   } else {
     t18 = $[32];
@@ -365,7 +365,7 @@ function BridgeDisconnectDialog(t0) {
   const t24 = focusIndex === 2;
   let t25;
   if ($[40] === Symbol.for("react.memo_cache_sentinel")) {
-    t25 = <Text>Continue</Text>;
+    t25 = <Text>{"继续"}</Text>;
     $[40] = t25;
   } else {
     t25 = $[40];
@@ -390,7 +390,7 @@ function BridgeDisconnectDialog(t0) {
   }
   let t28;
   if ($[47] === Symbol.for("react.memo_cache_sentinel")) {
-    t28 = <Text dimColor={true}>Enter to select · Esc to continue</Text>;
+    t28 = <Text dimColor={true}>{"Enter 选择 · Esc 继续"}</Text>;
     $[47] = t28;
   } else {
     t28 = $[47];

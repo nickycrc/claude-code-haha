@@ -151,7 +151,7 @@ export async function launchRemoteReview(
       return [
         {
           type: 'text',
-          text: `Ultrareview cannot launch:\n${reasons}`,
+          text: `无法启动 Ultrareview：${reasons}`,
         },
       ]
     }
@@ -214,7 +214,7 @@ export async function launchRemoteReview(
     }
     session = await teleportToRemote({
       initialMessage: null,
-      description: `ultrareview: ${repo.owner}/${repo.name}#${prNumber}`,
+      description: `Ultrareview：${repo.owner}/${repo.name}#${prNumber}`,
       signal: context.abortController.signal,
       branchName: `refs/pull/${prNumber}/head`,
       environmentId: CODE_REVIEW_ENV_ID,
@@ -245,7 +245,7 @@ export async function launchRemoteReview(
       return [
         {
           type: 'text',
-          text: `Could not find merge-base with ${baseBranch}. Make sure you're in a git repo with a ${baseBranch} branch.`,
+          text: `无法找到与 ${baseBranch} 的共同祖先，请确认当前 Git 仓库存在 ${baseBranch} 分支。`,
         },
       ]
     }
@@ -262,14 +262,14 @@ export async function launchRemoteReview(
       return [
         {
           type: 'text',
-          text: `No changes against the ${baseBranch} fork point. Make some commits or stage files first.`,
+          text: `相对于 ${baseBranch} 分叉点没有修改，请先提交代码或暂存文件。`,
         },
       ]
     }
 
     session = await teleportToRemote({
       initialMessage: null,
-      description: `ultrareview: ${baseBranch}`,
+      description: `Ultrareview：${baseBranch}`,
       signal: context.abortController.signal,
       useBundle: true,
       environmentId: CODE_REVIEW_ENV_ID,
@@ -283,7 +283,7 @@ export async function launchRemoteReview(
       return [
         {
           type: 'text',
-          text: 'Repo is too large. Push a PR and use `/ultrareview <PR#>` instead.',
+          text: "仓库过大，请推送 PR 并改用 `/ultrareview <PR#>`。",
         },
       ]
     }

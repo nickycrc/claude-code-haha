@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import type { CommandResultDisplay } from '../../commands.js';
@@ -5,7 +6,7 @@ import { TEARDROP_ASTERISK } from '../../constants/figures.js';
 import { useExitOnCtrlCDWithKeybindings } from '../../hooks/useExitOnCtrlCDWithKeybindings.js';
 import { setClipboard } from '../../ink/termio/osc.js';
 // eslint-disable-next-line custom-rules/prefer-use-keybindings -- enter to copy link
-import { Box, Link, Text, useInput } from '../../ink.js';
+import { Box, Link, useInput } from "../../ink.js";
 import { useKeybinding } from '../../keybindings/useKeybinding.js';
 import { logEvent } from '../../services/analytics/index.js';
 import { fetchReferralRedemptions, formatCreditAmount, getCachedOrFetchPassesEligibility } from '../../services/api/referral.js';
@@ -109,9 +110,9 @@ export function Passes({
   if (loading) {
     return <Pane>
         <Box flexDirection="column" gap={1}>
-          <Text dimColor>Loading guest pass information…</Text>
+          <Text dimColor>{"正在加载访客名额信息……"}</Text>
           <Text dimColor italic>
-            {exitState.pending ? <>Press {exitState.keyName} again to exit</> : <>Esc to cancel</>}
+            {exitState.pending ? <>{"按"} {exitState.keyName} {"再次按下退出"}</> : <>{"Esc 取消"}</>}
           </Text>
         </Box>
       </Pane>;
@@ -119,9 +120,9 @@ export function Passes({
   if (!isAvailable) {
     return <Pane>
         <Box flexDirection="column" gap={1}>
-          <Text>Guest passes are not currently available.</Text>
+          <Text>{"访客名额目前不可用。"}</Text>
           <Text dimColor italic>
-            {exitState.pending ? <>Press {exitState.keyName} again to exit</> : <>Esc to cancel</>}
+            {exitState.pending ? <>{"按"} {exitState.keyName} {"再次按下退出"}</> : <>{"Esc 取消"}</>}
           </Text>
         </Box>
       </Pane>;
@@ -154,7 +155,7 @@ export function Passes({
   };
   return <Pane>
       <Box flexDirection="column" gap={1}>
-        <Text color="permission">Guest passes · {availableCount} left</Text>
+        <Text color="permission">{"访客名额 ·"} {availableCount} {"剩余"}</Text>
 
         <Box flexDirection="row" marginLeft={2}>
           {sortedPasses.slice(0, 3).map(pass_0 => renderTicket(pass_0))}
@@ -166,16 +167,16 @@ export function Passes({
 
         <Box flexDirection="column" marginLeft={2}>
           <Text dimColor>
-            {referrerReward ? `Share a free week of Claude Code with friends. If they love it and subscribe, you'll get ${formatCreditAmount(referrerReward)} of extra usage to keep building. ` : 'Share a free week of Claude Code with friends. '}
+            {referrerReward ? `与好友分享一周免费 Claude Code。如好友订阅，你将获得 ${formatCreditAmount(referrerReward)} 额外用量，用于继续开发。` : "与好友分享一周免费 Claude Code。"}
             <Link url={referrerReward ? 'https://support.claude.com/en/articles/13456702-claude-code-guest-passes' : 'https://support.claude.com/en/articles/12875061-claude-code-guest-passes'}>
-              Terms apply.
+              {"适用相关条款。"}
             </Link>
           </Text>
         </Box>
 
         <Box>
           <Text dimColor italic>
-            {exitState.pending ? <>Press {exitState.keyName} again to exit</> : <>Enter to copy link · Esc to cancel</>}
+            {exitState.pending ? <>{"按"} {exitState.keyName} {"再次按下退出"}</> : <>{"Enter 复制链接 · Esc 取消"}</>}
           </Text>
         </Box>
       </Box>

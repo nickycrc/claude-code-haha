@@ -94,7 +94,7 @@ export function DiffDetailView(t0) {
     }
     let t3;
     if ($[9] === Symbol.for("react.memo_cache_sentinel")) {
-      t3 = <Text dimColor={true}> (untracked)</Text>;
+      t3 = <Text dimColor={true}> {"（未跟踪）"}</Text>;
       $[9] = t3;
     } else {
       t3 = $[9];
@@ -116,14 +116,14 @@ export function DiffDetailView(t0) {
     }
     let t6;
     if ($[13] === Symbol.for("react.memo_cache_sentinel")) {
-      t6 = <Text dimColor={true} italic={true}>New file not yet staged.</Text>;
+      t6 = <Text dimColor={true} italic={true}>{"新文件尚未暂存。"}</Text>;
       $[13] = t6;
     } else {
       t6 = $[13];
     }
     let t7;
     if ($[14] !== filePath) {
-      t7 = <Box flexDirection="column">{t6}<Text dimColor={true} italic={true}>Run `git add {filePath}` to see line counts.</Text></Box>;
+      t7 = <Box flexDirection="column">{t6}<Text dimColor={true} italic={true}>{"运行 `git add"} {filePath}{"` 查看行数。"}</Text></Box>;
       $[14] = filePath;
       $[15] = t7;
     } else {
@@ -158,7 +158,7 @@ export function DiffDetailView(t0) {
     }
     let t4;
     if ($[22] === Symbol.for("react.memo_cache_sentinel")) {
-      t4 = <Box flexDirection="column"><Text dimColor={true} italic={true}>Binary file - cannot display diff</Text></Box>;
+      t4 = <Box flexDirection="column"><Text dimColor={true} italic={true}>{"二进制文件，无法显示差异"}</Text></Box>;
       $[22] = t4;
     } else {
       t4 = $[22];
@@ -191,7 +191,7 @@ export function DiffDetailView(t0) {
     }
     let t4;
     if ($[28] === Symbol.for("react.memo_cache_sentinel")) {
-      t4 = <Box flexDirection="column"><Text dimColor={true} italic={true}>Large file - diff exceeds 1 MB limit</Text></Box>;
+      t4 = <Box flexDirection="column"><Text dimColor={true} italic={true}>{"文件过大，差异超过 1 MB 限制"}</Text></Box>;
       $[28] = t4;
     } else {
       t4 = $[28];
@@ -216,7 +216,7 @@ export function DiffDetailView(t0) {
   }
   let t3;
   if ($[33] !== isTruncated) {
-    t3 = isTruncated && <Text dimColor={true}> (truncated)</Text>;
+    t3 = isTruncated && <Text dimColor={true}> {"（已截断）"}</Text>;
     $[33] = isTruncated;
     $[34] = t3;
   } else {
@@ -240,7 +240,7 @@ export function DiffDetailView(t0) {
   }
   let t6;
   if ($[39] !== columns || $[40] !== fileContent || $[41] !== filePath || $[42] !== firstLine || $[43] !== hunks) {
-    t6 = hunks.length === 0 ? <Text dimColor={true}>No diff content</Text> : hunks.map((hunk, index) => <StructuredDiff key={index} patch={hunk} filePath={filePath} firstLine={firstLine} fileContent={fileContent} dim={false} width={columns - 2 - 2} />);
+    t6 = hunks.length === 0 ? <Text dimColor={true}>{"没有差异内容"}</Text> : hunks.map((hunk, index) => <StructuredDiff key={index} patch={hunk} filePath={filePath} firstLine={firstLine} fileContent={fileContent} dim={false} width={columns - 2 - 2} />);
     $[39] = columns;
     $[40] = fileContent;
     $[41] = filePath;
@@ -260,7 +260,7 @@ export function DiffDetailView(t0) {
   }
   let t8;
   if ($[47] !== isTruncated) {
-    t8 = isTruncated && <Text dimColor={true} italic={true}>… diff truncated (exceeded 400 line limit)</Text>;
+    t8 = isTruncated && <Text dimColor={true} italic={true}>{"……差异已截断（超过 400 行限制）"}</Text>;
     $[47] = isTruncated;
     $[48] = t8;
   } else {

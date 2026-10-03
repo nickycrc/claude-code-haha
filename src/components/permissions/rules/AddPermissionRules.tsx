@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import * as React from 'react';
 import { useCallback } from 'react';
 import { Select } from '../../../components/CustomSelect/select.js';
-import { Box, Text } from '../../../ink.js';
+import { Box } from "../../../ink.js";
 import type { ToolPermissionContext } from '../../../Tool.js';
 import type { PermissionBehavior, PermissionRule, PermissionRuleValue } from '../../../utils/permissions/PermissionRule.js';
 import { applyPermissionUpdate, persistPermissionUpdate } from '../../../utils/permissions/PermissionUpdate.js';
@@ -19,20 +20,20 @@ export function optionForPermissionSaveDestination(saveDestination: EditableSett
   switch (saveDestination) {
     case 'localSettings':
       return {
-        label: 'Project settings (local)',
-        description: `Saved in ${getRelativeSettingsFilePathForSource('localSettings')}`,
+        label: "项目设置（本地）",
+        description: `保存在 ${getRelativeSettingsFilePathForSource('localSettings')}`,
         value: saveDestination
       };
     case 'projectSettings':
       return {
-        label: 'Project settings',
-        description: `Checked in at ${getRelativeSettingsFilePathForSource('projectSettings')}`,
+        label: "项目设置",
+        description: `提交到仓库中的 ${getRelativeSettingsFilePathForSource('projectSettings')}`,
         value: saveDestination
       };
     case 'userSettings':
       return {
-        label: 'User settings',
-        description: `Saved in at ~/.claude/settings.json`,
+        label: "用户设置",
+        description: "保存在 ~/.claude/settings.json",
         value: saveDestination
       };
   }

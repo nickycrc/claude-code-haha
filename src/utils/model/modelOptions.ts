@@ -14,7 +14,8 @@ import {
 } from '../modelCost.js'
 import { getSettings_DEPRECATED } from '../settings/settings.js'
 import { checkOpus1mAccess, checkSonnet1mAccess } from './check1mAccess.js'
-import { getAPIProvider } from './providers.js'
+import { getAPIProvider, isFirstPartyAnthropicBaseUrl } from './providers.js'
+import { getConfiguredModelIds } from './configuredModels.js'
 import { isModelAllowed } from './modelAllowlist.js'
 import {
   getCanonicalName,
@@ -43,15 +44,23 @@ export type ModelOption = {
 }
 
 export function getDefaultOptionForUser(fastMode = false): ModelOption {
+  if (!isFirstPartyAnthropicBaseUrl()) {
+    return {
+      value: null,
+      label: "默认（推荐）",
+      description: `使用已配置的默认模型（${renderDefaultModelSetting(getDefaultMainLoopModelSetting())}）`,
+    }
+  }
+
   if (process.env.USER_TYPE === 'ant') {
     const currentModel = renderDefaultModelSetting(
       getDefaultMainLoopModelSetting(),
     )
     return {
       value: null,
-      label: 'Default (recommended)',
-      description: `Use the default model for Ants (currently ${currentModel})`,
-      descriptionForModel: `Default model (currently ${currentModel})`,
+      label: "默认（推荐）",
+      description: `使用内部默认模型（当前为 ${currentModel}）`,
+      descriptionForModel: `默认模型（当前为 ${currentModel}）`,
     }
   }
 
@@ -59,17 +68,17 @@ export function getDefaultOptionForUser(fastMode = false): ModelOption {
   if (isClaudeAISubscriber()) {
     return {
       value: null,
-      label: 'Default (recommended)',
+      label: "默认（推荐）",
       description: getClaudeAiUserDefaultModelDescription(fastMode),
     }
   }
 
   // PAYG
-  const is3P = getAPIProvider() !== 'firstParty'
+  const is3P = getAPIProvider() !== 'firstParty' || !isFirstPartyAnthropicBaseUrl()
   return {
     value: null,
-    label: 'Default (recommended)',
-    description: `Use the default model (currently ${renderDefaultModelSetting(getDefaultMainLoopModelSetting())})${is3P ? '' : ` · ${formatModelPricing(COST_TIER_3_15)}`}`,
+    label: "默认（推荐）",
+    description: `使用默认模型（当前为 ${renderDefaultModelSetting(getDefaultMainLoopModelSetting())}）${is3P ? '' : ` · ${formatModelPricing(COST_TIER_3_15)}`}`,
   }
 }
 
@@ -85,8 +94,8 @@ function getCustomSonnetOption(): ModelOption | undefined {
         process.env.ANTHROPIC_DEFAULT_SONNET_MODEL_NAME ?? customSonnetModel,
       description:
         process.env.ANTHROPIC_DEFAULT_SONNET_MODEL_DESCRIPTION ??
-        `Custom Sonnet model${is1m ? ' (1M context)' : ''}`,
-      descriptionForModel: `${process.env.ANTHROPIC_DEFAULT_SONNET_MODEL_DESCRIPTION ?? `Custom Sonnet model${is1m ? ' with 1M context' : ''}`} (${customSonnetModel})`,
+        `自定义 Sonnet 模型${is1m ? "（1M 上下文）" : ''}`,
+      descriptionForModel: `${process.env.ANTHROPIC_DEFAULT_SONNET_MODEL_DESCRIPTION ?? `自定义 Sonnet 模型${is1m ? ' with 1M context' : ''}`} (${customSonnetModel})`,
     }
   }
 }
@@ -98,9 +107,9 @@ function getSonnet46Option(): ModelOption {
   return {
     value: is3P ? getModelStrings().sonnet46 : 'sonnet',
     label: 'Sonnet',
-    description: `Sonnet 4.6 · Best for everyday tasks${is3P ? '' : ` · ${formatModelPricing(COST_TIER_3_15)}`}`,
+    description: `Sonnet 4.6 · 适合日常任务${is3P ? '' : ` · ${formatModelPricing(COST_TIER_3_15)}`}`,
     descriptionForModel:
-      'Sonnet 4.6 - best for everyday tasks. Generally recommended for most coding tasks',
+      "Sonnet 4.6 - 适合日常任务，推荐用于大多数编程任务",
   }
 }
 
@@ -115,8 +124,8 @@ function getCustomOpusOption(): ModelOption | undefined {
       label: process.env.ANTHROPIC_DEFAULT_OPUS_MODEL_NAME ?? customOpusModel,
       description:
         process.env.ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION ??
-        `Custom Opus model${is1m ? ' (1M context)' : ''}`,
-      descriptionForModel: `${process.env.ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION ?? `Custom Opus model${is1m ? ' with 1M context' : ''}`} (${customOpusModel})`,
+        `自定义 Opus 模型${is1m ? "（1M 上下文）" : ''}`,
+      descriptionForModel: `${process.env.ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION ?? `自定义 Opus 模型${is1m ? ' with 1M context' : ''}`} (${customOpusModel})`,
     }
   }
 }
@@ -125,8 +134,8 @@ function getOpus41Option(): ModelOption {
   return {
     value: 'opus',
     label: 'Opus 4.1',
-    description: `Opus 4.1 · Legacy`,
-    descriptionForModel: 'Opus 4.1 - legacy version',
+    description: "Opus 4.1 · 旧版本",
+    descriptionForModel: "Opus 4.1 - 旧版本",
   }
 }
 
@@ -135,8 +144,8 @@ function getOpus46Option(fastMode = false): ModelOption {
   return {
     value: is3P ? getModelStrings().opus46 : 'opus',
     label: 'Opus',
-    description: `Opus 4.7 · Most capable for complex work${getOpus46PricingSuffix(fastMode)}`,
-    descriptionForModel: 'Opus 4.7 - most capable for complex work',
+    description: `Opus 4.7 · 适合复杂任务，能力最强${getOpus46PricingSuffix(fastMode)}`,
+    descriptionForModel: "Opus 4.7 - 适合复杂任务，能力最强",
   }
 }
 
@@ -144,10 +153,10 @@ export function getSonnet46_1MOption(): ModelOption {
   const is3P = getAPIProvider() !== 'firstParty'
   return {
     value: is3P ? getModelStrings().sonnet46 + '[1m]' : 'sonnet[1m]',
-    label: 'Sonnet (1M context)',
-    description: `Sonnet 4.6 for long sessions${is3P ? '' : ` · ${formatModelPricing(COST_TIER_3_15)}`}`,
+    label: "Sonnet（1M 上下文）",
+    description: `Sonnet 4.6，适合长会话${is3P ? '' : ` · ${formatModelPricing(COST_TIER_3_15)}`}`,
     descriptionForModel:
-      'Sonnet 4.6 with 1M context window - for long sessions with large codebases',
+      "Sonnet 4.6，1M 上下文窗口 - 适合大型代码库的长会话",
   }
 }
 
@@ -155,10 +164,10 @@ export function getOpus46_1MOption(fastMode = false): ModelOption {
   const is3P = getAPIProvider() !== 'firstParty'
   return {
     value: is3P ? getModelStrings().opus46 + '[1m]' : 'opus[1m]',
-    label: 'Opus (1M context)',
-    description: `Opus 4.7 for long sessions${getOpus46PricingSuffix(fastMode)}`,
+    label: "Opus（1M 上下文）",
+    description: `Opus 4.7，适合长会话${getOpus46PricingSuffix(fastMode)}`,
     descriptionForModel:
-      'Opus 4.7 with 1M context window - for long sessions with large codebases',
+      "Opus 4.7，1M 上下文窗口 - 适合大型代码库的长会话",
   }
 }
 
@@ -172,8 +181,8 @@ function getCustomHaikuOption(): ModelOption | undefined {
       label: process.env.ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME ?? customHaikuModel,
       description:
         process.env.ANTHROPIC_DEFAULT_HAIKU_MODEL_DESCRIPTION ??
-        'Custom Haiku model',
-      descriptionForModel: `${process.env.ANTHROPIC_DEFAULT_HAIKU_MODEL_DESCRIPTION ?? 'Custom Haiku model'} (${customHaikuModel})`,
+        "自定义 Haiku 模型",
+      descriptionForModel: `${process.env.ANTHROPIC_DEFAULT_HAIKU_MODEL_DESCRIPTION ?? "自定义 Haiku 模型"} (${customHaikuModel})`,
     }
   }
 }
@@ -183,9 +192,9 @@ function getHaiku45Option(): ModelOption {
   return {
     value: 'haiku',
     label: 'Haiku',
-    description: `Haiku 4.5 · Fastest for quick answers${is3P ? '' : ` · ${formatModelPricing(COST_HAIKU_45)}`}`,
+    description: `Haiku 4.5 · 快速回复，速度最快${is3P ? '' : ` · ${formatModelPricing(COST_HAIKU_45)}`}`,
     descriptionForModel:
-      'Haiku 4.5 - fastest for quick answers. Lower cost but less capable than Sonnet 4.6.',
+      "Haiku 4.5 - 快速回复，速度最快。成本更低，但能力弱于 Sonnet 4.6。",
   }
 }
 
@@ -194,9 +203,9 @@ function getHaiku35Option(): ModelOption {
   return {
     value: 'haiku',
     label: 'Haiku',
-    description: `Haiku 3.5 for simple tasks${is3P ? '' : ` · ${formatModelPricing(COST_HAIKU_35)}`}`,
+    description: `Haiku 3.5，适合简单任务${is3P ? '' : ` · ${formatModelPricing(COST_HAIKU_35)}`}`,
     descriptionForModel:
-      'Haiku 3.5 - faster and lower cost, but less capable than Sonnet. Use for simple tasks.',
+      "Haiku 3.5 - 速度更快、成本更低，但能力弱于 Sonnet。适合简单任务。",
   }
 }
 
@@ -212,7 +221,7 @@ function getMaxOpusOption(fastMode = false): ModelOption {
   return {
     value: 'opus',
     label: 'Opus',
-    description: `Opus 4.7 · Most capable for complex work${fastMode ? getOpus46PricingSuffix(true) : ''}`,
+    description: `Opus 4.7 · 适合复杂任务，能力最强${fastMode ? getOpus46PricingSuffix(true) : ''}`,
   }
 }
 
@@ -221,8 +230,8 @@ export function getMaxSonnet46_1MOption(): ModelOption {
   const billingInfo = isClaudeAISubscriber() ? ' · Billed as extra usage' : ''
   return {
     value: 'sonnet[1m]',
-    label: 'Sonnet (1M context)',
-    description: `Sonnet 4.6 with 1M context${billingInfo}${is3P ? '' : ` · ${formatModelPricing(COST_TIER_3_15)}`}`,
+    label: "Sonnet（1M 上下文）",
+    description: `Sonnet 4.6，1M 上下文${billingInfo}${is3P ? '' : ` · ${formatModelPricing(COST_TIER_3_15)}`}`,
   }
 }
 
@@ -230,8 +239,8 @@ export function getMaxOpus46_1MOption(fastMode = false): ModelOption {
   const billingInfo = isClaudeAISubscriber() ? ' · Billed as extra usage' : ''
   return {
     value: 'opus[1m]',
-    label: 'Opus (1M context)',
-    description: `Opus 4.7 with 1M context${billingInfo}${getOpus46PricingSuffix(fastMode)}`,
+    label: "Opus（1M 上下文）",
+    description: `Opus 4.7，1M 上下文${billingInfo}${getOpus46PricingSuffix(fastMode)}`,
   }
 }
 
@@ -239,42 +248,52 @@ function getMergedOpus1MOption(fastMode = false): ModelOption {
   const is3P = getAPIProvider() !== 'firstParty'
   return {
     value: is3P ? getModelStrings().opus46 + '[1m]' : 'opus[1m]',
-    label: 'Opus (1M context)',
-    description: `Opus 4.7 with 1M context · Most capable for complex work${!is3P && fastMode ? getOpus46PricingSuffix(fastMode) : ''}`,
+    label: "Opus（1M 上下文）",
+    description: `Opus 4.7，1M 上下文 · 适合复杂任务，能力最强${!is3P && fastMode ? getOpus46PricingSuffix(fastMode) : ''}`,
     descriptionForModel:
-      'Opus 4.7 with 1M context - most capable for complex work',
+      "Opus 4.7，1M 上下文 - 适合复杂任务，能力最强",
   }
 }
 
 const MaxSonnet46Option: ModelOption = {
   value: 'sonnet',
   label: 'Sonnet',
-  description: 'Sonnet 4.6 · Best for everyday tasks',
+  description: "Sonnet 4.6 · 适合日常任务",
 }
 
 const MaxHaiku45Option: ModelOption = {
   value: 'haiku',
   label: 'Haiku',
-  description: 'Haiku 4.5 · Fastest for quick answers',
+  description: "Haiku 4.5 · 快速回复，速度最快",
 }
 
 function getOpusPlanOption(): ModelOption {
   return {
     value: 'opusplan',
-    label: 'Opus Plan Mode',
-    description: 'Use Opus 4.7 in plan mode, Sonnet 4.6 otherwise',
+    label: "Opus 计划模式",
+    description: "计划模式使用 Opus 4.7，其他模式使用 Sonnet 4.6",
   }
 }
 
 // @[MODEL LAUNCH]: Update the model picker lists below to include/reorder options for the new model.
 // Each user tier (ant, Max/Team Premium, Pro/Team Standard/Enterprise, PAYG 1P, PAYG 3P) has its own list.
 function getModelOptionsBase(fastMode = false): ModelOption[] {
+  if (!isFirstPartyAnthropicBaseUrl()) {
+    const modelIds = getConfiguredModelIds()
+    if (modelIds.length > 0) {
+      return [
+        getDefaultOptionForUser(fastMode),
+        ...modelIds.map(id => ({ value: id, label: id, description: "已配置的 API 模型" })),
+      ]
+    }
+  }
+
   if (process.env.USER_TYPE === 'ant') {
     // Build options from antModels config
     const antModelOptions: ModelOption[] = getAntModels().map(m => ({
       value: m.alias,
       label: m.label,
-      description: m.description ?? `[ANT-ONLY] ${m.label} (${m.model})`,
+      description: m.description ?? `[仅限内部] ${m.label}（${m.model}）`,
     }))
 
     return [
@@ -446,7 +465,7 @@ function getKnownModelOption(model: string): ModelOption | null {
     return {
       value: model,
       label: marketingName,
-      description: `Newer version available · select ${familyInfo.alias} for ${familyInfo.currentVersionName}`,
+      description: `有更新版本 · 选择 ${familyInfo.alias} 使用 ${familyInfo.currentVersionName}`,
     }
   }
 
@@ -472,12 +491,15 @@ export function getModelOptions(fastMode = false): ModelOption[] {
       label: process.env.ANTHROPIC_CUSTOM_MODEL_OPTION_NAME ?? envCustomModel,
       description:
         process.env.ANTHROPIC_CUSTOM_MODEL_OPTION_DESCRIPTION ??
-        `Custom model (${envCustomModel})`,
+        `自定义模型（${envCustomModel}）`,
     })
   }
 
   // Append additional model options fetched during bootstrap
-  for (const opt of getGlobalConfig().additionalModelOptionsCache ?? []) {
+  const additionalOptions = isFirstPartyAnthropicBaseUrl()
+    ? getGlobalConfig().additionalModelOptionsCache ?? []
+    : []
+  for (const opt of additionalOptions) {
     if (!options.some(existing => existing.value === opt.value)) {
       options.push(opt)
     }
@@ -517,7 +539,7 @@ export function getModelOptions(fastMode = false): ModelOption[] {
       options.push({
         value: customModel,
         label: customModel,
-        description: 'Custom model',
+        description: "自定义模型",
       })
     }
     return filterModelOptionsByAllowlist(options)

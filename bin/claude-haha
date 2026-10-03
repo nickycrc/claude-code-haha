@@ -21,10 +21,13 @@ else
   ENV_FILE_FLAG=""
 fi
 
+# Preload script path
+PRELOAD_FLAG="--preload $ROOT_DIR/preload.ts"
+
 # Force recovery CLI (simple readline REPL, no Ink TUI)
 if [[ "${CLAUDE_CODE_FORCE_RECOVERY_CLI:-0}" == "1" ]]; then
-  exec bun $ENV_FILE_FLAG ./src/localRecoveryCli.ts "$@"
+  exec bun $PRELOAD_FLAG $ENV_FILE_FLAG ./src/localRecoveryCli.ts "$@"
 fi
 
 # Default: full CLI with Ink TUI
-exec bun $ENV_FILE_FLAG ./src/entrypoints/cli.tsx "$@"
+exec bun $PRELOAD_FLAG $ENV_FILE_FLAG ./src/entrypoints/cli.tsx "$@"

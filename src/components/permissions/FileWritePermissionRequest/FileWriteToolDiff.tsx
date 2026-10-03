@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import * as React from 'react';
 import { useMemo } from 'react';
 import { useTerminalSize } from '../../../hooks/useTerminalSize.js';
-import { Box, NoSelect, Text } from '../../../ink.js';
+import { Box, NoSelect } from "../../../ink.js";
 import { intersperse } from '../../../utils/array.js';
 import { getPatchForDisplay } from '../../../utils/diff.js';
 import { HighlightedCode } from '../../HighlightedCode.js';

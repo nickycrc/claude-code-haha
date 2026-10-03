@@ -1,7 +1,8 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import figures from 'figures';
 import * as React from 'react';
-import { Box, color, Text, useTheme } from '../../ink.js';
+import { Box, color, useTheme } from "../../ink.js";
 import { plural } from '../../utils/stringUtils.js';
 import type { UnifiedInstalledItem } from './unifiedTypes.js';
 type Props = {
@@ -100,7 +101,7 @@ export function UnifiedInstalledCell(t0) {
     const t6 = !isSelected;
     let t7;
     if ($[16] === Symbol.for("react.memo_cache_sentinel")) {
-      t7 = <Text backgroundColor="userMessageBackground">Plugin</Text>;
+      t7 = <Text backgroundColor="userMessageBackground">{"插件"}</Text>;
       $[16] = t7;
     } else {
       t7 = $[16];
@@ -190,7 +191,7 @@ export function UnifiedInstalledCell(t0) {
     const t7 = !isSelected;
     let t8;
     if ($[42] === Symbol.for("react.memo_cache_sentinel")) {
-      t8 = <Text backgroundColor="userMessageBackground">Plugin</Text>;
+      t8 = <Text backgroundColor="userMessageBackground">{"插件"}</Text>;
       $[42] = t8;
     } else {
       t8 = $[42];
@@ -224,7 +225,7 @@ export function UnifiedInstalledCell(t0) {
     const t13 = !isSelected;
     let t14;
     if ($[50] !== t13) {
-      t14 = <Text dimColor={t13}>removed</Text>;
+      t14 = <Text dimColor={t13}>{"已移除"}</Text>;
       $[50] = t13;
       $[51] = t14;
     } else {
@@ -289,7 +290,7 @@ export function UnifiedInstalledCell(t0) {
     const t9 = !isSelected;
     let t10;
     if ($[69] === Symbol.for("react.memo_cache_sentinel")) {
-      t10 = <Text backgroundColor="userMessageBackground">Plugin</Text>;
+      t10 = <Text backgroundColor="userMessageBackground">{"插件"}</Text>;
       $[69] = t10;
     } else {
       t10 = $[69];

@@ -1,5 +1,6 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import React, { type ReactNode, useState } from 'react'
-import { Box, Text } from '../../../ink.js'
+import { Box } from "../../../ink.js";
 import { useKeybinding } from '../../../hooks/useKeybinding.js'
 import { Select } from '../../CustomSelect/select.js'
 import TextInput from '../../TextInput.js'
@@ -59,11 +60,11 @@ export function ScheduleStep(): ReactNode {
 
   if (showTimePicker && needsTime) {
     return (
-      <WizardDialogLayout subtitle="Schedule time">
+      <WizardDialogLayout subtitle="计划时间">
         <Box flexDirection="column">
           <Box marginBottom={1}>
             <Text dimColor>
-              Enter the time for this task (24-hour format, e.g. 09:00):
+              {"输入任务执行时间（24 小时制，例如 09:00）："}
             </Text>
           </Box>
           <TextInput
@@ -74,8 +75,7 @@ export function ScheduleStep(): ReactNode {
           />
           <Box marginTop={1}>
             <Text dimColor>
-              Scheduled tasks use a randomized delay of several minutes for
-              server performance.
+              {"为优化服务器性能，定时任务会随机延迟数分钟执行。"}
             </Text>
           </Box>
         </Box>
@@ -84,10 +84,10 @@ export function ScheduleStep(): ReactNode {
   }
 
   return (
-    <WizardDialogLayout subtitle="Frequency">
+    <WizardDialogLayout subtitle="频率">
       <Box flexDirection="column">
         <Box marginBottom={1}>
-          <Text dimColor>How often should this task run?</Text>
+          <Text dimColor>{"此任务应多久运行一次？"}</Text>
         </Box>
         <Select
           options={FREQUENCY_OPTIONS}

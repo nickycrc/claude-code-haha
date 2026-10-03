@@ -1,10 +1,11 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { execa } from 'execa';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Select } from '../../components/CustomSelect/index.js';
 import { Dialog } from '../../components/design-system/Dialog.js';
 import { LoadingState } from '../../components/design-system/LoadingState.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { logEvent, type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS as SafeString } from '../../services/analytics/index.js';
 import type { LocalJSXCommandOnDone } from '../../types/command.js';
 import { openBrowser } from '../../utils/browser.js';
@@ -150,27 +151,26 @@ function Web({
     onDone(`Connected as ${result.result.github_username}. Opened ${url}`);
   };
   if (step.name === 'checking') {
-    return <LoadingState message="Checking login status…" />;
+    return <LoadingState message="正在检查登录状态……" />;
   }
   if (step.name === 'uploading') {
-    return <LoadingState message="Connecting GitHub to Claude…" />;
+    return <LoadingState message="正在将 GitHub 连接到 Claude……" />;
   }
   const token = step.token;
-  return <Dialog title="Connect Claude on the web to GitHub?" onCancel={handleCancel} hideInputGuide>
+  return <Dialog title="将网页版 Claude 连接到 GitHub？" onCancel={handleCancel} hideInputGuide>
       <Box flexDirection="column">
         <Text>
-          Claude on the web requires connecting to your GitHub account to clone
-          and push code on your behalf.
+          {"网页版 Claude 需要连接 GitHub 账户，以便代表你克隆和推送代码。"}
         </Text>
         <Text dimColor>
-          Your local credentials are used to authenticate with GitHub
+          {"使用本地凭据向 GitHub 验证身份"}
         </Text>
       </Box>
       <Select options={[{
-      label: 'Continue',
+      label: "继续",
       value: 'send'
     }, {
-      label: 'Cancel',
+      label: "取消",
       value: 'cancel'
     }]} onChange={value => {
       if (value === 'send') {

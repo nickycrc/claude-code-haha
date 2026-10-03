@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import type { ContentBlockParam, TextBlockParam } from '@anthropic-ai/sdk/resources/index.mjs';
 import { randomUUID, type UUID } from 'crypto';
@@ -9,7 +10,7 @@ import { useAppState } from 'src/state/AppState.js';
 import { type DiffStats, fileHistoryCanRestore, fileHistoryEnabled, fileHistoryGetDiffStats } from 'src/utils/fileHistory.js';
 import { logError } from 'src/utils/log.js';
 import { useExitOnCtrlCDWithKeybindings } from '../hooks/useExitOnCtrlCDWithKeybindings.js';
-import { Box, Text } from '../ink.js';
+import { Box } from "../ink.js";
 import { useKeybinding, useKeybindings } from '../keybindings/useKeybinding.js';
 import type { Message, PartialCompactDirection, UserMessage } from '../types/message.js';
 import { stripDisplayTags } from '../utils/displayTags.js';
@@ -93,20 +94,20 @@ export function MessageSelector({
   function getRestoreOptions(canRestoreCode: boolean): OptionWithDescription<RestoreOption>[] {
     const baseOptions: OptionWithDescription<RestoreOption>[] = canRestoreCode ? [{
       value: 'both',
-      label: 'Restore code and conversation'
+      label: "恢复代码和对话"
     }, {
       value: 'conversation',
-      label: 'Restore conversation'
+      label: "恢复对话"
     }, {
       value: 'code',
-      label: 'Restore code'
+      label: "恢复代码"
     }] : [{
       value: 'conversation',
-      label: 'Restore conversation'
+      label: "恢复对话"
     }];
     const summarizeInputProps = {
       type: 'input' as const,
-      placeholder: 'add context (optional)',
+      placeholder: "补充上下文（可选）",
       initialValue: '',
       allowEmptySubmitToCancel: true,
       showLabelWithValue: true,
@@ -114,21 +115,21 @@ export function MessageSelector({
     };
     baseOptions.push({
       value: 'summarize',
-      label: 'Summarize from here',
+      label: "从此处开始总结",
       ...summarizeInputProps,
       onChange: setSummarizeFromFeedback
     });
     if ("external" === 'ant') {
       baseOptions.push({
         value: 'summarize_up_to',
-        label: 'Summarize up to here',
+        label: "总结截至此处的内容",
         ...summarizeInputProps,
         onChange: setSummarizeUpToFeedback
       });
     }
     baseOptions.push({
       value: 'nevermind',
-      label: 'Never mind'
+      label: "算了"
     });
     return baseOptions;
   }
@@ -316,20 +317,19 @@ export function MessageSelector({
       <Divider color="suggestion" />
       <Box flexDirection="column" marginX={1} gap={1}>
         <Text bold color="suggestion">
-          Rewind
+          {"回退"}
         </Text>
 
         {error && <>
-            <Text color="error">Error: {error}</Text>
+            <Text color="error">{"错误："} {error}</Text>
           </>}
         {!hasMessagesToSelect && <>
-            <Text>Nothing to rewind to yet.</Text>
+            <Text>{"暂无可回退的内容。"}</Text>
           </>}
         {!error && messageToRestore && hasMessagesToSelect && <>
             <Text>
-              Confirm you want to restore{' '}
-              {!diffStatsForRestore && 'the conversation '}to the point before
-              you sent this message:
+              {"确认要恢复"}{' '}
+              {!diffStatsForRestore && "对话"}{"到发送此消息之前："}
             </Text>
             <Box flexDirection="column" paddingLeft={1} borderStyle="single" borderRight={false} borderTop={false} borderBottom={false} borderLeft={true} borderLeftDimColor>
               <UserMessageOption userMessage={messageToRestore} color="text" isCurrent={false} />
@@ -340,20 +340,19 @@ export function MessageSelector({
             <RestoreOptionDescription selectedRestoreOption={selectedRestoreOption} canRestoreCode={!!canRestoreCode_0} diffStatsForRestore={diffStatsForRestore} />
             {isRestoring && isSummarizeOption(restoringOption) ? <Box flexDirection="row" gap={1}>
                 <Spinner />
-                <Text>Summarizing…</Text>
+                <Text>{"正在总结……"}</Text>
               </Box> : <Select isDisabled={isRestoring} options={getRestoreOptions(!!canRestoreCode_0)} defaultFocusValue={canRestoreCode_0 ? 'both' : 'conversation'} onFocus={value => setSelectedRestoreOption(value as RestoreOption)} onChange={value_0 => onSelectRestoreOption(value_0 as RestoreOption)} onCancel={() => preselectedMessage ? onClose() : setMessageToRestore(undefined)} />}
             {canRestoreCode_0 && <Box marginBottom={1}>
                 <Text dimColor>
-                  {figures.warning} Rewinding does not affect files edited
-                  manually or via bash.
+                  {figures.warning} {"回退不会影响手动编辑或通过 Bash 修改的文件。"}
                 </Text>
               </Box>}
           </>}
         {showPickList && <>
             {isFileHistoryEnabled ? <Text>
-                Restore the code and/or conversation to the point before…
+                {"将代码和／或对话恢复到此处之前……"}
               </Text> : <Text>
-                Restore and fork the conversation to the point before…
+                {"恢复并将对话分支到此处之前……"}
               </Text>}
             <Box width="100%" flexDirection="column">
               {messageOptions.slice(firstVisibleIndex, firstVisibleIndex + MAX_VISIBLE_MESSAGES).map((msg, visibleOptionIndex) => {
@@ -377,12 +376,12 @@ export function MessageSelector({
                             {metadata ? <>
                                 <Text dimColor={!isSelected} color="inactive">
                                   {numFilesChanged ? <>
-                                      {numFilesChanged === 1 && metadata.filesChanged![0] ? `${path.basename(metadata.filesChanged![0])} ` : `${numFilesChanged} files changed `}
+                                      {numFilesChanged === 1 && metadata.filesChanged![0] ? `${path.basename(metadata.filesChanged![0])} ` : `${numFilesChanged} 个文件已修改`}
                                       <DiffStatsText diffStats={metadata} />
-                                    </> : <>No code changes</>}
+                                    </> : <>{"没有代码修改"}</>}
                                 </Text>
                               </> : <Text dimColor color="warning">
-                                {figures.warning} No code restore
+                                {figures.warning} {"不恢复代码"}
                               </Text>}
                           </Box>}
                       </Box>
@@ -391,9 +390,8 @@ export function MessageSelector({
             </Box>
           </>}
         {!messageToRestore && <Text dimColor italic>
-            {exitState.pending ? <>Press {exitState.keyName} again to exit</> : <>
-                {!error && hasMessagesToSelect && 'Enter to continue · '}Esc to
-                exit
+            {exitState.pending ? <>{"按"} {exitState.keyName} {"再次按下退出"}</> : <>
+                {!error && hasMessagesToSelect && "Enter 继续 ·"}{"Esc 退出"}
               </>}
           </Text>}
       </Box>
@@ -439,7 +437,7 @@ function RestoreOptionDescription(t0) {
   }
   let t3;
   if ($[4] !== diffStatsForRestore || $[5] !== selectedRestoreOption || $[6] !== showCodeRestore) {
-    t3 = !isSummarizeOption(selectedRestoreOption) && (showCodeRestore ? <RestoreCodeConfirmation diffStatsForRestore={diffStatsForRestore} /> : <Text dimColor={true}>The code will be unchanged.</Text>);
+    t3 = !isSummarizeOption(selectedRestoreOption) && (showCodeRestore ? <RestoreCodeConfirmation diffStatsForRestore={diffStatsForRestore} /> : <Text dimColor={true}>{"代码将保持不变。"}</Text>);
     $[4] = diffStatsForRestore;
     $[5] = selectedRestoreOption;
     $[6] = showCodeRestore;
@@ -469,7 +467,7 @@ function RestoreCodeConfirmation(t0) {
   if (!diffStatsForRestore.filesChanged || !diffStatsForRestore.filesChanged[0]) {
     let t1;
     if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
-      t1 = <Text dimColor={true}>The code has not changed (nothing will be restored).</Text>;
+      t1 = <Text dimColor={true}>{"代码未修改，无需恢复。"}</Text>;
       $[0] = t1;
     } else {
       t1 = $[0];
@@ -532,7 +530,7 @@ function RestoreCodeConfirmation(t0) {
   }
   let t2;
   if ($[11] !== fileLabel || $[12] !== t1) {
-    t2 = <><Text dimColor={true}>The code will be restored{" "}{t1} in {fileLabel}.</Text></>;
+    t2 = <><Text dimColor={true}>{"代码将被恢复"}{" "}{t1} {"位于"} {fileLabel}.</Text></>;
     $[11] = fileLabel;
     $[12] = t1;
     $[13] = t2;
@@ -591,7 +589,7 @@ function UserMessageOption(t0) {
   if (isCurrent) {
     let t1;
     if ($[0] !== color || $[1] !== dimColor) {
-      t1 = <Box width="100%"><Text italic={true} color={color} dimColor={dimColor}>(current)</Text></Box>;
+      t1 = <Box width="100%"><Text italic={true} color={color} dimColor={dimColor}>{"（当前）"}</Text></Box>;
       $[0] = color;
       $[1] = dimColor;
       $[2] = t1;
@@ -618,7 +616,7 @@ function UserMessageOption(t0) {
       if (isEmptyMessageText(messageText)) {
         let t7;
         if ($[17] !== color || $[18] !== dimColor) {
-          t7 = <Box flexDirection="row" width="100%"><Text italic={true} color={color} dimColor={dimColor}>((empty message))</Text></Box>;
+          t7 = <Box flexDirection="row" width="100%"><Text italic={true} color={color} dimColor={dimColor}>{"（（空消息））"}</Text></Box>;
           $[17] = color;
           $[18] = dimColor;
           $[19] = t7;

@@ -1,6 +1,7 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React, { type ReactNode, useState } from 'react';
-import { Box, Text } from '../../../../ink.js';
+import { Box } from "../../../../ink.js";
 import { useKeybinding } from '../../../../keybindings/useKeybinding.js';
 import type { AgentDefinition } from '../../../../tools/AgentTool/loadAgentsDir.js';
 import { ConfigurableShortcutHint } from '../../../ConfigurableShortcutHint.js';
@@ -59,21 +60,21 @@ export function TypeStep(_props) {
   const handleSubmit = t1;
   let t2;
   if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
-    t2 = <Byline><KeyboardShortcutHint shortcut="Type" action="enter text" /><KeyboardShortcutHint shortcut="Enter" action="continue" /><ConfigurableShortcutHint action="confirm:no" context="Settings" fallback="Esc" description="go back" /></Byline>;
+    t2 = <Byline><KeyboardShortcutHint shortcut="Type" action="输入文字" /><KeyboardShortcutHint shortcut="Enter" action="继续" /><ConfigurableShortcutHint action="confirm:no" context="Settings" fallback="Esc" description="返回" /></Byline>;
     $[4] = t2;
   } else {
     t2 = $[4];
   }
   let t3;
   if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
-    t3 = <Text>Enter a unique identifier for your agent:</Text>;
+    t3 = <Text>{"输入代理的唯一标识符："}</Text>;
     $[5] = t3;
   } else {
     t3 = $[5];
   }
   let t4;
   if ($[6] !== agentType || $[7] !== cursorOffset || $[8] !== handleSubmit) {
-    t4 = <Box marginTop={1}><TextInput value={agentType} onChange={setAgentType} onSubmit={handleSubmit} placeholder="e.g., test-runner, tech-lead, etc" columns={60} cursorOffset={cursorOffset} onChangeCursorOffset={setCursorOffset} focus={true} showCursor={true} /></Box>;
+    t4 = <Box marginTop={1}><TextInput value={agentType} onChange={setAgentType} onSubmit={handleSubmit} placeholder="例如：test-runner、tech-lead 等" columns={60} cursorOffset={cursorOffset} onChangeCursorOffset={setCursorOffset} focus={true} showCursor={true} /></Box>;
     $[6] = agentType;
     $[7] = cursorOffset;
     $[8] = handleSubmit;
@@ -91,7 +92,7 @@ export function TypeStep(_props) {
   }
   let t6;
   if ($[12] !== t4 || $[13] !== t5) {
-    t6 = <WizardDialogLayout subtitle="Agent type (identifier)" footerText={t2}><Box flexDirection="column">{t3}{t4}{t5}</Box></WizardDialogLayout>;
+    t6 = <WizardDialogLayout subtitle="代理类型（标识符）" footerText={t2}><Box flexDirection="column">{t3}{t4}{t5}</Box></WizardDialogLayout>;
     $[12] = t4;
     $[13] = t5;
     $[14] = t6;

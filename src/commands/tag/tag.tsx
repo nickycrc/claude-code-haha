@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import chalk from 'chalk';
 import type { UUID } from 'crypto';
@@ -7,7 +8,7 @@ import type { CommandResultDisplay } from '../../commands.js';
 import { Select } from '../../components/CustomSelect/select.js';
 import { Dialog } from '../../components/design-system/Dialog.js';
 import { COMMON_HELP_ARGS, COMMON_INFO_ARGS } from '../../constants/xml.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { logEvent } from '../../services/analytics/index.js';
 import type { LocalJSXCommandOnDone } from '../../types/command.js';
 import { recursivelySanitizeUnicode } from '../../utils/sanitization.js';
@@ -22,7 +23,7 @@ function ConfirmRemoveTag(t0) {
   const t1 = `Current tag: #${tagName}`;
   let t2;
   if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
-    t2 = <Text>This will remove the tag from the current session.</Text>;
+    t2 = <Text>{"这将从当前会话移除此标签。"}</Text>;
     $[0] = t2;
   } else {
     t2 = $[0];
@@ -39,10 +40,10 @@ function ConfirmRemoveTag(t0) {
   let t4;
   if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
     t4 = [{
-      label: "Yes, remove tag",
+      label: "是，移除标签",
       value: "yes"
     }, {
-      label: "No, keep tag",
+      label: "否，保留标签",
       value: "no"
     }];
     $[4] = t4;
@@ -59,7 +60,7 @@ function ConfirmRemoveTag(t0) {
   }
   let t6;
   if ($[7] !== onCancel || $[8] !== t1 || $[9] !== t5) {
-    t6 = <Dialog title="Remove tag?" subtitle={t1} onCancel={onCancel} color="warning">{t5}</Dialog>;
+    t6 = <Dialog title="移除标签？" subtitle={t1} onCancel={onCancel} color="warning">{t5}</Dialog>;
     $[7] = onCancel;
     $[8] = t1;
     $[9] = t5;

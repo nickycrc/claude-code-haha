@@ -1,9 +1,10 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import figures from 'figures';
 import React, { useMemo } from 'react';
 import { useTerminalSize } from '../../../hooks/useTerminalSize.js';
 import { stringWidth } from '../../../ink/stringWidth.js';
-import { Box, Text } from '../../../ink.js';
+import { Box } from "../../../ink.js";
 import type { Question } from '../../../tools/AskUserQuestionTool/AskUserQuestionTool.js';
 import { truncateToWidth } from '../../../utils/format.js';
 type Props = {
@@ -135,7 +136,7 @@ export function QuestionNavigationBar(t0) {
   }
   let t5;
   if ($[26] !== currentQuestionIndex || $[27] !== hideSubmitTab || $[28] !== questions.length) {
-    t5 = !hideSubmitTab && <Box key="submit">{currentQuestionIndex === questions.length ? <Text backgroundColor="permission" color="inverseText">{" "}{figures.tick} Submit{" "}</Text> : <Text> {figures.tick} Submit </Text>}</Box>;
+    t5 = !hideSubmitTab && <Box key="submit">{currentQuestionIndex === questions.length ? <Text backgroundColor="permission" color="inverseText">{" "}{figures.tick} {"提交"}{" "}</Text> : <Text> {figures.tick} {"提交"} </Text>}</Box>;
     $[26] = currentQuestionIndex;
     $[27] = hideSubmitTab;
     $[28] = questions.length;

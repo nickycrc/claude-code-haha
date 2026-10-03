@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import figures from 'figures';
 import * as React from 'react';
 import { useEffect } from 'react';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { errorMessage } from '../../utils/errors.js';
 import { logError } from '../../utils/log.js';
 import { validateManifest } from '../../utils/plugins/validatePlugin.js';
@@ -88,7 +89,7 @@ export function ValidatePlugin(t0) {
   useEffect(t1, t2);
   let t3;
   if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
-    t3 = <Box flexDirection="column"><Text>Running validation...</Text></Box>;
+    t3 = <Box flexDirection="column"><Text>{"正在验证……"}</Text></Box>;
     $[4] = t3;
   } else {
     t3 = $[4];

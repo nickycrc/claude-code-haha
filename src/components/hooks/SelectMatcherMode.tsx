@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 /**
  * SelectMatcherMode shows the configured matchers for a selected hook event.
@@ -7,7 +8,7 @@ import { c as _c } from "react/compiler-runtime";
  */
 import * as React from 'react';
 import type { HookEvent } from 'src/entrypoints/agentSdkTypes.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { type HookSource, hookSourceInlineDisplayString, type IndividualHookConfig } from '../../utils/hooks/hooksSettings.js';
 import { plural } from '../../utils/stringUtils.js';
 import { Select } from '../CustomSelect/select.js';
@@ -67,7 +68,7 @@ export function SelectMatcherMode(t0) {
     const t2 = `${selectedEvent} - Matchers`;
     let t3;
     if ($[7] === Symbol.for("react.memo_cache_sentinel")) {
-      t3 = <Box flexDirection="column" gap={1}><Text dimColor={true}>No hooks configured for this event.</Text><Text dimColor={true}>To add hooks, edit settings.json directly or ask Claude.</Text></Box>;
+      t3 = <Box flexDirection="column" gap={1}><Text dimColor={true}>{"此事件尚未配置钩子。"}</Text><Text dimColor={true}>{"如需添加钩子，请直接编辑 settings.json，或让 Claude 处理。"}</Text></Box>;
       $[7] = t3;
     } else {
       t3 = $[7];
@@ -136,7 +137,7 @@ function _temp3(item) {
   };
 }
 function _temp2() {
-  return <Text>Esc to go back</Text>;
+  return <Text>{"Esc 返回"}</Text>;
 }
 function _temp(h) {
   return h.source;

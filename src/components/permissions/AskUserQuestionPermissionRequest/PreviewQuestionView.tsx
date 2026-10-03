@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import figures from 'figures';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useTerminalSize } from '../../../hooks/useTerminalSize.js';
 import type { KeyboardEvent } from '../../../ink/events/keyboard-event.js';
-import { Box, Text } from '../../../ink.js';
+import { Box } from "../../../ink.js";
 import { useKeybinding, useKeybindings } from '../../../keybindings/useKeybinding.js';
 import { useAppState } from '../../../state/AppState.js';
 import type { Question } from '../../../tools/AskUserQuestionTool/AskUserQuestionTool.js';
@@ -284,13 +285,13 @@ export function PreviewQuestionView({
             <Box flexDirection="column" flexGrow={1}>
               <PreviewBox content={previewContent || 'No preview available'} maxLines={previewMaxLines} minWidth={minContentWidth} maxWidth={previewMaxWidth} />
               <Box marginTop={1} flexDirection="row" gap={1}>
-                <Text color="suggestion">Notes:</Text>
-                {isInNotesInput ? <TextInput value={notesValue} placeholder="Add notes on this design…" onChange={value => {
+                <Text color="suggestion">{"备注："}</Text>
+                {isInNotesInput ? <TextInput value={notesValue} placeholder="为此设计添加备注……" onChange={value => {
                 onUpdateQuestionState(questionText, {
                   textInputValue: value
                 }, false);
               }} onSubmit={handleNotesExit} onExit={handleNotesExit} focus={true} showCursor={true} columns={60} cursorOffset={cursorOffset} onChangeCursorOffset={setCursorOffset} /> : <Text dimColor italic>
-                    {notesValue || 'press n to add notes'}
+                    {notesValue || "按 n 添加备注"}
                   </Text>}
               </Box>
             </Box>
@@ -302,23 +303,22 @@ export function PreviewQuestionView({
             <Box flexDirection="row" gap={1}>
               {isFooterFocused && footerIndex === 0 ? <Text color="suggestion">{figures.pointer}</Text> : <Text> </Text>}
               <Text color={isFooterFocused && footerIndex === 0 ? 'suggestion' : undefined}>
-                Chat about this
+                {"讨论此项"}
               </Text>
             </Box>
             {isInPlanMode && <Box flexDirection="row" gap={1}>
                 {isFooterFocused && footerIndex === 1 ? <Text color="suggestion">{figures.pointer}</Text> : <Text> </Text>}
                 <Text color={isFooterFocused && footerIndex === 1 ? 'suggestion' : undefined}>
-                  Skip interview and plan immediately
+                  {"跳过访谈并立即制定计划"}
                 </Text>
               </Box>}
           </Box>
           <Box marginTop={1}>
             <Text color="inactive" dimColor>
-              Enter to select · {figures.arrowUp}/{figures.arrowDown} to
-              navigate · n to add notes
-              {questions.length > 1 && <> · Tab to switch questions</>}
-              {isInNotesInput && editorName && <> · ctrl+g to edit in {editorName}</>}{' '}
-              · Esc to cancel
+              {"Enter 选择 ·"} {figures.arrowUp}/{figures.arrowDown} {"导航 · n 添加备注"}
+              {questions.length > 1 && <> {"· Tab 切换问题"}</>}
+              {isInNotesInput && editorName && <> {"· ctrl+g 在以下编辑器中编辑："} {editorName}</>}{' '}
+              {"· Esc 取消"}
             </Text>
           </Box>
         </Box>

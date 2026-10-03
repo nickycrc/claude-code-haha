@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import { execa } from 'execa';
 import { readFile } from 'fs/promises';
@@ -9,7 +10,7 @@ import { Select } from '../../components/CustomSelect/select.js';
 import { Dialog } from '../../components/design-system/Dialog.js';
 import { Spinner } from '../../components/Spinner.js';
 import instances from '../../ink/instances.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { enablePluginOp } from '../../services/plugins/pluginOperations.js';
 import { logForDebugging } from '../../utils/debug.js';
 import { isENOENT, toError } from '../../utils/errors.js';
@@ -77,13 +78,13 @@ export async function playAnimation(skillDir: string): Promise<{
     if (isENOENT(e)) {
       return {
         success: false,
-        message: 'No animation found. Run /think-back first to generate one.'
+        message: "未找到动画，请先运行 /think-back 生成。"
       };
     }
     logError(e);
     return {
       success: false,
-      message: `Could not access animation data: ${toError(e).message}`
+      message: `无法访问动画数据：${toError(e).message}`
     };
   }
   try {
@@ -92,13 +93,13 @@ export async function playAnimation(skillDir: string): Promise<{
     if (isENOENT(e)) {
       return {
         success: false,
-        message: 'Player script not found. The player.js file is missing from the thinkback skill.'
+        message: "未找到播放器脚本，thinkback 技能缺少 player.js 文件。"
       };
     }
     logError(e);
     return {
       success: false,
-      message: `Could not access player script: ${toError(e).message}`
+      message: `无法访问播放器脚本：${toError(e).message}`
     };
   }
 
@@ -107,7 +108,7 @@ export async function playAnimation(skillDir: string): Promise<{
   if (!inkInstance) {
     return {
       success: false,
-      message: 'Failed to access terminal instance'
+      message: "无法访问终端实例"
     };
   }
   inkInstance.enterAlternateScreen();
@@ -132,7 +133,7 @@ export async function playAnimation(skillDir: string): Promise<{
   }
   return {
     success: true,
-    message: 'Year in review animation complete!'
+    message: "年度回顾动画播放完毕！"
   };
 }
 type InstallState = {
@@ -252,7 +253,7 @@ function ThinkbackInstaller({
   }, [onReady, onError]);
   if (state.phase === 'error') {
     return <Box flexDirection="column">
-        <Text color="error">Error: {state.message}</Text>
+        <Text color="error">{"错误："} {state.message}</Text>
       </Box>;
   }
   if (state.phase === 'ready') {
@@ -280,25 +281,25 @@ function ThinkbackMenu(t0) {
   let t1;
   if ($[0] !== hasGenerated) {
     t1 = hasGenerated ? [{
-      label: "Play animation",
+      label: "播放动画",
       value: "play" as const,
-      description: "Watch your year in review"
+      description: "查看年度回顾"
     }, {
-      label: "Edit content",
+      label: "编辑内容",
       value: "edit" as const,
-      description: "Modify the animation"
+      description: "修改动画"
     }, {
-      label: "Fix errors",
+      label: "修复错误",
       value: "fix" as const,
-      description: "Fix validation or rendering issues"
+      description: "修复验证或渲染问题"
     }, {
-      label: "Regenerate",
+      label: "重新生成",
       value: "regenerate" as const,
-      description: "Create a new animation from scratch"
+      description: "从头创建新动画"
     }] : [{
-      label: "Let's go!",
+      label: "开始吧！",
       value: "regenerate" as const,
-      description: "Generate your personalized animation"
+      description: "生成个性化动画"
     }];
     $[0] = hasGenerated;
     $[1] = t1;
@@ -346,7 +347,7 @@ function ThinkbackMenu(t0) {
   }
   let t4;
   if ($[8] !== hasGenerated) {
-    t4 = !hasGenerated && <Box flexDirection="column"><Text>Relive your year of coding with Claude.</Text><Text dimColor={true}>{"We'll create a personalized ASCII animation celebrating your journey."}</Text></Box>;
+    t4 = !hasGenerated && <Box flexDirection="column"><Text>{"回顾你与 Claude 一起编程的一年。"}</Text><Text dimColor={true}>{"我们会创建个性化 ASCII 动画，回顾你的编程历程。"}</Text></Box>;
     $[8] = hasGenerated;
     $[9] = t4;
   } else {
@@ -372,7 +373,7 @@ function ThinkbackMenu(t0) {
   }
   let t7;
   if ($[16] !== handleCancel || $[17] !== t6) {
-    t7 = <Dialog title="Think Back on 2025 with Claude Code" subtitle="Generate your 2025 Claude Code Think Back (takes a few minutes to run)" onCancel={handleCancel} color="claude">{t6}</Dialog>;
+    t7 = <Dialog title="与 Claude Code 一起回顾 2025 年" subtitle="生成你的 2025 年 Claude Code 年度回顾（需要几分钟）" onCancel={handleCancel} color="claude">{t6}</Dialog>;
     $[16] = handleCancel;
     $[17] = t6;
     $[18] = t7;
@@ -488,7 +489,7 @@ function ThinkbackFlow(t0) {
   if (installError) {
     let t8;
     if ($[14] !== installError) {
-      t8 = <Text color="error">Error: {installError}</Text>;
+      t8 = <Text color="error">{"错误："} {installError}</Text>;
       $[14] = installError;
       $[15] = t8;
     } else {
@@ -496,7 +497,7 @@ function ThinkbackFlow(t0) {
     }
     let t9;
     if ($[16] === Symbol.for("react.memo_cache_sentinel")) {
-      t9 = <Text dimColor={true}>Try running /plugin to manually install the think-back plugin.</Text>;
+      t9 = <Text dimColor={true}>{"可尝试运行 /plugin 手动安装 think-back 插件。"}</Text>;
       $[16] = t9;
     } else {
       t9 = $[16];
@@ -525,7 +526,7 @@ function ThinkbackFlow(t0) {
   if (!skillDir || hasGenerated === null) {
     let t8;
     if ($[21] === Symbol.for("react.memo_cache_sentinel")) {
-      t8 = <Box><Spinner /><Text>Loading thinkback skill…</Text></Box>;
+      t8 = <Box><Spinner /><Text>{"正在加载 thinkback 技能……"}</Text></Box>;
       $[21] = t8;
     } else {
       t8 = $[21];

@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import figures from 'figures';
 import React, { useMemo, useState } from 'react';
@@ -8,7 +9,7 @@ import type { CommandResultDisplay } from '../../commands.js';
 import { DIAMOND_FILLED, DIAMOND_OPEN } from '../../constants/figures.js';
 import { useElapsedTime } from '../../hooks/useElapsedTime.js';
 import type { KeyboardEvent } from '../../ink/events/keyboard-event.js';
-import { Box, Link, Text } from '../../ink.js';
+import { Box, Link } from "../../ink.js";
 import type { RemoteAgentTaskState } from '../../tasks/RemoteAgentTask/RemoteAgentTask.js';
 import { getRemoteTaskSessionUrl } from '../../tasks/RemoteAgentTask/RemoteAgentTask.js';
 import { AGENT_TOOL_NAME, LEGACY_AGENT_TOOL_NAME } from '../../tools/AgentTool/constants.js';
@@ -168,7 +169,7 @@ function UltraplanSessionDetail(t0) {
     }
     let t7;
     if ($[12] === Symbol.for("react.memo_cache_sentinel")) {
-      t7 = <Text dimColor={true}>This will terminate the Claude Code on the web session.</Text>;
+      t7 = <Text dimColor={true}>{"这将终止网页版 Claude Code 会话。"}</Text>;
       $[12] = t7;
     } else {
       t7 = $[12];
@@ -176,7 +177,7 @@ function UltraplanSessionDetail(t0) {
     let t8;
     if ($[13] === Symbol.for("react.memo_cache_sentinel")) {
       t8 = {
-        label: "Terminate session",
+        label: "终止会话",
         value: "stop" as const
       };
       $[13] = t8;
@@ -186,7 +187,7 @@ function UltraplanSessionDetail(t0) {
     let t9;
     if ($[14] === Symbol.for("react.memo_cache_sentinel")) {
       t9 = [t8, {
-        label: "Back",
+        label: "返回",
         value: "back" as const
       }];
       $[14] = t9;
@@ -195,7 +196,7 @@ function UltraplanSessionDetail(t0) {
     }
     let t10;
     if ($[15] !== goBackOrClose || $[16] !== onKill) {
-      t10 = <Dialog title="Stop ultraplan?" onCancel={t6} color="background"><Box flexDirection="column" gap={1}>{t7}<Select options={t9} onChange={v => {
+      t10 = <Dialog title="停止 Ultraplan？" onCancel={t6} color="background"><Box flexDirection="column" gap={1}>{t7}<Select options={t9} onChange={v => {
             if (v === "stop") {
               onKill?.();
               goBackOrClose();
@@ -272,7 +273,7 @@ function UltraplanSessionDetail(t0) {
   }
   let t15;
   if ($[33] !== agentsWorking || $[34] !== t11 || $[35] !== t12 || $[36] !== t13 || $[37] !== t14 || $[38] !== toolCalls) {
-    t15 = <Text>{t11}{agentsWorking} {t12}{" "}{t13} · {toolCalls} tool{" "}{t14}</Text>;
+    t15 = <Text>{t11}{agentsWorking} {t12}{" "}{t13} · {toolCalls} {"工具"}{" "}{t14}</Text>;
     $[33] = agentsWorking;
     $[34] = t11;
     $[35] = t12;
@@ -311,7 +312,7 @@ function UltraplanSessionDetail(t0) {
   let t19;
   if ($[47] === Symbol.for("react.memo_cache_sentinel")) {
     t19 = {
-      label: "Review in Claude Code on the web",
+      label: "在网页版 Claude Code 中查看",
       value: "open" as const
     };
     $[47] = t19;
@@ -321,7 +322,7 @@ function UltraplanSessionDetail(t0) {
   let t20;
   if ($[48] !== onKill || $[49] !== running) {
     t20 = onKill && running ? [{
-      label: "Stop ultraplan",
+      label: "停止 Ultraplan",
       value: "stop" as const
     }] : [];
     $[48] = onKill;
@@ -333,7 +334,7 @@ function UltraplanSessionDetail(t0) {
   let t21;
   if ($[51] === Symbol.for("react.memo_cache_sentinel")) {
     t21 = {
-      label: "Back",
+      label: "返回",
       value: "back" as const
     };
     $[51] = t21;
@@ -440,7 +441,7 @@ function StagePipeline(t0) {
   const inSetup = !completed && !hasProgress;
   let t2;
   if ($[2] !== inSetup) {
-    t2 = inSetup ? <Text color="background">Setup</Text> : <Text dimColor={true}>Setup</Text>;
+    t2 = inSetup ? <Text color="background">{"配置"}</Text> : <Text dimColor={true}>{"配置"}</Text>;
     $[2] = inSetup;
     $[3] = t2;
   } else {
@@ -549,7 +550,7 @@ function ReviewSessionDetail(t0) {
     }
     let t4;
     if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
-      t4 = <Text dimColor={true}>This archives the remote session and stops local tracking. The review will not complete and any findings so far are discarded.</Text>;
+      t4 = <Text dimColor={true}>{"这将归档远程会话并停止本地跟踪。审查将无法完成，已有发现也会被丢弃。"}</Text>;
       $[5] = t4;
     } else {
       t4 = $[5];
@@ -557,7 +558,7 @@ function ReviewSessionDetail(t0) {
     let t5;
     if ($[6] === Symbol.for("react.memo_cache_sentinel")) {
       t5 = {
-        label: "Stop ultrareview",
+        label: "停止 Ultrareview",
         value: "stop" as const
       };
       $[6] = t5;
@@ -567,7 +568,7 @@ function ReviewSessionDetail(t0) {
     let t6;
     if ($[7] === Symbol.for("react.memo_cache_sentinel")) {
       t6 = [t5, {
-        label: "Back",
+        label: "返回",
         value: "back" as const
       }];
       $[7] = t6;
@@ -576,7 +577,7 @@ function ReviewSessionDetail(t0) {
     }
     let t7;
     if ($[8] !== goBackOrClose || $[9] !== onKill) {
-      t7 = <Dialog title="Stop ultrareview?" onCancel={t3} color="background"><Box flexDirection="column" gap={1}>{t4}<Select options={t6} onChange={v => {
+      t7 = <Dialog title="停止 Ultrareview？" onCancel={t3} color="background"><Box flexDirection="column" gap={1}>{t4}<Select options={t6} onChange={v => {
             if (v === "stop") {
               onKill?.();
               goBackOrClose();
@@ -595,19 +596,19 @@ function ReviewSessionDetail(t0) {
   let t3;
   if ($[11] !== completed || $[12] !== onKill || $[13] !== running) {
     t3 = completed ? [{
-      label: "Open in Claude Code on the web",
+      label: "在网页版 Claude Code 中打开",
       value: "open"
     }, {
-      label: "Dismiss",
+      label: "关闭",
       value: "dismiss"
     }] : [{
-      label: "Open in Claude Code on the web",
+      label: "在网页版 Claude Code 中打开",
       value: "open"
     }, ...(onKill && running ? [{
-      label: "Stop ultrareview",
+      label: "停止 Ultrareview",
       value: "stop" as const
     }] : []), {
-      label: "Back",
+      label: "返回",
       value: "back"
     }];
     $[11] = completed;
@@ -773,7 +774,7 @@ function ReviewSessionDetail(t0) {
   return t20;
 }
 function _temp(exitState) {
-  return exitState.pending ? <Text>Press {exitState.keyName} again to exit</Text> : <Byline><KeyboardShortcutHint shortcut="Enter" action="select" /><KeyboardShortcutHint shortcut="Esc" action="go back" /></Byline>;
+  return exitState.pending ? <Text>{"按"} {exitState.keyName} {"再次按下退出"}</Text> : <Byline><KeyboardShortcutHint shortcut="Enter" action="选择" /><KeyboardShortcutHint shortcut="Esc" action="返回" /></Byline>;
 }
 export function RemoteSessionDetailDialog({
   session,
@@ -846,29 +847,29 @@ export function RemoteSessionDetailDialog({
   // Map TaskStatus to display status (handle 'pending')
   const displayStatus = session.status === 'pending' ? 'starting' : session.status;
   return <Box flexDirection="column" tabIndex={0} autoFocus onKeyDown={handleKeyDown}>
-      <Dialog title="Remote session details" onCancel={handleClose} color="background" inputGuide={exitState => exitState.pending ? <Text>Press {exitState.keyName} again to exit</Text> : <Byline>
-              {onBack && <KeyboardShortcutHint shortcut="←" action="go back" />}
-              <KeyboardShortcutHint shortcut="Esc/Enter/Space" action="close" />
+      <Dialog title="远程会话详情" onCancel={handleClose} color="background" inputGuide={exitState => exitState.pending ? <Text>{"按"} {exitState.keyName} {"再次按下退出"}</Text> : <Byline>
+              {onBack && <KeyboardShortcutHint shortcut="←" action="返回" />}
+              <KeyboardShortcutHint shortcut="Esc/Enter/Space" action="关闭" />
               {!isTeleporting && <KeyboardShortcutHint shortcut="t" action="teleport" />}
             </Byline>}>
         <Box flexDirection="column">
           <Text>
-            <Text bold>Status</Text>:{' '}
+            <Text bold>{"状态"}</Text>:{' '}
             {displayStatus === 'running' || displayStatus === 'starting' ? <Text color="background">{displayStatus}</Text> : displayStatus === 'completed' ? <Text color="success">{displayStatus}</Text> : <Text color="error">{displayStatus}</Text>}
           </Text>
           <Text>
-            <Text bold>Runtime</Text>:{' '}
+            <Text bold>{"运行时间"}</Text>:{' '}
             {formatDuration((session.endTime ?? Date.now()) - session.startTime)}
           </Text>
           <Text wrap="truncate-end">
-            <Text bold>Title</Text>: {displayTitle}
+            <Text bold>{"标题"}</Text>: {displayTitle}
           </Text>
           <Text>
-            <Text bold>Progress</Text>:{' '}
+            <Text bold>{"进度"}</Text>:{' '}
             <RemoteSessionProgress session={session} />
           </Text>
           <Text>
-            <Text bold>Session URL</Text>:{' '}
+            <Text bold>{"会话地址"}</Text>:{' '}
             <Link url={getRemoteTaskSessionUrl(session.sessionId)}>
               <Text dimColor>{getRemoteTaskSessionUrl(session.sessionId)}</Text>
             </Link>
@@ -878,26 +879,26 @@ export function RemoteSessionDetailDialog({
         {/* Remote session messages section */}
         {session.log.length > 0 && <Box flexDirection="column" marginTop={1}>
             <Text>
-              <Text bold>Recent messages</Text>:
+              <Text bold>{"最近消息"}</Text>:
             </Text>
             <Box flexDirection="column" height={10} overflowY="hidden">
               {lastMessages.map((msg, i) => <Message key={i} message={msg} lookups={EMPTY_LOOKUPS} addMargin={i > 0} tools={toolUseContext.options.tools} commands={toolUseContext.options.commands} verbose={toolUseContext.options.verbose} inProgressToolUseIDs={new Set()} progressMessagesForMessage={[]} shouldAnimate={false} shouldShowDot={false} style="condensed" isTranscriptMode={false} isStatic={true} />)}
             </Box>
             <Box marginTop={1}>
               <Text dimColor italic>
-                Showing last {lastMessages.length} of {session.log.length}{' '}
-                messages
+                {"显示最近的"} {lastMessages.length} {"／"} {session.log.length}{' '}
+                {"条消息"}
               </Text>
             </Box>
           </Box>}
 
         {/* Teleport error message */}
         {teleportError && <Box marginTop={1}>
-            <Text color="error">Teleport failed: {teleportError}</Text>
+            <Text color="error">{"会话转移失败："} {teleportError}</Text>
           </Box>}
 
         {/* Teleporting status */}
-        {isTeleporting && <Text color="background">Teleporting to session…</Text>}
+        {isTeleporting && <Text color="background">{"正在转移会话……"}</Text>}
       </Dialog>
     </Box>;
 }

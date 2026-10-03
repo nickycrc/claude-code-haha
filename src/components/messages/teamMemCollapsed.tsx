@@ -57,7 +57,7 @@ export function TeamMemCountParts(t0) {
       const t3 = tmReadCount === 1 ? "memory" : "memories";
       let t4;
       if ($[9] !== t2 || $[10] !== t3 || $[11] !== verb) {
-        t4 = <Text key="team-mem-read">{verb} {t2} team{" "}{t3}</Text>;
+        t4 = <Text key="team-mem-read">{verb} {t2} {"团队"}{" "}{t3}</Text>;
         $[9] = t2;
         $[10] = t3;
         $[11] = verb;
@@ -115,7 +115,7 @@ export function TeamMemCountParts(t0) {
       const t3 = tmWriteCount === 1 ? "memory" : "memories";
       let t4;
       if ($[19] !== t2 || $[20] !== t3 || $[21] !== verb_1) {
-        t4 = <Text key="team-mem-write">{verb_1} {t2} team{" "}{t3}</Text>;
+        t4 = <Text key="team-mem-write">{verb_1} {t2} {"团队"}{" "}{t3}</Text>;
         $[19] = t2;
         $[20] = t3;
         $[21] = verb_1;

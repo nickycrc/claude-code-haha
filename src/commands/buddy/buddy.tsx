@@ -125,8 +125,8 @@ function CompanionCard({
     const color = RARITY_COLORS[bones.rarity]
     return (
       <Box flexDirection="column" paddingX={1} paddingY={1} autoFocus={true} onKeyDown={handleKeyDown} tabIndex={0}>
-        <Text bold>You haven't hatched a companion yet!</Text>
-        <Text dimColor>Here's a preview of yours:</Text>
+        <Text bold>{"你还没有孵化伙伴！"}</Text>
+        <Text dimColor>{"这是你的伙伴预览："}</Text>
         <Box flexDirection="column" marginY={1}>
           {preview.map((line, i) => (
             <Text key={i} color={color}>
@@ -137,8 +137,8 @@ function CompanionCard({
             A {bones.rarity} {bones.species} {RARITY_STARS[bones.rarity]}
           </Text>
         </Box>
-        <Text>Run <Text bold>/buddy hatch</Text> to bring them to life!</Text>
-        <Text dimColor>Or type <Text bold>q</Text> to dismiss.</Text>
+        <Text>{"运行"} <Text bold>/buddy hatch</Text> {"让它诞生！"}</Text>
+        <Text dimColor>{"或输入"} <Text bold>q</Text> {"关闭。"}</Text>
       </Box>
     )
   }
@@ -161,18 +161,18 @@ function CompanionCard({
         </Box>
         <Box flexDirection="column" justifyContent="center">
           <Text>
-            <Text bold>Species:</Text>{' '}
+            <Text bold>{"种类："}</Text>{' '}
             <Text color={color}>{companion.species}</Text>
           </Text>
           <Text>
-            <Text bold>Rarity:</Text>{' '}
+            <Text bold>{"稀有度："}</Text>{' '}
             <Text color={color}>
               {companion.rarity} {RARITY_STARS[companion.rarity]}
             </Text>
           </Text>
-          {companion.shiny && <Text color="warning">✦ Shiny!</Text>}
+          {companion.shiny && <Text color="warning">{"✦ 闪光！"}</Text>}
           <Text dimColor>{'─'.repeat(20)}</Text>
-          <Text bold>Stats:</Text>
+          <Text bold>{"属性："}</Text>
           {STAT_NAMES.map(stat => (
             <Text key={stat}>
               <Text dimColor>{stat}:</Text>{' '}
@@ -185,7 +185,7 @@ function CompanionCard({
       <Text dimColor>
         /buddy pet · /buddy mute · /buddy unmute · /buddy release
       </Text>
-      <Text dimColor>Press q or Enter to dismiss</Text>
+      <Text dimColor>{"按 q 或 Enter 关闭"}</Text>
     </Box>
   )
 }

@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import figures from 'figures';
 import React, { useCallback, useState } from 'react';
 import type { KeyboardEvent } from '../../../ink/events/keyboard-event.js';
-import { Box, Text } from '../../../ink.js';
+import { Box } from "../../../ink.js";
 import { useAppState } from '../../../state/AppState.js';
 import type { Question, QuestionOption } from '../../../tools/AskUserQuestionTool/AskUserQuestionTool.js';
 import type { PastedContent } from '../../../utils/config.js';
@@ -206,7 +207,7 @@ export function QuestionView(t0) {
       t12 = {
         type: "input" as const,
         value: "__other__",
-        label: "Other",
+        label: "其他",
         placeholder: t9,
         initialValue: t10,
         onChange: t11
@@ -261,7 +262,7 @@ export function QuestionView(t0) {
   }
   let t8;
   if ($[47] !== isInPlanMode || $[48] !== planFilePath) {
-    t8 = isInPlanMode && planFilePath && <Box flexDirection="column" gap={0}><Divider color="inactive" /><Text color="inactive">Planning: <FilePathLink filePath={planFilePath} /></Text></Box>;
+    t8 = isInPlanMode && planFilePath && <Box flexDirection="column" gap={0}><Divider color="inactive" /><Text color="inactive">{"正在规划："} <FilePathLink filePath={planFilePath} /></Text></Box>;
     $[47] = isInPlanMode;
     $[48] = planFilePath;
     $[49] = t8;
@@ -351,7 +352,7 @@ export function QuestionView(t0) {
   const t16 = options.length + 1;
   let t17;
   if ($[80] !== t15 || $[81] !== t16) {
-    t17 = <Text color={t15}>{t16}. Chat about this</Text>;
+    t17 = <Text color={t15}>{t16}{"。讨论此项"}</Text>;
     $[80] = t15;
     $[81] = t16;
     $[82] = t17;
@@ -369,7 +370,7 @@ export function QuestionView(t0) {
   }
   let t19;
   if ($[86] !== footerIndex || $[87] !== isFooterFocused || $[88] !== isInPlanMode || $[89] !== options.length) {
-    t19 = isInPlanMode && <Box flexDirection="row" gap={1}>{isFooterFocused && footerIndex === 1 ? <Text color="suggestion">{figures.pointer}</Text> : <Text> </Text>}<Text color={isFooterFocused && footerIndex === 1 ? "suggestion" : undefined}>{options.length + 2}. Skip interview and plan immediately</Text></Box>;
+    t19 = isInPlanMode && <Box flexDirection="row" gap={1}>{isFooterFocused && footerIndex === 1 ? <Text color="suggestion">{figures.pointer}</Text> : <Text> </Text>}<Text color={isFooterFocused && footerIndex === 1 ? "suggestion" : undefined}>{options.length + 2}{"。跳过访谈并立即制定计划"}</Text></Box>;
     $[86] = footerIndex;
     $[87] = isFooterFocused;
     $[88] = isInPlanMode;
@@ -389,7 +390,7 @@ export function QuestionView(t0) {
   }
   let t21;
   if ($[94] !== questions.length) {
-    t21 = questions.length === 1 ? <>{figures.arrowUp}/{figures.arrowDown} to navigate</> : "Tab/Arrow keys to navigate";
+    t21 = questions.length === 1 ? <>{figures.arrowUp}/{figures.arrowDown} {"导航"}</> : "Tab/Arrow keys to navigate";
     $[94] = questions.length;
     $[95] = t21;
   } else {
@@ -397,7 +398,7 @@ export function QuestionView(t0) {
   }
   let t22;
   if ($[96] !== isOtherFocused) {
-    t22 = isOtherFocused && editorName && <> · ctrl+g to edit in {editorName}</>;
+    t22 = isOtherFocused && editorName && <> {"· ctrl+g 在以下编辑器中编辑："} {editorName}</>;
     $[96] = isOtherFocused;
     $[97] = t22;
   } else {
@@ -405,7 +406,7 @@ export function QuestionView(t0) {
   }
   let t23;
   if ($[98] !== t21 || $[99] !== t22) {
-    t23 = <Box marginTop={1}><Text color="inactive" dimColor={true}>Enter to select ·{" "}{t21}{t22}{" "}· Esc to cancel</Text></Box>;
+    t23 = <Box marginTop={1}><Text color="inactive" dimColor={true}>{"Enter 选择 ·"}{" "}{t21}{t22}{" "}{"· Esc 取消"}</Text></Box>;
     $[98] = t21;
     $[99] = t22;
     $[100] = t23;

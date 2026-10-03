@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS, logEvent } from 'src/services/analytics/index.js';
@@ -6,7 +7,7 @@ import { Byline } from '../../components/design-system/Byline.js';
 import { KeyboardShortcutHint } from '../../components/design-system/KeyboardShortcutHint.js';
 import { Spinner } from '../../components/Spinner.js';
 import TextInput from '../../components/TextInput.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { toError } from '../../utils/errors.js';
 import { logError } from '../../utils/log.js';
 import { clearAllCaches } from '../../utils/plugins/cacheUtils.js';
@@ -123,13 +124,13 @@ export function AddMarketplace({
   return <Box flexDirection="column">
       <Box flexDirection="column" paddingX={1} borderStyle="round">
         <Box marginBottom={1}>
-          <Text bold>Add Marketplace</Text>
+          <Text bold>{"添加市场"}</Text>
         </Box>
         <Box flexDirection="column">
-          <Text>Enter marketplace source:</Text>
-          <Text dimColor>Examples:</Text>
-          <Text dimColor> · owner/repo (GitHub)</Text>
-          <Text dimColor> · git@github.com:owner/repo.git (SSH)</Text>
+          <Text>{"输入市场来源："}</Text>
+          <Text dimColor>{"示例："}</Text>
+          <Text dimColor> {"· owner/repo（GitHub）"}</Text>
+          <Text dimColor> {"· git@github.com:owner/repo.git（SSH）"}</Text>
           <Text dimColor> · https://example.com/marketplace.json</Text>
           <Text dimColor> · ./path/to/marketplace</Text>
           <Box marginTop={1}>
@@ -139,7 +140,7 @@ export function AddMarketplace({
         {isLoading && <Box marginTop={1}>
             <Spinner />
             <Text>
-              {progressMessage || 'Adding marketplace to configuration…'}
+              {progressMessage || "正在将市场添加到配置……"}
             </Text>
           </Box>}
         {error && <Box marginTop={1}>
@@ -152,8 +153,8 @@ export function AddMarketplace({
       <Box marginLeft={3}>
         <Text dimColor italic>
           <Byline>
-            <KeyboardShortcutHint shortcut="Enter" action="add" />
-            <ConfigurableShortcutHint action="confirm:no" context="Settings" fallback="Esc" description="cancel" />
+            <KeyboardShortcutHint shortcut="Enter" action="添加" />
+            <ConfigurableShortcutHint action="confirm:no" context="Settings" fallback="Esc" description="取消" />
           </Byline>
         </Text>
       </Box>

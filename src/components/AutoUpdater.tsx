@@ -175,20 +175,20 @@ export function AutoUpdater({
   }
   return <Box flexDirection="row" gap={1}>
       {verbose && <Text dimColor wrap="truncate">
-          globalVersion: {versions.global} &middot; latestVersion:{' '}
+          globalVersion: {versions.global} {"· 最新版本："}{' '}
           {versions.latest}
         </Text>}
       {isUpdating ? <>
           <Box>
             <Text color="text" dimColor wrap="truncate">
-              Auto-updating…
+              {"正在自动更新……"}
             </Text>
           </Box>
         </> : autoUpdaterResult?.status === 'success' && showSuccessMessage && updateSemver && <Text color="success" wrap="truncate">
-            ✓ Update installed · Restart to apply
+            {"✓ 更新已安装 · 重启后生效"}
           </Text>}
       {(autoUpdaterResult?.status === 'install_failed' || autoUpdaterResult?.status === 'no_permissions') && <Text color="error" wrap="truncate">
-          ✗ Auto-update failed &middot; Try <Text bold>claude doctor</Text> or{' '}
+          {"✗ 自动更新失败 · 请尝试"} <Text bold>claude doctor</Text> {"或"}{' '}
           <Text bold>
             {hasLocalInstall ? `cd ~/.claude/local && npm update ${MACRO.PACKAGE_URL}` : `npm i -g ${MACRO.PACKAGE_URL}`}
           </Text>

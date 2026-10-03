@@ -9,7 +9,7 @@ export function TaskModelStep(): ReactNode {
     useWizard<ScheduledTaskWizardData>()
 
   return (
-    <WizardDialogLayout subtitle="Model">
+    <WizardDialogLayout subtitle="模型">
       <ModelSelector
         initialModel={wizardData.model}
         onComplete={(model) => {

@@ -176,17 +176,17 @@ export function NativeAutoUpdater({
         </Text>}
       {isUpdating ? <Box>
           <Text dimColor wrap="truncate">
-            Checking for updates
+            {"正在检查更新"}
           </Text>
         </Box> : autoUpdaterResult?.status === 'success' && showSuccessMessage && updateSemver && <Text color="success" wrap="truncate">
-            ✓ Update installed · Restart to update
+            {"✓ 更新已安装 · 重启后更新"}
           </Text>}
       {autoUpdaterResult?.status === 'install_failed' && <Text color="error" wrap="truncate">
-          ✗ Auto-update failed &middot; Try <Text bold>/status</Text>
+          {"✗ 自动更新失败 · 请尝试"} <Text bold>/status</Text>
         </Text>}
       {maxVersionIssue && "external" === 'ant' && <Text color="warning">
-          ⚠ Known issue: {maxVersionIssue} &middot; Run{' '}
-          <Text bold>claude rollback --safe</Text> to downgrade
+          {"⚠ 已知问题："} {maxVersionIssue} {"· 运行"}{' '}
+          <Text bold>claude rollback --safe</Text> {"降级"}
         </Text>}
     </Box>;
 }

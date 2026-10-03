@@ -1,7 +1,8 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React from 'react';
 import { useExitOnCtrlCDWithKeybindings } from '../../hooks/useExitOnCtrlCDWithKeybindings.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { useKeybinding } from '../../keybindings/useKeybinding.js';
 import type { SettingsJson } from '../../utils/settings/types.js';
 import { Select } from '../CustomSelect/index.js';
@@ -58,7 +59,7 @@ export function ManagedSettingsSecurityDialog(t0) {
   const t8 = 1;
   let t9;
   if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
-    t9 = <Text>Your organization has configured managed settings that could allow execution of arbitrary code or interception of your prompts and responses.</Text>;
+    t9 = <Text>{"你的组织配置了托管设置，可能允许执行任意代码或拦截提示词和回复。"}</Text>;
     $[4] = t9;
   } else {
     t9 = $[4];
@@ -67,7 +68,7 @@ export function ManagedSettingsSecurityDialog(t0) {
   const t10 = "column";
   let t11;
   if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
-    t11 = <Text dimColor={true}>Settings requiring approval:</Text>;
+    t11 = <Text dimColor={true}>{"需要批准的设置："}</Text>;
     $[5] = t11;
   } else {
     t11 = $[5];
@@ -85,7 +86,7 @@ export function ManagedSettingsSecurityDialog(t0) {
   }
   let t14;
   if ($[10] === Symbol.for("react.memo_cache_sentinel")) {
-    t14 = <Text>Only accept if you trust your organization's IT administration and expect these settings to be configured.</Text>;
+    t14 = <Text>{"只有信任组织的 IT 管理员且预期这些设置会被配置时，才应接受。"}</Text>;
     $[10] = t14;
   } else {
     t14 = $[10];
@@ -93,10 +94,10 @@ export function ManagedSettingsSecurityDialog(t0) {
   let t15;
   if ($[11] === Symbol.for("react.memo_cache_sentinel")) {
     t15 = [{
-      label: "Yes, I trust these settings",
+      label: "是，我信任这些设置",
       value: "accept"
     }, {
-      label: "No, exit Claude Code",
+      label: "否，退出 Claude Code",
       value: "exit"
     }];
     $[11] = t15;
@@ -113,7 +114,7 @@ export function ManagedSettingsSecurityDialog(t0) {
   }
   let t17;
   if ($[14] !== exitState.keyName || $[15] !== exitState.pending) {
-    t17 = <Text dimColor={true}>{exitState.pending ? <>Press {exitState.keyName} again to exit</> : <>Enter to confirm · Esc to exit</>}</Text>;
+    t17 = <Text dimColor={true}>{exitState.pending ? <>{"按"} {exitState.keyName} {"再次按下退出"}</> : <>{"Enter 确认 · Esc 退出"}</>}</Text>;
     $[14] = exitState.keyName;
     $[15] = exitState.pending;
     $[16] = t17;

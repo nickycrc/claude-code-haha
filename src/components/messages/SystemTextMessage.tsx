@@ -101,7 +101,7 @@ export function SystemTextMessage(t0) {
     let t3;
     if ($[13] === Symbol.for("react.memo_cache_sentinel")) {
       t2 = <Box minWidth={2}><Text color="error">{BLACK_CIRCLE}</Text></Box>;
-      t3 = <Text dimColor={true}>All background agents stopped</Text>;
+      t3 = <Text dimColor={true}>{"所有后台代理已停止"}</Text>;
       $[13] = t2;
       $[14] = t3;
     } else {
@@ -162,7 +162,7 @@ export function SystemTextMessage(t0) {
     let t3;
     if ($[27] === Symbol.for("react.memo_cache_sentinel")) {
       t2 = <Text dimColor={true}>{TEARDROP_ASTERISK} </Text>;
-      t3 = <Text>Allowed </Text>;
+      t3 = <Text>{"已允许"} </Text>;
       $[27] = t2;
       $[28] = t3;
     } else {
@@ -295,7 +295,7 @@ function StopHookSummaryMessage(t0) {
     const t3 = hookCount === 1 ? "hook" : "hooks";
     let t4;
     if ($[5] !== hookCount || $[6] !== message.hookLabel || $[7] !== t3 || $[8] !== totalStr) {
-      t4 = <Text dimColor={true}>{"  \u23BF  "}Ran {hookCount} {message.hookLabel}{" "}{t3}{totalStr}</Text>;
+      t4 = <Text dimColor={true}>{"  \u23BF  "}{"已运行"} {hookCount} {message.hookLabel}{" "}{t3}{totalStr}</Text>;
       $[5] = hookCount;
       $[6] = message.hookLabel;
       $[7] = t3;
@@ -354,7 +354,7 @@ function StopHookSummaryMessage(t0) {
   }
   let t10;
   if ($[22] !== t6 || $[23] !== t7 || $[24] !== t8 || $[25] !== t9 || $[26] !== totalStr) {
-    t10 = <Text>Ran {t6} {t7}{" "}{t8}{totalStr}{t9}</Text>;
+    t10 = <Text>{"已运行"} {t6} {t7}{" "}{t8}{totalStr}{t9}</Text>;
     $[22] = t6;
     $[23] = t7;
     $[24] = t8;
@@ -384,7 +384,7 @@ function StopHookSummaryMessage(t0) {
   }
   let t13;
   if ($[34] !== hookErrors || $[35] !== message.hookLabel) {
-    t13 = hookErrors.length > 0 && hookErrors.map((err, idx_1) => <Text key={idx_1}><Text dimColor={true}>⎿  </Text>{message.hookLabel ?? "Stop"} hook error: {err}</Text>);
+    t13 = hookErrors.length > 0 && hookErrors.map((err, idx_1) => <Text key={idx_1}><Text dimColor={true}>⎿  </Text>{message.hookLabel ?? "停止"} {"钩子错误："} {err}</Text>);
     $[34] = hookErrors;
     $[35] = message.hookLabel;
     $[36] = t13;
@@ -417,11 +417,11 @@ function StopHookSummaryMessage(t0) {
 }
 function _temp3(info_0, idx_0) {
   const durationStr_0 = false && info_0.durationMs !== undefined ? ` (${formatSecondsShort(info_0.durationMs)})` : "";
-  return <Text key={`cmd-${idx_0}`} dimColor={true}>⎿  {info_0.command === "prompt" ? `prompt: ${info_0.promptText || ""}` : info_0.command}{durationStr_0}</Text>;
+  return <Text key={`cmd-${idx_0}`} dimColor={true}>⎿  {info_0.command === "prompt" ? `提示词：${info_0.promptText || ""}` : info_0.command}{durationStr_0}</Text>;
 }
 function _temp2(info, idx) {
   const durationStr = false && info.durationMs !== undefined ? ` (${formatSecondsShort(info.durationMs)})` : "";
-  return <Text key={`cmd-${idx}`} dimColor={true}>{"     \u23BF "}{info.command === "prompt" ? `prompt: ${info.promptText || ""}` : info.command}{durationStr}</Text>;
+  return <Text key={`cmd-${idx}`} dimColor={true}>{"     \u23BF "}{info.command === "prompt" ? `提示词：${info.promptText || ""}` : info.command}{durationStr}</Text>;
 }
 function _temp(sum, h) {
   return sum + (h.durationMs ?? 0);
@@ -782,7 +782,7 @@ function BridgeStatusMessage(t0) {
   }
   let t3;
   if ($[1] === Symbol.for("react.memo_cache_sentinel")) {
-    t3 = <Text><ThemedText color="suggestion">/remote-control</ThemedText> is active. Code in CLI or at</Text>;
+    t3 = <Text><ThemedText color="suggestion">/remote-control</ThemedText> {"已启用。可在 CLI 或以下地址编程："}</Text>;
     $[1] = t3;
   } else {
     t3 = $[1];

@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import { relative } from 'path';
 import * as React from 'react';
 import { Suspense, use, useMemo } from 'react';
-import { Box, NoSelect, Text } from '../../../ink.js';
+import { Box, NoSelect } from "../../../ink.js";
 import type { NotebookCellType, NotebookContent } from '../../../types/notebook.js';
 import { intersperse } from '../../../utils/array.js';
 import { getCwd } from '../../../utils/cwd.js';
@@ -187,7 +188,7 @@ function NotebookEditToolDiffInner(t0) {
   const t6 = cell_type ? ` (${cell_type})` : "";
   let t7;
   if ($[16] !== cell_id || $[17] !== editTypeDescription || $[18] !== t6) {
-    t7 = <Text dimColor={true}>{editTypeDescription} for cell {cell_id}{t6}</Text>;
+    t7 = <Text dimColor={true}>{editTypeDescription} {"用于单元格"} {cell_id}{t6}</Text>;
     $[16] = cell_id;
     $[17] = editTypeDescription;
     $[18] = t6;

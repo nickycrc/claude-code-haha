@@ -67,6 +67,13 @@ export function startServer(port = PORT, host = HOST) {
     port,
     hostname: host,
 
+    /**
+     * Bun closes a connection after this many seconds with no bytes moving, and
+     * defaults to 10 — far too short for a local model that stays silent while
+     * prefilling a large prompt. 255 is Bun's maximum.
+     */
+    idleTimeout: 255,
+
     async fetch(req, server) {
       const url = new URL(req.url)
 

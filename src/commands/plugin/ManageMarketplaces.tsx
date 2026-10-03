@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import figures from 'figures';
 import * as React from 'react';
@@ -7,7 +8,7 @@ import { ConfigurableShortcutHint } from '../../components/ConfigurableShortcutH
 import { Byline } from '../../components/design-system/Byline.js';
 import { KeyboardShortcutHint } from '../../components/design-system/KeyboardShortcutHint.js';
 // eslint-disable-next-line custom-rules/prefer-use-keybindings -- useInput needed for marketplace-specific u/r shortcuts and y/n confirmation not in keybinding schema
-import { Box, Text, useInput } from '../../ink.js';
+import { Box, useInput } from "../../ink.js";
 import { useKeybinding, useKeybindings } from '../../keybindings/useKeybinding.js';
 import type { LoadedPlugin } from '../../types/plugin.js';
 import { count } from '../../utils/array.js';
@@ -365,10 +366,10 @@ export function ManageMarketplaces({
       secondaryLabel?: string;
       value: string;
     }> = [{
-      label: `Browse plugins (${marketplace.pluginCount ?? 0})`,
+      label: `浏览插件（${marketplace.pluginCount ?? 0}）`,
       value: 'browse'
     }, {
-      label: 'Update marketplace',
+      label: "更新市场",
       secondaryLabel: marketplace.lastUpdated ? `(last updated ${new Date(marketplace.lastUpdated).toLocaleDateString()})` : undefined,
       value: 'update'
     }];
@@ -376,12 +377,12 @@ export function ManageMarketplaces({
     // Only show auto-update toggle if auto-updater is not globally disabled
     if (!shouldSkipPluginAutoupdate()) {
       options.push({
-        label: marketplace.autoUpdate ? 'Disable auto-update' : 'Enable auto-update',
+        label: marketplace.autoUpdate ? "禁用自动更新" : "启用自动更新",
         value: 'toggle-auto-update'
       });
     }
     options.push({
-      label: 'Remove marketplace',
+      label: "移除市场",
       value: 'remove'
     });
     return options;
@@ -536,27 +537,27 @@ export function ManageMarketplaces({
     isActive: !isProcessing && internalView === 'confirm-remove'
   });
   if (loading) {
-    return <Text>Loading marketplaces…</Text>;
+    return <Text>{"正在加载市场……"}</Text>;
   }
   if (marketplaceStates.length === 0) {
     return <Box flexDirection="column">
         <Box marginBottom={1}>
-          <Text bold>Manage marketplaces</Text>
+          <Text bold>{"管理市场"}</Text>
         </Box>
 
         {/* Add Marketplace option */}
         <Box flexDirection="row" gap={1}>
           <Text color="suggestion">{figures.pointer} +</Text>
           <Text bold color="suggestion">
-            Add Marketplace
+            {"添加市场"}
           </Text>
         </Box>
 
         <Box marginLeft={3}>
           <Text dimColor italic>
-            {exitState.pending ? <>Press {exitState.keyName} again to go back</> : <Byline>
-                <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="select" />
-                <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="go back" />
+            {exitState.pending ? <>{"按"} {exitState.keyName} {"再次按下返回"}</> : <Byline>
+                <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="选择" />
+                <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="返回" />
               </Byline>}
           </Text>
         </Box>
@@ -568,13 +569,13 @@ export function ManageMarketplaces({
     const pluginCount = selectedMarketplace.installedPlugins?.length || 0;
     return <Box flexDirection="column">
         <Text bold color="warning">
-          Remove marketplace <Text italic>{selectedMarketplace.name}</Text>?
+          {"移除市场"} <Text italic>{selectedMarketplace.name}</Text>?
         </Text>
         <Box flexDirection="column">
           {pluginCount > 0 && <Box marginTop={1}>
               <Text color="warning">
-                This will also uninstall {pluginCount}{' '}
-                {plural(pluginCount, 'plugin')} from this marketplace:
+                {"这也将卸载"} {pluginCount}{' '}
+                {plural(pluginCount, 'plugin')} {"，来自此市场："}
               </Text>
             </Box>}
           {selectedMarketplace.installedPlugins && selectedMarketplace.installedPlugins.length > 0 && <Box flexDirection="column" marginTop={1} marginLeft={2}>
@@ -584,8 +585,7 @@ export function ManageMarketplaces({
               </Box>}
           <Box marginTop={1}>
             <Text>
-              Press <Text bold>y</Text> to confirm or <Text bold>n</Text> to
-              cancel
+              {"按"} <Text bold>y</Text> {"确认，或"} <Text bold>n</Text> {"取消"}
             </Text>
           </Box>
         </Box>
@@ -603,7 +603,7 @@ export function ManageMarketplaces({
         <Text dimColor>{selectedMarketplace.source}</Text>
         <Box marginTop={1}>
           <Text>
-            {selectedMarketplace.pluginCount || 0} available{' '}
+            {selectedMarketplace.pluginCount || 0} {"可用"}{' '}
             {plural(selectedMarketplace.pluginCount || 0, 'plugin')}
           </Text>
         </Box>
@@ -611,7 +611,7 @@ export function ManageMarketplaces({
         {/* Installed plugins section */}
         {selectedMarketplace.installedPlugins && selectedMarketplace.installedPlugins.length > 0 && <Box flexDirection="column" marginTop={1}>
               <Text bold>
-                Installed plugins ({selectedMarketplace.installedPlugins.length}
+                {"已安装插件（"}{selectedMarketplace.installedPlugins.length}
                 ):
               </Text>
               <Box flexDirection="column" marginLeft={1}>
@@ -627,7 +627,7 @@ export function ManageMarketplaces({
 
         {/* Processing indicator */}
         {isUpdating && <Box marginTop={1} flexDirection="column">
-            <Text color="claude">Updating marketplace…</Text>
+            <Text color="claude">{"正在更新市场……"}</Text>
             {progressMessage && <Text dimColor>{progressMessage}</Text>}
           </Box>}
 
@@ -658,16 +658,15 @@ export function ManageMarketplaces({
         {/* Show explanatory text at the bottom when auto-update is enabled */}
         {!isUpdating && !shouldSkipPluginAutoupdate() && selectedMarketplace.autoUpdate && <Box marginTop={1}>
               <Text dimColor>
-                Auto-update enabled. Claude Code will automatically update this
-                marketplace and its installed plugins.
+                {"自动更新已启用。Claude Code 将自动更新此市场及其已安装插件。"}
               </Text>
             </Box>}
 
         <Box marginLeft={3}>
           <Text dimColor italic>
-            {isUpdating ? <>Please wait…</> : <Byline>
-                <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="select" />
-                <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="go back" />
+            {isUpdating ? <>{"请稍候……"}</> : <Byline>
+                <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="选择" />
+                <ConfigurableShortcutHint action="confirm:no" context="Confirmation" fallback="Esc" description="返回" />
               </Byline>}
           </Text>
         </Box>
@@ -681,7 +680,7 @@ export function ManageMarketplaces({
   } = getPendingCounts();
   return <Box flexDirection="column">
       <Box marginBottom={1}>
-        <Text bold>Manage marketplaces</Text>
+        <Text bold>{"管理市场"}</Text>
       </Box>
 
       {/* Add Marketplace option */}
@@ -690,7 +689,7 @@ export function ManageMarketplaces({
           {selectedIndex === 0 ? figures.pointer : ' '} +
         </Text>
         <Text bold color={selectedIndex === 0 ? 'suggestion' : undefined}>
-          Add Marketplace
+          {"添加市场"}
         </Text>
       </Box>
 
@@ -719,11 +718,11 @@ export function ManageMarketplaces({
                 </Box>
                 <Text dimColor>{state.source}</Text>
                 <Text dimColor>
-                  {state.pluginCount !== undefined && <>{state.pluginCount} available</>}
-                  {state.installedPlugins && state.installedPlugins.length > 0 && <> • {state.installedPlugins.length} installed</>}
+                  {state.pluginCount !== undefined && <>{state.pluginCount} {"可用"}</>}
+                  {state.installedPlugins && state.installedPlugins.length > 0 && <> • {state.installedPlugins.length} {"已安装"}</>}
                   {state.lastUpdated && <>
                       {' '}
-                      • Updated{' '}
+                      {"• 已更新"}{' '}
                       {new Date(state.lastUpdated).toLocaleDateString()}
                     </>}
                 </Text>
@@ -735,20 +734,20 @@ export function ManageMarketplaces({
       {/* Pending changes summary */}
       {hasPendingChanges() && <Box marginTop={1} flexDirection="column">
           <Text>
-            <Text bold>Pending changes:</Text>{' '}
-            <Text dimColor>Enter to apply</Text>
+            <Text bold>{"待应用的修改："}</Text>{' '}
+            <Text dimColor>{"Enter 应用"}</Text>
           </Text>
           {updateCount > 0 && <Text>
-              • Update {updateCount} {plural(updateCount, 'marketplace')}
+              {"• 更新"} {updateCount} {plural(updateCount, 'marketplace')}
             </Text>}
           {removeCount > 0 && <Text color="warning">
-              • Remove {removeCount} {plural(removeCount, 'marketplace')}
+              {"• 移除"} {removeCount} {plural(removeCount, 'marketplace')}
             </Text>}
         </Box>}
 
       {/* Processing indicator */}
       {isProcessing && <Box marginTop={1}>
-          <Text color="claude">Processing changes…</Text>
+          <Text color="claude">{"正在处理修改……"}</Text>
         </Box>}
 
       {/* Error display */}
@@ -772,7 +771,7 @@ function ManageMarketplacesKeyHints(t0) {
   if (exitState.pending) {
     let t1;
     if ($[0] !== exitState.keyName) {
-      t1 = <Box marginTop={1}><Text dimColor={true} italic={true}>Press {exitState.keyName} again to go back</Text></Box>;
+      t1 = <Box marginTop={1}><Text dimColor={true} italic={true}>{"按"} {exitState.keyName} {"再次按下返回"}</Text></Box>;
       $[0] = exitState.keyName;
       $[1] = t1;
     } else {
@@ -782,7 +781,7 @@ function ManageMarketplacesKeyHints(t0) {
   }
   let t1;
   if ($[2] !== hasPendingActions) {
-    t1 = hasPendingActions && <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="apply changes" />;
+    t1 = hasPendingActions && <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="应用修改" />;
     $[2] = hasPendingActions;
     $[3] = t1;
   } else {
@@ -790,7 +789,7 @@ function ManageMarketplacesKeyHints(t0) {
   }
   let t2;
   if ($[4] !== hasPendingActions) {
-    t2 = !hasPendingActions && <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="select" />;
+    t2 = !hasPendingActions && <ConfigurableShortcutHint action="select:accept" context="Select" fallback="Enter" description="选择" />;
     $[4] = hasPendingActions;
     $[5] = t2;
   } else {
@@ -798,7 +797,7 @@ function ManageMarketplacesKeyHints(t0) {
   }
   let t3;
   if ($[6] !== hasPendingActions) {
-    t3 = !hasPendingActions && <KeyboardShortcutHint shortcut="u" action="update" />;
+    t3 = !hasPendingActions && <KeyboardShortcutHint shortcut="u" action="更新" />;
     $[6] = hasPendingActions;
     $[7] = t3;
   } else {
@@ -806,7 +805,7 @@ function ManageMarketplacesKeyHints(t0) {
   }
   let t4;
   if ($[8] !== hasPendingActions) {
-    t4 = !hasPendingActions && <KeyboardShortcutHint shortcut="r" action="remove" />;
+    t4 = !hasPendingActions && <KeyboardShortcutHint shortcut="r" action="移除" />;
     $[8] = hasPendingActions;
     $[9] = t4;
   } else {

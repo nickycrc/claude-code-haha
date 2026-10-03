@@ -18,22 +18,22 @@ export function handleReconnectResult(result: {
   switch (result.client.type) {
     case 'connected':
       return {
-        message: `Reconnected to ${serverName}.`,
+        message: `已重新连接 ${serverName}。`,
         success: true
       };
     case 'needs-auth':
       return {
-        message: `${serverName} requires authentication. Use the 'Authenticate' option.`,
+        message: `${serverName} 需要身份验证，请使用“验证身份”选项。`,
         success: false
       };
     case 'failed':
       return {
-        message: `Failed to reconnect to ${serverName}.`,
+        message: `重新连接 ${serverName} 失败。`,
         success: false
       };
     default:
       return {
-        message: `Unknown result when reconnecting to ${serverName}.`,
+        message: `重新连接 ${serverName} 时返回未知结果。`,
         success: false
       };
   }

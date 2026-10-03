@@ -1,6 +1,7 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import * as React from 'react';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { getAgentModelOptions } from '../../utils/model/agent.js';
 import { Select } from '../CustomSelect/select.js';
 interface ModelSelectorProps {
@@ -23,7 +24,7 @@ export function ModelSelector(t0) {
         t1 = [{
           value: initialModel,
           label: initialModel,
-          description: "Current model (custom ID)"
+          description: "当前模型（自定义 ID）"
         }, ...base];
         break bb0;
       }
@@ -38,7 +39,7 @@ export function ModelSelector(t0) {
   const defaultModel = initialModel ?? "sonnet";
   let t2;
   if ($[2] === Symbol.for("react.memo_cache_sentinel")) {
-    t2 = <Box marginBottom={1}><Text dimColor={true}>Model determines the agent's reasoning capabilities and speed.</Text></Box>;
+    t2 = <Box marginBottom={1}><Text dimColor={true}>{"模型决定代理的推理能力和速度。"}</Text></Box>;
     $[2] = t2;
   } else {
     t2 = $[2];

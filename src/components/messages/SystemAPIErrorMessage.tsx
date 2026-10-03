@@ -103,7 +103,7 @@ export function SystemAPIErrorMessage(t0) {
   const t9 = retryInSecondsLive === 1 ? "second" : "seconds";
   let t10;
   if ($[19] !== maxRetries || $[20] !== retryAttempt || $[21] !== retryInSecondsLive || $[22] !== t9) {
-    t10 = <Text dimColor={true}>Retrying in {retryInSecondsLive}{" "}{t9}… (attempt{" "}{retryAttempt}/{maxRetries}){process.env.API_TIMEOUT_MS ? ` · API_TIMEOUT_MS=${process.env.API_TIMEOUT_MS}ms, try increasing it` : ""}</Text>;
+    t10 = <Text dimColor={true}>{"将在以下时间后重试："} {retryInSecondsLive}{" "}{t9}{"……（第"}{" "}{retryAttempt}/{maxRetries}){process.env.API_TIMEOUT_MS ? `· API_TIMEOUT_MS=${process.env.API_TIMEOUT_MS} 毫秒，可尝试增大此值` : ""}</Text>;
     $[19] = maxRetries;
     $[20] = retryAttempt;
     $[21] = retryInSecondsLive;

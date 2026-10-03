@@ -1,9 +1,10 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { type AnalyticsMetadata_I_VERIFIED_THIS_IS_NOT_CODE_OR_FILEPATHS, logEvent } from 'src/services/analytics/index.js';
 import { setupTerminal, shouldOfferTerminalSetup } from '../commands/terminalSetup/terminalSetup.js';
 import { useExitOnCtrlCDWithKeybindings } from '../hooks/useExitOnCtrlCDWithKeybindings.js';
-import { Box, Link, Newline, Text, useTheme } from '../ink.js';
+import { Box, Link, Newline, useTheme } from "../ink.js";
 import { useKeybindings } from '../keybindings/useKeybinding.js';
 import { isAnthropicAuthEnabled } from '../utils/auth.js';
 import { normalizeApiKeyForConfig } from '../utils/authPortable.js';
@@ -59,11 +60,11 @@ export function Onboarding({
 
   // Define all onboarding steps
   const themeStep = <Box marginX={1}>
-      <ThemePicker onThemeSelect={handleThemeSelection} showIntroText={true} helpText="To change this later, run /theme" hideEscToCancel={true} skipExitHandling={true} // Skip exit handling as Onboarding already handles it
+      <ThemePicker onThemeSelect={handleThemeSelection} showIntroText={true} helpText="之后可运行 /theme 修改" hideEscToCancel={true} skipExitHandling={true} // Skip exit handling as Onboarding already handles it
     />
     </Box>;
   const securityStep = <Box flexDirection="column" gap={1} paddingLeft={1}>
-      <Text bold>Security notes:</Text>
+      <Text bold>{"安全提示："}</Text>
       <Box flexDirection="column" width={70}>
         {/**
          * OrderedList misnumbers items when rendering conditionally,
@@ -71,20 +72,20 @@ export function Onboarding({
          */}
         <OrderedList>
           <OrderedList.Item>
-            <Text>Claude can make mistakes</Text>
+            <Text>{"Claude 可能出错"}</Text>
             <Text dimColor wrap="wrap">
-              You should always review Claude&apos;s responses, especially when
+              {"请始终检查 Claude 的回复，尤其是"}
               <Newline />
-              running code.
+              {"运行代码时。"}
               <Newline />
             </Text>
           </OrderedList.Item>
           <OrderedList.Item>
             <Text>
-              Due to prompt injection risks, only use it with code you trust
+              {"由于提示词注入风险，请只使用可信代码"}
             </Text>
             <Text dimColor wrap="wrap">
-              For more details see:
+              {"更多详情："}
               <Newline />
               <Link url="https://code.claude.com/docs/en/security" />
             </Text>
@@ -146,19 +147,19 @@ export function Onboarding({
     steps.push({
       id: 'terminal-setup',
       component: <Box flexDirection="column" gap={1} paddingLeft={1}>
-          <Text bold>Use Claude Code&apos;s terminal setup?</Text>
+          <Text bold>{"使用 Claude Code 的终端设置？"}</Text>
           <Box flexDirection="column" width={70} gap={1}>
             <Text>
-              For the optimal coding experience, enable the recommended settings
+              {"为获得更好的编程体验，建议启用以下设置"}
               <Newline />
-              for your terminal:{' '}
-              {env.terminal === 'Apple_Terminal' ? 'Option+Enter for newlines and visual bell' : 'Shift+Enter for newlines'}
+              {"用于你的终端："}{' '}
+              {env.terminal === 'Apple_Terminal' ? "Option+Enter 换行，并启用视觉提示铃" : "Shift+Enter 换行"}
             </Text>
             <Select options={[{
-            label: 'Yes, use recommended settings',
+            label: "是，使用推荐设置",
             value: 'install'
           }, {
-            label: 'No, maybe later with /terminal-setup',
+            label: "否，之后再用 /terminal-setup 设置",
             value: 'no'
           }]} onChange={value => {
             if (value === 'install') {
@@ -169,7 +170,7 @@ export function Onboarding({
             }
           }} onCancel={() => goToNextStep()} />
             <Text dimColor>
-              {exitState.pending ? <>Press {exitState.keyName} again to exit</> : <>Enter to confirm · Esc to skip</>}
+              {exitState.pending ? <>{"按"} {exitState.keyName} {"再次按下退出"}</> : <>{"Enter 确认 · Esc 跳过"}</>}
             </Text>
           </Box>
         </Box>
@@ -206,7 +207,7 @@ export function Onboarding({
       <Box flexDirection="column" marginTop={1}>
         {currentStep?.component}
         {exitState.pending && <Box padding={1}>
-            <Text dimColor>Press {exitState.keyName} again to exit</Text>
+            <Text dimColor>{"按"} {exitState.keyName} {"再次按下退出"}</Text>
           </Box>}
       </Box>
     </Box>;

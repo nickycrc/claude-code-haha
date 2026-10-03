@@ -2,6 +2,38 @@
 
 本项目基于 Anthropic 协议与 LLM 通信。通过协议转换代理，可以使用 OpenAI、DeepSeek、Ollama 等任意模型。
 
+## 命令行使用内置代理并切换模型
+
+当前项目自带 Anthropic → OpenAI 协议转换代理，命令行可以独立使用，无需打开桌面客户端。
+供应商的 `apiFormat` 支持 `anthropic`、`openai_chat` 和 `openai_responses`。
+OpenAI 格式需要先启动本地服务，Windows 下运行 `bin\start-proxy-server.cmd`，然后启动 `cch`。
+
+在已保存的供应商配置中，`models.main` 是默认模型，`models.sonnet`、`models.opus`、`models.haiku` 是可选的模型映射。
+`/model` 会显示这些实际模型 ID（自动去重），还可以在供应商对象中增加候选模型：
+
+```json
+{
+  "apiFormat": "openai_chat",
+  "baseUrl": "http://127.0.0.1:8000",
+  "models": {
+    "main": "your-default-model",
+    "sonnet": "your-default-model",
+    "opus": "your-default-model",
+    "haiku": "your-fast-model"
+  },
+  "availableModels": ["your-second-model", "your-third-model"]
+}
+```
+
+上面是供应商对象的配置片段。完整对象还包含 `id`、`presetId`、`name`、`apiKey` 等字段，保存在 `~/.claude/cc-haha/providers.json`。
+通过供应商 API 创建、更新或激活后，配置会同步到 `~/.claude/cc-haha/settings.json`；手动编辑 `providers.json` 后需要重新激活供应商。
+也可以直接在 cc-haha 的 `settings.json` 的 `env` 中设置 `CCH_MODEL_OPTIONS`，值为 JSON 数组字符串，例如 `"[\"your-second-model\",\"your-third-model\"]"`。
+重启 CLI 后输入 `/model` 选择，或者输入 `/model your-second-model` 指定模型；`/model default` 恢复 `models.main`。
+
+模型名称区分大小写，应填写该 API 支持的真实 ID。切换模型沿用当前供应商的接口、密钥和协议；候选列表不会使 API 自动获得未提供的模型。
+内置代理支持根地址（如 `https://example.com`）和已包含 `/v1` 的地址（如 `https://example.com/v1`），不会重复添加 `/v1`。
+下文的 LiteLLM 和第三方代理属于其他接入方式。
+
 ## 原理
 
 ```

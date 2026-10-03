@@ -2,7 +2,7 @@
  * Provider types — preset-based provider configuration.
  *
  * Providers are stored in ~/.claude/cc-haha/providers.json as a lightweight index.
- * The active provider's env vars are written to ~/.claude/settings.json.
+ * The active provider's env vars are written to ~/.claude/cc-haha/settings.json.
  */
 
 import { z } from 'zod'
@@ -29,6 +29,7 @@ export const SavedProviderSchema = z.object({
   baseUrl: z.string(),
   apiFormat: ApiFormatSchema.default('anthropic'),
   models: ModelMappingSchema,
+  availableModels: z.array(z.string().trim().min(1)).optional(),
   notes: z.string().optional(),
 })
 
@@ -44,6 +45,7 @@ export const CreateProviderSchema = z.object({
   baseUrl: z.string(),
   apiFormat: ApiFormatSchema.default('anthropic'),
   models: ModelMappingSchema,
+  availableModels: z.array(z.string().trim().min(1)).optional(),
   notes: z.string().optional(),
 })
 
@@ -53,6 +55,7 @@ export const UpdateProviderSchema = z.object({
   baseUrl: z.string().optional(),
   apiFormat: ApiFormatSchema.optional(),
   models: ModelMappingSchema.optional(),
+  availableModels: z.array(z.string().trim().min(1)).optional(),
   notes: z.string().optional(),
 })
 

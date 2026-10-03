@@ -1,7 +1,8 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { relative } from 'path';
 import React, { useMemo } from 'react';
 import { useDiffInIDE } from '../../../hooks/useDiffInIDE.js';
-import { Box, Text } from '../../../ink.js';
+import { Box } from "../../../ink.js";
 import type { ToolUseContext } from '../../../Tool.js';
 import { getLanguageName } from '../../../utils/cliHighlight.js';
 import { getCwd } from '../../../utils/cwd.js';
@@ -162,7 +163,7 @@ export function FilePermissionDialog<T extends ToolInput = ToolInput>({
   const isSymlinkOutsideCwd = symlinkTarget != null && relative(getCwd(), symlinkTarget).startsWith('..');
   const symlinkWarning = symlinkTarget ? <Box paddingX={1} marginBottom={1}>
       <Text color="warning">
-        {isSymlinkOutsideCwd ? `This will modify ${symlinkTarget} (outside working directory) via a symlink` : `Symlink target: ${symlinkTarget}`}
+        {isSymlinkOutsideCwd ? `这将通过符号链接修改 ${symlinkTarget}（工作目录之外）` : `符号链接目标：${symlinkTarget}`}
       </Text>
     </Box> : null;
   return <>
@@ -195,8 +196,8 @@ export function FilePermissionDialog<T extends ToolInput = ToolInput>({
       </PermissionDialog>
       <Box paddingX={1} marginTop={1}>
         <Text dimColor>
-          Esc to cancel
-          {(focusedOption === 'yes' && !yesInputMode || focusedOption === 'no' && !noInputMode) && ' · Tab to amend'}
+          {"Esc 取消"}
+          {(focusedOption === 'yes' && !yesInputMode || focusedOption === 'no' && !noInputMode) && "· Tab 修改"}
         </Text>
       </Box>
     </>;

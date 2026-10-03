@@ -1,6 +1,7 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import React, { useCallback, useEffect, useRef } from 'react';
 import { isBridgeEnabled } from '../bridge/bridgeEnabled.js';
-import { Box, Text } from '../ink.js';
+import { Box } from "../ink.js";
 import { getClaudeAIOAuthTokens } from '../utils/auth.js';
 import { getGlobalConfig, saveGlobalConfig } from '../utils/config.js';
 import type { OptionWithDescription } from './CustomSelect/select.js';
@@ -33,26 +34,23 @@ export function RemoteCallout({
     onDoneRef.current(value);
   }, []);
   const options: OptionWithDescription<RemoteCalloutSelection>[] = [{
-    label: 'Enable Remote Control for this session',
-    description: 'Opens a secure connection to claude.ai.',
+    label: "为本次会话启用远程控制",
+    description: "将与 claude.ai 建立安全连接。",
     value: 'enable'
   }, {
-    label: 'Never mind',
-    description: 'You can always enable it later with /remote-control.',
+    label: "算了",
+    description: "之后可随时使用 /remote-control 启用。",
     value: 'dismiss'
   }];
-  return <PermissionDialog title="Remote Control">
+  return <PermissionDialog title="远程控制">
       <Box flexDirection="column" paddingX={2} paddingY={1}>
         <Box marginBottom={1} flexDirection="column">
           <Text>
-            Remote Control lets you access this CLI session from the web
-            (claude.ai/code) or the Claude app, so you can pick up where you
-            left off on any device.
+            {"远程控制允许通过网页（claude.ai/code）或 Claude 应用访问此 CLI 会话，以便在任意设备上继续工作。"}
           </Text>
           <Text> </Text>
           <Text>
-            You can disconnect remote access anytime by running /remote-control
-            again.
+            {"可随时再次运行 /remote-control 断开远程访问。"}
           </Text>
         </Box>
         <Box>

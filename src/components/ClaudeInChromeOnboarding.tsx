@@ -1,8 +1,9 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React from 'react';
 import { logEvent } from 'src/services/analytics/index.js';
 // eslint-disable-next-line custom-rules/prefer-use-keybindings -- enter to continue
-import { Box, Link, Newline, Text, useInput } from '../ink.js';
+import { Box, Link, Newline, useInput } from "../ink.js";
 import { isChromeExtensionInstalled } from '../utils/claudeInChrome/setup.js';
 import { saveGlobalConfig } from '../utils/config.js';
 import { Dialog } from './design-system/Dialog.js';
@@ -48,7 +49,7 @@ export function ClaudeInChromeOnboarding(t0) {
   useInput(t3);
   let t4;
   if ($[4] !== isExtensionInstalled) {
-    t4 = !isExtensionInstalled && <><Newline /><Newline />Requires the Chrome extension. Get started at{" "}<Link url={CHROME_EXTENSION_URL} /></>;
+    t4 = !isExtensionInstalled && <><Newline /><Newline />{"需要 Chrome 扩展。使用指南："}{" "}<Link url={CHROME_EXTENSION_URL} /></>;
     $[4] = isExtensionInstalled;
     $[5] = t4;
   } else {
@@ -56,7 +57,7 @@ export function ClaudeInChromeOnboarding(t0) {
   }
   let t5;
   if ($[6] !== t4) {
-    t5 = <Text>Claude in Chrome works with the Chrome extension to let you control your browser directly from Claude Code. You can navigate websites, fill forms, capture screenshots, record GIFs, and debug with console logs and network requests.{t4}</Text>;
+    t5 = <Text>{"Claude in Chrome 通过 Chrome 扩展，让你直接从 Claude Code 控制浏览器。支持浏览网页、填写表单、截图、录制 GIF，以及查看控制台日志和网络请求进行调试。"}{t4}</Text>;
     $[6] = t4;
     $[7] = t5;
   } else {
@@ -72,7 +73,7 @@ export function ClaudeInChromeOnboarding(t0) {
   }
   let t7;
   if ($[10] !== t6) {
-    t7 = <Text dimColor={true}>Site-level permissions are inherited from the Chrome extension. Manage permissions in the Chrome extension settings to control which sites Claude can browse, click, and type on{t6}.</Text>;
+    t7 = <Text dimColor={true}>{"网站权限沿用 Chrome 扩展的设置。请在扩展设置中控制 Claude 可以浏览、点击和输入的网站。"}{t6}.</Text>;
     $[10] = t6;
     $[11] = t7;
   } else {
@@ -87,7 +88,7 @@ export function ClaudeInChromeOnboarding(t0) {
   }
   let t9;
   if ($[13] === Symbol.for("react.memo_cache_sentinel")) {
-    t9 = <Text dimColor={true}>For more info, use{" "}{t8}{" "}or visit <Link url="https://code.claude.com/docs/en/chrome" /></Text>;
+    t9 = <Text dimColor={true}>{"了解更多，请使用"}{" "}{t8}{" "}{"或访问"} <Link url="https://code.claude.com/docs/en/chrome" /></Text>;
     $[13] = t9;
   } else {
     t9 = $[13];
@@ -103,7 +104,7 @@ export function ClaudeInChromeOnboarding(t0) {
   }
   let t11;
   if ($[17] !== onDone || $[18] !== t10) {
-    t11 = <Dialog title="Claude in Chrome (Beta)" onCancel={onDone} color="chromeYellow">{t10}</Dialog>;
+    t11 = <Dialog title="Claude in Chrome（测试版）" onCancel={onDone} color="chromeYellow">{t10}</Dialog>;
     $[17] = onDone;
     $[18] = t10;
     $[19] = t11;

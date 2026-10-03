@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import figures from 'figures';
 import * as React from 'react';
@@ -5,7 +6,7 @@ import { useCallback, useEffect } from 'react';
 import { getOriginalCwd } from '../../../bootstrap/state.js';
 import type { CommandResultDisplay } from '../../../commands.js';
 import { Select } from '../../../components/CustomSelect/select.js';
-import { Box, Text } from '../../../ink.js';
+import { Box } from "../../../ink.js";
 import type { ToolPermissionContext } from '../../../Tool.js';
 import { useTabHeaderFocus } from '../../design-system/Tabs.js';
 type Props = {
@@ -97,7 +98,7 @@ export function WorkspaceTab(t0) {
     let t6;
     if ($[14] === Symbol.for("react.memo_cache_sentinel")) {
       t6 = {
-        label: `Add directory${figures.ellipsis}`,
+        label: `添加目录${figures.ellipsis}`,
         value: "add-directory"
       };
       $[14] = t6;
@@ -113,7 +114,7 @@ export function WorkspaceTab(t0) {
   const options = opts;
   let t6;
   if ($[15] === Symbol.for("react.memo_cache_sentinel")) {
-    t6 = <Box flexDirection="row" marginTop={1} marginLeft={2} gap={1}><Text>{`-  ${getOriginalCwd()}`}</Text><Text dimColor={true}>(Original working directory)</Text></Box>;
+    t6 = <Box flexDirection="row" marginTop={1} marginLeft={2} gap={1}><Text>{`-  ${getOriginalCwd()}`}</Text><Text dimColor={true}>{"（原始工作目录）"}</Text></Box>;
     $[15] = t6;
   } else {
     t6 = $[15];

@@ -1,5 +1,6 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import React, { type ReactNode, useState } from 'react'
-import { Box, Text } from '../../../ink.js'
+import { Box } from "../../../ink.js";
 import { useKeybinding } from '../../../hooks/useKeybinding.js'
 import TextInput from '../../TextInput.js'
 import { WizardDialogLayout } from '../../wizard/index.js'
@@ -26,18 +27,18 @@ export function TaskDescriptionStep(): ReactNode {
   }
 
   return (
-    <WizardDialogLayout subtitle="Description">
+    <WizardDialogLayout subtitle="描述">
       <Box flexDirection="column">
         <Box marginBottom={1}>
           <Text dimColor>
-            Briefly describe what this scheduled task does.
+            {"简要描述此定时任务的用途。"}
           </Text>
         </Box>
         <TextInput
           value={value}
           onChange={setValue}
           onSubmit={handleSubmit}
-          placeholder="e.g. Review yesterday's commits and flag anything concerning"
+          placeholder="例如：审查昨天的提交并标出需要关注的问题"
         />
         {error && (
           <Box marginTop={1}>

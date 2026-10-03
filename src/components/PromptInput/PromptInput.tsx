@@ -746,7 +746,7 @@ function PromptInput({
     if (thinkTriggers.length && isUltrathinkEnabled()) {
       addNotification({
         key: 'ultrathink-active',
-        text: 'Effort set to high for this turn',
+        text: "本轮推理强度已设为高",
         priority: 'immediate',
         timeoutMs: 5000
       });
@@ -758,7 +758,7 @@ function PromptInput({
     if (feature('ULTRAPLAN') && ultraplanTriggers.length) {
       addNotification({
         key: 'ultraplan-active',
-        text: 'This prompt will launch an ultraplan session in Claude Code on the web',
+        text: "此输入将在网页版 Claude Code 中启动 Ultraplan 会话",
         priority: 'immediate',
         timeoutMs: 5000
       });
@@ -770,7 +770,7 @@ function PromptInput({
     if (isUltrareviewEnabled() && ultrareviewTriggers.length) {
       addNotification({
         key: 'ultrareview-active',
-        text: 'Run /ultrareview after Claude finishes to review these changes in the cloud',
+        text: "Claude 完成后，可运行 /ultrareview 在云端审查这些修改",
         priority: 'immediate',
         timeoutMs: 5000
       });
@@ -815,8 +815,8 @@ function PromptInput({
         addNotification({
           key: 'stash-hint',
           jsx: <Text dimColor>
-              Tip:{' '}
-              <ConfigurableShortcutHint action="chat:stash" context="Chat" fallback="ctrl+s" description="stash" />
+              {"提示："}{' '}
+              <ConfigurableShortcutHint action="chat:stash" context="Chat" fallback="ctrl+s" description="暂存" />
             </Text>,
           priority: 'immediate',
           timeoutMs: FOOTER_TEMPORARY_STATUS_TIMEOUT
@@ -1042,7 +1042,7 @@ function PromptInput({
         if (result.success) {
           addNotification({
             key: 'direct-message-sent',
-            text: `Sent to @${result.recipientName}`,
+            text: `已发送给 @${result.recipientName}`,
             priority: 'immediate',
             timeoutMs: 3000
           });
@@ -1341,7 +1341,7 @@ function PromptInput({
       }
       addNotification({
         key: 'external-editor-error',
-        text: `External editor failed: ${errorMessage(err)}`,
+        text: `外部编辑器失败：${errorMessage(err)}`,
         color: 'warning',
         priority: 'high'
       });
@@ -1870,9 +1870,9 @@ function PromptInput({
       const shortcut = MACOS_OPTION_SPECIAL_CHARS[char];
       const terminalName = getNativeCSIuTerminalDisplayName();
       const jsx = terminalName ? <Text dimColor>
-          To enable {shortcut}, set <Text bold>Option as Meta</Text> in{' '}
-          {terminalName} preferences (⌘,)
-        </Text> : <Text dimColor>To enable {shortcut}, run /terminal-setup</Text>;
+          {"如需启用"} {shortcut}{"，请设置"} <Text bold>{"Option 作为 Meta 键"}</Text> {"位于"}{' '}
+          {terminalName} {"偏好设置（⌘,）"}
+        </Text> : <Text dimColor>{"如需启用"} {shortcut}{"，运行 /terminal-setup"}</Text>;
       addNotification({
         key: 'option-meta-hint',
         jsx,
@@ -2092,7 +2092,7 @@ function PromptInput({
     addNotification({
       key: 'thinking-toggled-hotkey',
       jsx: <Text color={enabled ? 'suggestion' : undefined} dimColor={!enabled}>
-            Thinking {enabled ? 'on' : 'off'}
+            {"思考"} {enabled ? "开启" : "关闭"}
           </Text>,
       priority: 'immediate',
       timeoutMs: 3000
@@ -2231,7 +2231,7 @@ function PromptInput({
   if (isExternalEditorActive) {
     return <Box flexDirection="row" alignItems="center" justifyContent="center" borderColor={getBorderColor()} borderStyle="round" borderLeft={false} borderRight={false} borderBottom width="100%">
         <Text dimColor italic>
-          Save and close editor to continue...
+          {"保存并关闭编辑器后继续……"}
         </Text>
       </Box>;
   }
@@ -2239,7 +2239,7 @@ function PromptInput({
   return <Box flexDirection="column" marginTop={briefOwnsGap ? 0 : 1}>
       {!isFullscreenEnvEnabled() && <PromptInputQueuedCommands />}
       {hasSuppressedDialogs && <Box marginTop={1} marginLeft={2}>
-          <Text dimColor>Waiting for permission…</Text>
+          <Text dimColor>{"正在等待权限确认……"}</Text>
         </Box>}
       <PromptInputStashNotice hasStash={stashedPrompt !== undefined} />
       {swarmBanner ? <>

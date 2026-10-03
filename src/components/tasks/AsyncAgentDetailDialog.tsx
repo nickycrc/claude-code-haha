@@ -1,9 +1,10 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React, { useMemo } from 'react';
 import type { DeepImmutable } from 'src/types/utils.js';
 import { useElapsedTime } from '../../hooks/useElapsedTime.js';
 import type { KeyboardEvent } from '../../ink/events/keyboard-event.js';
-import { Box, Text, useTheme } from '../../ink.js';
+import { Box, useTheme } from "../../ink.js";
 import { useKeybindings } from '../../keybindings/useKeybinding.js';
 import { getEmptyToolPermissionContext } from '../../Tool.js';
 import type { LocalAgentTaskState } from '../../tasks/LocalAgentTask/LocalAgentTask.js';
@@ -113,7 +114,7 @@ export function AsyncAgentDetailDialog(t0) {
   const title = t8;
   let t9;
   if ($[14] !== agent.status) {
-    t9 = agent.status !== "running" && <Text color={getTaskStatusColor(agent.status)}>{getTaskStatusIcon(agent.status)}{" "}{agent.status === "completed" ? "Completed" : agent.status === "failed" ? "Failed" : "Stopped"}{" \xB7 "}</Text>;
+    t9 = agent.status !== "running" && <Text color={getTaskStatusColor(agent.status)}>{getTaskStatusIcon(agent.status)}{" "}{agent.status === "completed" ? "已完成" : agent.status === "failed" ? "失败" : "已停止"}{" \xB7 "}</Text>;
     $[14] = agent.status;
     $[15] = t9;
   } else {
@@ -121,7 +122,7 @@ export function AsyncAgentDetailDialog(t0) {
   }
   let t10;
   if ($[16] !== tokenCount) {
-    t10 = tokenCount !== undefined && tokenCount > 0 && <> · {formatNumber(tokenCount)} tokens</>;
+    t10 = tokenCount !== undefined && tokenCount > 0 && <> · {formatNumber(tokenCount)} {"令牌"}</>;
     $[16] = tokenCount;
     $[17] = t10;
   } else {
@@ -129,7 +130,7 @@ export function AsyncAgentDetailDialog(t0) {
   }
   let t11;
   if ($[18] !== toolUseCount) {
-    t11 = toolUseCount !== undefined && toolUseCount > 0 && <>{" "}· {toolUseCount} {toolUseCount === 1 ? "tool" : "tools"}</>;
+    t11 = toolUseCount !== undefined && toolUseCount > 0 && <>{" "}· {toolUseCount} {toolUseCount === 1 ? "工具" : "工具"}</>;
     $[18] = toolUseCount;
     $[19] = t11;
   } else {
@@ -157,7 +158,7 @@ export function AsyncAgentDetailDialog(t0) {
   const subtitle = t13;
   let t14;
   if ($[27] !== agent.status || $[28] !== onBack || $[29] !== onKillAgent) {
-    t14 = exitState => exitState.pending ? <Text>Press {exitState.keyName} again to exit</Text> : <Byline>{onBack && <KeyboardShortcutHint shortcut={"\u2190"} action="go back" />}<KeyboardShortcutHint shortcut="Esc/Enter/Space" action="close" />{agent.status === "running" && onKillAgent && <KeyboardShortcutHint shortcut="x" action="stop" />}</Byline>;
+    t14 = exitState => exitState.pending ? <Text>{"按"} {exitState.keyName} {"再次按下退出"}</Text> : <Byline>{onBack && <KeyboardShortcutHint shortcut={"\u2190"} action="返回" />}<KeyboardShortcutHint shortcut="Esc/Enter/Space" action="关闭" />{agent.status === "running" && onKillAgent && <KeyboardShortcutHint shortcut="x" action="停止" />}</Byline>;
     $[27] = agent.status;
     $[28] = onBack;
     $[29] = onKillAgent;
@@ -167,7 +168,7 @@ export function AsyncAgentDetailDialog(t0) {
   }
   let t15;
   if ($[31] !== agent.progress || $[32] !== agent.status || $[33] !== theme) {
-    t15 = agent.status === "running" && agent.progress?.recentActivities && agent.progress.recentActivities.length > 0 && <Box flexDirection="column"><Text bold={true} dimColor={true}>Progress</Text>{agent.progress.recentActivities.map((activity, i) => <Text key={i} dimColor={i < agent.progress.recentActivities.length - 1} wrap="truncate-end">{i === agent.progress.recentActivities.length - 1 ? "\u203A " : "  "}{renderToolActivity(activity, tools, theme)}</Text>)}</Box>;
+    t15 = agent.status === "running" && agent.progress?.recentActivities && agent.progress.recentActivities.length > 0 && <Box flexDirection="column"><Text bold={true} dimColor={true}>{"进度"}</Text>{agent.progress.recentActivities.map((activity, i) => <Text key={i} dimColor={i < agent.progress.recentActivities.length - 1} wrap="truncate-end">{i === agent.progress.recentActivities.length - 1 ? "\u203A " : "  "}{renderToolActivity(activity, tools, theme)}</Text>)}</Box>;
     $[31] = agent.progress;
     $[32] = agent.status;
     $[33] = theme;
@@ -177,7 +178,7 @@ export function AsyncAgentDetailDialog(t0) {
   }
   let t16;
   if ($[35] !== displayPrompt || $[36] !== planContent) {
-    t16 = planContent ? <Box marginTop={1}><UserPlanMessage addMargin={false} planContent={planContent} /></Box> : <Box flexDirection="column" marginTop={1}><Text bold={true} dimColor={true}>Prompt</Text><Text wrap="wrap">{displayPrompt}</Text></Box>;
+    t16 = planContent ? <Box marginTop={1}><UserPlanMessage addMargin={false} planContent={planContent} /></Box> : <Box flexDirection="column" marginTop={1}><Text bold={true} dimColor={true}>{"提示词"}</Text><Text wrap="wrap">{displayPrompt}</Text></Box>;
     $[35] = displayPrompt;
     $[36] = planContent;
     $[37] = t16;
@@ -186,7 +187,7 @@ export function AsyncAgentDetailDialog(t0) {
   }
   let t17;
   if ($[38] !== agent.error || $[39] !== agent.status) {
-    t17 = agent.status === "failed" && agent.error && <Box flexDirection="column" marginTop={1}><Text bold={true} color="error">Error</Text><Text color="error" wrap="wrap">{agent.error}</Text></Box>;
+    t17 = agent.status === "failed" && agent.error && <Box flexDirection="column" marginTop={1}><Text bold={true} color="error">{"错误"}</Text><Text color="error" wrap="wrap">{agent.error}</Text></Box>;
     $[38] = agent.error;
     $[39] = agent.status;
     $[40] = t17;

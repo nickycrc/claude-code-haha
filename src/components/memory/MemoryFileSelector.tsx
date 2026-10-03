@@ -1,3 +1,4 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import { feature } from 'bun:bundle';
 import chalk from 'chalk';
@@ -7,7 +8,7 @@ import * as React from 'react';
 import { use, useEffect, useState } from 'react';
 import { getOriginalCwd } from '../../bootstrap/state.js';
 import { useExitOnCtrlCDWithKeybindings } from '../../hooks/useExitOnCtrlCDWithKeybindings.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 import { useKeybinding } from '../../keybindings/useKeybinding.js';
 import { getAutoMemPath, isAutoMemoryEnabled } from '../../memdir/paths.js';
 import { logEvent } from '../../services/analytics/index.js';
@@ -115,7 +116,7 @@ export function MemoryFileSelector(t0) {
     let t1;
     if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
       t1 = {
-        label: "Open auto-memory folder",
+        label: "打开自动记忆文件夹",
         value: `${OPEN_FOLDER_PREFIX}${getAutoMemPath()}`,
         description: ""
       };
@@ -128,7 +129,7 @@ export function MemoryFileSelector(t0) {
       let t2;
       if ($[1] === Symbol.for("react.memo_cache_sentinel")) {
         t2 = {
-          label: "Open team memory folder",
+          label: "打开团队记忆文件夹",
           value: `${OPEN_FOLDER_PREFIX}${teamMemPaths.getTeamMemPath()}`,
           description: ""
         };
@@ -142,9 +143,9 @@ export function MemoryFileSelector(t0) {
       if (agent.memory) {
         const agentDir = getAgentMemoryDir(agent.agentType, agent.memory);
         folderOptions.push({
-          label: `Open ${chalk.bold(agent.agentType)} agent memory`,
+          label: `打开 ${chalk.bold(agent.agentType)} 的代理记忆`,
           value: `${OPEN_FOLDER_PREFIX}${agentDir}`,
-          description: `${agent.memory} scope`
+          description: `${agent.memory} 范围`
         });
       }
     }
@@ -324,7 +325,7 @@ export function MemoryFileSelector(t0) {
   const t15 = autoMemoryOn ? "on" : "off";
   let t16;
   if ($[30] !== t15) {
-    t16 = <Text>Auto-memory: {t15}</Text>;
+    t16 = <Text>{"自动记忆："} {t15}</Text>;
     $[30] = t15;
     $[31] = t16;
   } else {
@@ -341,7 +342,7 @@ export function MemoryFileSelector(t0) {
   }
   let t18;
   if ($[35] !== autoDreamOn || $[36] !== dreamStatus || $[37] !== focusedToggle || $[38] !== isDreamRunning || $[39] !== showDreamRow) {
-    t18 = showDreamRow && <ListItem isFocused={focusedToggle === 1} styled={false}><Text color={focusedToggle === 1 ? "suggestion" : undefined}>Auto-dream: {autoDreamOn ? "on" : "off"}{dreamStatus && <Text dimColor={true}> · {dreamStatus}</Text>}{!isDreamRunning && autoDreamOn && <Text dimColor={true}> · /dream to run</Text>}</Text></ListItem>;
+    t18 = showDreamRow && <ListItem isFocused={focusedToggle === 1} styled={false}><Text color={focusedToggle === 1 ? "suggestion" : undefined}>{"自动整理记忆："} {autoDreamOn ? "开启" : "关闭"}{dreamStatus && <Text dimColor={true}> · {dreamStatus}</Text>}{!isDreamRunning && autoDreamOn && <Text dimColor={true}> {"· 使用 /dream 运行"}</Text>}</Text></ListItem>;
     $[35] = autoDreamOn;
     $[36] = dreamStatus;
     $[37] = focusedToggle;

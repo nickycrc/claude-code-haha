@@ -1,7 +1,8 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import { c as _c } from "react/compiler-runtime";
 import React from 'react';
 import { Select } from 'src/components/CustomSelect/index.js';
-import { Box, Text } from '../../ink.js';
+import { Box } from "../../ink.js";
 interface ExistingWorkflowStepProps {
   repoName: string;
   onSelectAction: (action: 'update' | 'skip' | 'exit') => void;
@@ -15,13 +16,13 @@ export function ExistingWorkflowStep(t0) {
   let t1;
   if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
     t1 = [{
-      label: "Update workflow file with latest version",
+      label: "将工作流文件更新到最新版本",
       value: "update"
     }, {
-      label: "Skip workflow update (configure secrets only)",
+      label: "跳过工作流更新（仅配置机密）",
       value: "skip"
     }, {
-      label: "Exit without making changes",
+      label: "退出且不进行修改",
       value: "exit"
     }];
     $[0] = t1;
@@ -53,14 +54,14 @@ export function ExistingWorkflowStep(t0) {
   const handleCancel = t3;
   let t4;
   if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
-    t4 = <Text bold={true}>Existing Workflow Found</Text>;
+    t4 = <Text bold={true}>{"发现已有工作流"}</Text>;
     $[5] = t4;
   } else {
     t4 = $[5];
   }
   let t5;
   if ($[6] !== repoName) {
-    t5 = <Box flexDirection="column" marginBottom={1}>{t4}<Text dimColor={true}>Repository: {repoName}</Text></Box>;
+    t5 = <Box flexDirection="column" marginBottom={1}>{t4}<Text dimColor={true}>{"仓库："} {repoName}</Text></Box>;
     $[6] = repoName;
     $[7] = t5;
   } else {
@@ -68,7 +69,7 @@ export function ExistingWorkflowStep(t0) {
   }
   let t6;
   if ($[8] === Symbol.for("react.memo_cache_sentinel")) {
-    t6 = <Box flexDirection="column" marginBottom={1}><Text>A Claude workflow file already exists at{" "}<Text color="claude">.github/workflows/claude.yml</Text></Text><Text dimColor={true}>What would you like to do?</Text></Box>;
+    t6 = <Box flexDirection="column" marginBottom={1}><Text>{"以下位置已有 Claude 工作流文件："}{" "}<Text color="claude">.github/workflows/claude.yml</Text></Text><Text dimColor={true}>{"你希望如何操作？"}</Text></Box>;
     $[8] = t6;
   } else {
     t6 = $[8];
@@ -84,7 +85,7 @@ export function ExistingWorkflowStep(t0) {
   }
   let t8;
   if ($[12] === Symbol.for("react.memo_cache_sentinel")) {
-    t8 = <Box marginTop={1}><Text dimColor={true}>View the latest workflow template at:{" "}<Text color="claude">https://github.com/anthropics/claude-code-action/blob/main/examples/claude.yml</Text></Text></Box>;
+    t8 = <Box marginTop={1}><Text dimColor={true}>{"查看最新工作流模板："}{" "}<Text color="claude">https://github.com/anthropics/claude-code-action/blob/main/examples/claude.yml</Text></Text></Box>;
     $[12] = t8;
   } else {
     t8 = $[12];

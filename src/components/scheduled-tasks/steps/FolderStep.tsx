@@ -1,5 +1,6 @@
+import { MenuText as Text } from 'src/components/design-system/MenuText.js'
 import React, { type ReactNode, useMemo, useState } from 'react'
-import { Box, Text } from '../../../ink.js'
+import { Box } from "../../../ink.js";
 import { getProjectRoot } from '../../../bootstrap/state.js'
 import { useKeybinding } from '../../../hooks/useKeybinding.js'
 import TextInput from '../../TextInput.js'
@@ -53,10 +54,10 @@ export function FolderStep(): ReactNode {
   // Custom path input mode — uses TextInput instead of Select input type
   if (customPath) {
     return (
-      <WizardDialogLayout subtitle="Working directory">
+      <WizardDialogLayout subtitle="工作目录">
         <Box flexDirection="column">
           <Box marginBottom={1}>
-            <Text dimColor>Enter the full path to the working directory:</Text>
+            <Text dimColor>{"输入工作目录的完整路径："}</Text>
           </Box>
           <TextInput
             value={pathValue}
@@ -91,20 +92,20 @@ export function FolderStep(): ReactNode {
   }
 
   return (
-    <WizardDialogLayout subtitle="Working directory">
+    <WizardDialogLayout subtitle="工作目录">
       <Box flexDirection="column">
         <Box marginBottom={1}>
           <Text dimColor>
-            Select the folder where this task will run.
+            {"选择此任务的运行文件夹。"}
           </Text>
         </Box>
         <Select
           options={[
             ...folderOptions,
             {
-              label: '+ Choose a different folder',
+              label: "+ 选择其他文件夹",
               value: '__custom__',
-              description: 'Enter a custom path',
+              description: "输入自定义路径",
             },
           ]}
           defaultValue={wizardData.folder ?? currentProject}

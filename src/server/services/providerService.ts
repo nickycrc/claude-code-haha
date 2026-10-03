@@ -10,6 +10,7 @@ import * as fs from 'fs/promises'
 import * as path from 'path'
 import * as os from 'os'
 import { ApiError } from '../middleware/errorHandler.js'
+import { getOpenaiEndpoint } from '../proxy/openaiEndpoint.js'
 import { anthropicToOpenaiChat } from '../proxy/transform/anthropicToOpenaiChat.js'
 import { anthropicToOpenaiResponses } from '../proxy/transform/anthropicToOpenaiResponses.js'
 import { openaiChatToAnthropic } from '../proxy/transform/openaiChatToAnthropic.js'
@@ -34,6 +35,10 @@ const MANAGED_ENV_KEYS = [
   'ANTHROPIC_DEFAULT_HAIKU_MODEL',
   'ANTHROPIC_DEFAULT_SONNET_MODEL',
   'ANTHROPIC_DEFAULT_OPUS_MODEL',
+  'CCH_MODEL_OPTIONS',
+  'ANTHROPIC_CUSTOM_MODEL_OPTION',
+  'ANTHROPIC_CUSTOM_MODEL_OPTION_NAME',
+  'ANTHROPIC_CUSTOM_MODEL_OPTION_DESCRIPTION',
 ] as const
 
 const DEFAULT_INDEX: ProvidersIndex = { activeId: null, providers: [] }
@@ -150,6 +155,7 @@ export class ProviderService {
       baseUrl: input.baseUrl,
       apiFormat: input.apiFormat ?? 'anthropic',
       models: input.models,
+      ...(input.availableModels !== undefined && { availableModels: input.availableModels }),
       ...(input.notes !== undefined && { notes: input.notes }),
     }
 
@@ -171,6 +177,7 @@ export class ProviderService {
       ...(input.baseUrl !== undefined && { baseUrl: input.baseUrl }),
       ...(input.apiFormat !== undefined && { apiFormat: input.apiFormat }),
       ...(input.models !== undefined && { models: input.models }),
+      ...(input.availableModels !== undefined && { availableModels: input.availableModels }),
       ...(input.notes !== undefined && { notes: input.notes }),
     }
 
@@ -240,6 +247,11 @@ export class ProviderService {
       ANTHROPIC_DEFAULT_HAIKU_MODEL: provider.models.haiku,
       ANTHROPIC_DEFAULT_SONNET_MODEL: provider.models.sonnet,
       ANTHROPIC_DEFAULT_OPUS_MODEL: provider.models.opus,
+      CCH_MODEL_OPTIONS: JSON.stringify(provider.availableModels ?? []),
+      // Empty values override a legacy option inherited from ~/.claude/settings.json.
+      ANTHROPIC_CUSTOM_MODEL_OPTION: '',
+      ANTHROPIC_CUSTOM_MODEL_OPTION_NAME: '',
+      ANTHROPIC_CUSTOM_MODEL_OPTION_DESCRIPTION: '',
     }
   }
 
@@ -474,10 +486,10 @@ export class ProviderService {
       let transformedBody: unknown
       if (format === 'openai_chat') {
         transformedBody = anthropicToOpenaiChat(anthropicReq)
-        upstreamUrl = `${base}/v1/chat/completions`
+        upstreamUrl = getOpenaiEndpoint(base, 'chat/completions')
       } else {
         transformedBody = anthropicToOpenaiResponses(anthropicReq)
-        upstreamUrl = `${base}/v1/responses`
+        upstreamUrl = getOpenaiEndpoint(base, 'responses')
       }
 
       // Call upstream with transformed request
@@ -532,14 +544,14 @@ function buildDirectTestRequest(
 
   if (format === 'openai_chat') {
     return {
-      url: `${base}/v1/chat/completions`,
+      url: getOpenaiEndpoint(base, 'chat/completions'),
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
       body: { model: modelId, max_tokens: 16, messages: [{ role: 'user', content: prompt }] },
     }
   }
   if (format === 'openai_responses') {
     return {
-      url: `${base}/v1/responses`,
+      url: getOpenaiEndpoint(base, 'responses'),
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
       body: { model: modelId, max_output_tokens: 16, input: [{ type: 'message', role: 'user', content: prompt }] },
     }
